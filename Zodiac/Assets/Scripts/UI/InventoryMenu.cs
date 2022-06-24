@@ -10,7 +10,15 @@ public class InventoryMenu : MonoBehaviour
 
     private void Start()
     {
-        Hide();
+    }
+
+    private void Update()
+    {
+        // closing of menu
+        if (ZodiacInput.InputMap.UI.Cancel.triggered)
+        {
+            Close();
+        }
     }
     private void Clear()
     {
@@ -22,22 +30,31 @@ public class InventoryMenu : MonoBehaviour
     {
         Clear();
 
-        foreach(Item item in inventory.Contents)
+        for(int i = 0; i < inventory.Contents.Count; i++)
         {
+            Item item = inventory.Contents[i];
             GameObject itemSlot = Instantiate(itemSlotPrefab);
             itemSlot.transform.SetParent(itemsContainer.transform, false);
             itemSlot.GetComponent<ItemSlot>().SetItem(item);
+            itemSlot.gameObject.name = $"Slot {i}";
+
+            if(i == 0)
+            {
+                itemSlot.GetComponent<Selectable>().Select();
+            }
         }
     }
 
     public void Show(Inventory inventory)
     {
         SetInventory(inventory);
-        gameObject.GetComponent<Canvas>().enabled = true;
+
+        var canvas = gameObject.GetComponent<Canvas>();
+        canvas.enabled = true;
 
         ZodiacInput.MenuMode();
     }
-    public void Hide()
+    public void Close()
     {
         gameObject.GetComponent<Canvas>().enabled = false;
         ZodiacInput.FreeRoamMode();

@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public static class ZodiacInput
 {
     private static ZodiacInputMap inputMap;
+    public static ZodiacInputMap InputMap { get => inputMap; }
     static ZodiacInput()
     {
         // initialize

@@ -7,9 +7,12 @@ public class ItemSlot : MonoBehaviour
 {
     [SerializeField] Image icon;
     [SerializeField] TextMeshProUGUI text;
+    private Item item;
     
-    public void SetItem(Item item)
+    public void SetItem(Item _item)
     {
+        item = _item;
+
         Visual vis = item.gameObject.GetComponent<Visual>();
         if (vis == null)
             return;
@@ -17,9 +20,14 @@ public class ItemSlot : MonoBehaviour
         // set name
         text.text = vis.Name;
         if (item.Count > 1)
-            text.text += " " + item.Count;
+            text.text += " x" + item.Count;
 
         // set icon
         icon.sprite = vis.Sprite;
+    }
+
+    public void ItemSelected()
+    {
+        Debug.Log(text.text);
     }
 }
