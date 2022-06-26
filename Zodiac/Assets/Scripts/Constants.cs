@@ -11,5 +11,5 @@ public static class Constants
     public const int COST_ATTACK = 1000;
 
     // max amount of energy an entity can have
-    public const float ENERGY_CAP = 2000;
+    public const int ENERGY_CAP = 2000;
 }

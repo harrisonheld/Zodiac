@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public class Physical : MonoBehaviour
 {
+    // some far away point to put stuff
+    public static Vector2Int OFFSCREEN = new Vector2Int(-100, -100);
+
     private Vector2Int position;
     public Vector2Int Position { 
         get => position;
@@ -28,6 +31,6 @@ public class Physical : MonoBehaviour
     private void OnDestroy()
     {
         // hide the gameobject offscreen
-        Position = new Vector2Int(100, 100);
+        Position = OFFSCREEN;
     }
 }

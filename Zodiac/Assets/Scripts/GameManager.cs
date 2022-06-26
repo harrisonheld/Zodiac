@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
         Common.menuManager = GetComponent<MenuManager>();
         Common.inventoryMenu = GameObject.Find("InventoryMenu").GetComponent<InventoryMenu>();
         Common.itemSubMenu = GameObject.Find("ItemSubMenu").GetComponent<ItemSubMenu>();
+        Common.alertMenu = GameObject.Find("AlertMenu").GetComponent<AlertMenu>();
 
         // get all entities
         foreach (Physical phys in GameObject.FindObjectsOfType<Physical>())
@@ -119,7 +120,8 @@ public class GameManager : MonoBehaviour
 
     public static int Distance(Vector2Int a, Vector2Int b)
     {
-        /* d = Max( |delta X|, |delta Y| )
+        /* 
+         * d = Max( |delta X|, |delta Y| )
          * This makes all 8 adjacent tiles equadistant.
         */
         
@@ -135,8 +137,8 @@ public class GameManager : MonoBehaviour
         {
             energyHaver.Energy += energyHaver.Speed;
 
-            if (energyHaver.Energy >= 1)
-                energyHaver.Energy = 1;
+            if (energyHaver.Energy >= Constants.ENERGY_CAP)
+                energyHaver.Energy = Constants.ENERGY_CAP;
         }
 
         yield return null;
@@ -145,13 +147,17 @@ public class GameManager : MonoBehaviour
     {
         foreach (Brain brain in Object.FindObjectsOfType<Brain>()) 
         {
+
+            if (!Entities.Contains(brain.gameObject))
+                continue;
+
             Physical myPhys = brain.gameObject.GetComponent<Physical>();
             EnergyHaver energyHaver = brain.gameObject.GetComponent<EnergyHaver>();
 
             // any entity that has more than 0 energy can do whatever move they want
             // if it costs too much, they will simply go into the negative and be unable to do anything
             // until they are above zero energy
-            if (energyHaver.Energy <= 0) 
+            if (energyHaver.Energy < Constants.COST_MOVE) 
                 continue;
 
             Vector2Int myPos = myPhys.Position;

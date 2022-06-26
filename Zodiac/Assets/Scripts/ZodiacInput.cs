@@ -45,7 +45,7 @@ public static class ZodiacInput
             {
                 var inv = player.GetComponent<Inventory>();
                 Common.inventoryMenu.SetInventory(inv);
-                Common.menuManager.OpenMenu(Common.inventoryMenu);
+                Common.menuManager.Open(Common.inventoryMenu);
                     yield return null;
             }
 

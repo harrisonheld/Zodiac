@@ -32,20 +32,46 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
     {
         Clear();
 
-        itemDisplayText.text = item.gameObject.GetComponent<Visual>().DisplayName;
+        Visual itemVisual = item.gameObject.GetComponent<Visual>();
+        itemDisplayText.text = itemVisual.DisplayName;
 
-        // add the drop button
+        // 
+        // add buttons
+        //
+
         AddButton("Drop", () =>
         {
             GameManager.Drop(item.ContainingInventory.gameObject, item);
             // refresh inv UI to account for the removed item
             Common.inventoryMenu.RefreshUI();
         });
-        AddButton("Dupe", () =>
+        AddButton("Inspect", () =>
         {
-            item.Count *= 2;
-            Common.inventoryMenu.RefreshUI();
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            
+            foreach(Component comp in item.gameObject.GetComponents<Component>())
+            {
+                sb.AppendLine($"<{comp.GetType().Name}>");
+                foreach(System.Reflection.FieldInfo fieldInfo in comp.GetType().GetFields())
+                {
+                    sb.AppendLine($"{fieldInfo.Name}: {fieldInfo.GetValue(comp)}");
+                }
+                sb.AppendLine();
+            }
+
+            Common.alertMenu.SetText(sb.ToString());
+            Common.menuManager.Open(Common.alertMenu);
         }, closeMenuOnUse: false);
+
+        Equippable equippable;
+        if(item.gameObject.TryGetComponent<Equippable>(out equippable))
+        {
+            AddButton("Equip", () =>
+            {
+                Common.alertMenu.SetText("YOU GAY!!!! BITCH!");
+                Common.menuManager.Open(Common.alertMenu);
+            });
+        }
     }
     public void GainFocus()
     {
@@ -63,12 +89,13 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
 
         dropButtonGo.GetComponentInChildren<TextMeshProUGUI>().text = text;
 
+
         dropButtonComp.onClick.AddListener(action);
-        if(closeMenuOnUse)
+        if (closeMenuOnUse)
         {
             // add an action to close this menu
             dropButtonComp.onClick.AddListener(() => {
-                Common.menuManager.CloseMenu(this);
+                Common.menuManager.Close(this);
             });
         }
 

@@ -11,6 +11,8 @@ public static class Common
 {
     public static MenuManager menuManager;
 
+    // when adding a new menu here, remember to edit the start function in GameManager.cs to intialize it
     public static InventoryMenu inventoryMenu;
     public static ItemSubMenu itemSubMenu;
+    public static AlertMenu alertMenu;
 }

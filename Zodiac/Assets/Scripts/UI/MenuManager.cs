@@ -8,7 +8,9 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour {
 
-    private static Stack<IZodiacMenu> menus = new Stack<IZodiacMenu> ();
+    // list of menus, in order of precedence. The menu at the end is the topmost menu.
+    // i would use a stack but sometimes you want to close a menu that isnt the top most.
+    private static List<IZodiacMenu> menus = new List<IZodiacMenu> ();
 
     public void Update()
     {
@@ -17,19 +19,31 @@ public class MenuManager : MonoBehaviour {
 
         // closing of menus
         if(ZodiacInput.InputMap.UI.Cancel.triggered)
-        {
-            CloseMenu(menus.Peek());
-        }
+            CloseTopMenu();
     }
 
-    public void OpenMenu(IZodiacMenu menu)
+    public IZodiacMenu TopMenu()
+    {
+        return menus.Last();
+    }
+    public void CloseTopMenu()
+    {
+        Close(TopMenu());
+    }
+    public void CloseAll()
+    {
+        while (menus.Count > 0)
+            Close(TopMenu());
+    }
+
+    public void Open(IZodiacMenu menu)
     {
         if(menus.Count == 0)
             ZodiacInput.MenuMode();
         else // menus.Count > 0 
         {
             // disable interatcion on previous menu
-            menus.Peek().CanvasGroup.interactable = false;
+            TopMenu().CanvasGroup.interactable = false;
         }
 
         menu.Canvas.enabled = true;
@@ -38,16 +52,11 @@ public class MenuManager : MonoBehaviour {
         menu.RefreshUI();
         menu.GainFocus();
 
-        menus.Push(menu);
+        menus.Add(menu);
     }
-    public void CloseMenu(IZodiacMenu menu)
+    public void Close(IZodiacMenu toClose)
     {
-        Debug.Log("Closing menu.");
-
-        Debug.Assert(menus.Count > 0);
-        Debug.Assert(menu == menus.Peek());
-
-        IZodiacMenu toClose = menus.Pop();
+        menus.Remove(toClose);
         toClose.Canvas.enabled = false;
         toClose.CanvasGroup.interactable = false;
 
@@ -55,8 +64,8 @@ public class MenuManager : MonoBehaviour {
             ZodiacInput.FreeRoamMode();
         else // next menu gains focus
         {
-            menus.Peek().CanvasGroup.interactable = true;
-            menus.Peek().GainFocus();
+            TopMenu().CanvasGroup.interactable = true;
+            TopMenu().GainFocus();
         }
     }
 }
