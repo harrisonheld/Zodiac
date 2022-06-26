@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class World : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     [Header("Info")]
     [SerializeField] int tick = 0;
@@ -11,6 +11,11 @@ public class World : MonoBehaviour
 
     public void Start()
     {
+        // get stuff
+        Common.menuManager = GetComponent<MenuManager>();
+        Common.inventoryMenu = GameObject.Find("InventoryMenu").GetComponent<InventoryMenu>();
+        Common.itemSubMenu = GameObject.Find("ItemSubMenu").GetComponent<ItemSubMenu>();
+
         // get all entities
         foreach (Physical phys in GameObject.FindObjectsOfType<Physical>())
         {

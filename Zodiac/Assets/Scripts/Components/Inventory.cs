@@ -14,10 +14,13 @@ public class Inventory : MonoBehaviour
         Physical phys = go.GetComponent<Physical>();
         Destroy(phys);
 
+        item.ContainingInventory = this;
+
         Contents.Add(item);
     }
     public bool RemoveItem(Item item)
     {
+        item.ContainingInventory = null;
         return Contents.Remove(item);
     }
 }

@@ -29,7 +29,7 @@ public static class ZodiacInput
             if (inputMap.FreeRoam.Pickup.triggered)
             {
                 var items = new List<Item>();
-                foreach(GameObject candidate in World.EntitiesAt(playerPos))
+                foreach(GameObject candidate in GameManager.EntitiesAt(playerPos))
                 {
                     Item item = candidate.GetComponent<Item>();
                     if (item != null)
@@ -37,14 +37,16 @@ public static class ZodiacInput
                 }
 
                 foreach(Item item in items)
-                    World.Pickup(player, item);
+                    GameManager.Pickup(player, item);
             }
 
             // open inventory
             if(inputMap.FreeRoam.OpenInventory.triggered)
             {
                 var inv = player.GetComponent<Inventory>();
-                GameObject.Find("InventoryMenu").GetComponent<InventoryMenu>().Show(inv);
+                Common.inventoryMenu.SetInventory(inv);
+                Common.menuManager.OpenMenu(Common.inventoryMenu);
+                    yield return null;
             }
 
             // movement
@@ -56,11 +58,11 @@ public static class ZodiacInput
                 Physical playerPhys = player.GetComponent<Physical>();
                 Vector2Int destPosition = playerPhys.Position + move;
 
-                GameObject target = World.EntityAt(destPosition);
+                GameObject target = GameManager.EntityAt(destPosition);
                 if (target != null && target.GetComponent<Physical>().Solid)
                 {
                     // attack
-                    World.Attack(player, target);
+                    GameManager.Attack(player, target);
                     yield break;
                 }
                 else

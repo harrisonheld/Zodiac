@@ -7,6 +7,7 @@ public class ItemSlot : MonoBehaviour
 {
     [SerializeField] Image icon;
     [SerializeField] TextMeshProUGUI text;
+
     private Item item;
     
     public void SetItem(Item _item)
@@ -18,7 +19,7 @@ public class ItemSlot : MonoBehaviour
             return;
 
         // set name
-        text.text = vis.Name;
+        text.text = vis.DisplayName;
         if (item.Count > 1)
             text.text += " x" + item.Count;
 
@@ -28,6 +29,7 @@ public class ItemSlot : MonoBehaviour
 
     public void ItemSelected()
     {
-        Debug.Log(text.text);
+        Common.itemSubMenu.SetItem(item);
+        Common.menuManager.OpenMenu(Common.itemSubMenu);
     }
 }

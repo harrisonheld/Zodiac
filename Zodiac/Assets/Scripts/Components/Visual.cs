@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Visual : MonoBehaviour
 {
-    [SerializeField] public string Name = "";
+    [SerializeField] public string DisplayName = "";
     [SerializeField] private Sprite sprite = null;
     public Sprite Sprite
     {
@@ -23,8 +23,8 @@ public class Visual : MonoBehaviour
     {
         // grab values from unity
 
-        if(Name == "")
-            Name = gameObject.name;
+        if(DisplayName == "")
+            DisplayName = gameObject.name;
 
         if (sprite == null)
             Sprite = gameObject.GetComponent<SpriteRenderer>().sprite;

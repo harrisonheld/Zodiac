@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    [SerializeField] public Inventory ContainingInventory = null;
     [SerializeField] public int Count = 1; // how many are in the stack
 }

@@ -3,62 +3,48 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class InventoryMenu : MonoBehaviour
+public class InventoryMenu : MonoBehaviour, IZodiacMenu
 {
     [SerializeField] GameObject itemsContainer;
     [SerializeField] GameObject itemSlotPrefab;
 
-    private void Start()
-    {
-    }
+    private Inventory inventory;
+    private int selectedIdx = 0;
+    public Canvas Canvas { get => GetComponent<Canvas>(); }
+    public CanvasGroup CanvasGroup { get => GetComponent<CanvasGroup>(); }
 
-    private void Update()
-    {
-        // closing of menu
-        if (ZodiacInput.InputMap.UI.Cancel.triggered)
-        {
-            Close();
-        }
-    }
-    private void Clear()
-    {
-        // destry all item slots
-        foreach (Transform child in itemsContainer.transform)
-            Destroy(child.gameObject);
-    }
-    private void SetInventory(Inventory inventory)
+    public void RefreshUI()
     {
         Clear();
 
-        for(int i = 0; i < inventory.Contents.Count; i++)
+        for (int i = 0; i < inventory.Contents.Count; i++)
         {
             Item item = inventory.Contents[i];
             GameObject itemSlot = Instantiate(itemSlotPrefab);
             itemSlot.transform.SetParent(itemsContainer.transform, false);
             itemSlot.GetComponent<ItemSlot>().SetItem(item);
             itemSlot.gameObject.name = $"Slot {i}";
-
-            if(i == 0)
-            {
-                itemSlot.GetComponent<Selectable>().Select();
-            }
         }
     }
-
-    public void Show(Inventory inventory)
+    public void GainFocus()
     {
-        SetInventory(inventory);
-
-        var canvas = gameObject.GetComponent<Canvas>();
-        canvas.enabled = true;
-
-        ZodiacInput.MenuMode();
+        if(itemsContainer.transform.childCount > 0)
+        {
+            itemsContainer.transform.GetChild(0).GetComponent<Selectable>().Select();
+        }
     }
-    public void Close()
+    private void Clear()
     {
-        gameObject.GetComponent<Canvas>().enabled = false;
-        ZodiacInput.FreeRoamMode();
-
-        ZodiacInput.FreeRoamMode();
+        // mark all children for destruction
+        foreach (Transform child in itemsContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        // detach children now, as they may not be destroyed instantly
+        itemsContainer.transform.DetachChildren();
+    }
+    public void SetInventory(Inventory _inventory)
+    {
+        inventory = _inventory;
     }
 }
