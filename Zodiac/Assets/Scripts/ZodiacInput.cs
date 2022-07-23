@@ -30,6 +30,10 @@ public static class ZodiacInput
             if (inputMap.FreeRoam.ForfeitTurn.triggered)
                 yield break;
 
+            // out of energy, turn is over
+            if (player.GetComponent<EnergyHaver>().OutOfEnergy())
+                yield break;
+
             // get item
             if (inputMap.FreeRoam.Pickup.triggered)
             {
@@ -51,7 +55,7 @@ public static class ZodiacInput
                 var inv = player.GetComponent<Inventory>();
                 Common.inventoryMenu.SetInventory(inv);
                 Common.menuManager.Open(Common.inventoryMenu);
-                    yield return null;
+                yield return null;
             }
 
             // movement
@@ -67,14 +71,12 @@ public static class ZodiacInput
                 if (target != null && target.GetComponent<Physical>().Solid)
                 {
                     // attack
-                    GameManager.Attack(player, target);
-                    yield break;
+                    GameManager.BumpAttack(player, target);
                 }
                 else
                 {
                     // move
-                    playerPhys.Position += move;
-                    yield break;
+                    GameManager.Move(player, player.GetComponent<Physical>().Position + move);
                 }
             }
 

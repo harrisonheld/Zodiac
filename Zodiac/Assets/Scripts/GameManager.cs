@@ -87,16 +87,33 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    public static void Attack(GameObject attacker, GameObject target)
+    public static void BumpAttack(GameObject attacker, GameObject target)
     {
-        var health = target.GetComponent<Health>();
-        if (health == null)
+        var targetHealth = target.GetComponent<Health>();
+        if (targetHealth == null)
         {
             Debug.Log("Failed to attack as target has no health component.");
             return;
         }
-        attacker.GetComponent<EnergyHaver>().Energy -= Constants.COST_MOVE;
-        health.CurrentHealth -= Mathf.Max(0, 4 - health.Defense);
+
+        // calculate attack stats
+        int attackDamage = 1;
+        int attackCost = Constants.COST_ATTACK; // cost of the attack in energy
+
+        Equippable attackerPrimary = attacker.GetComponent<Inventory>().GetPrimary();
+        if(attackerPrimary != null)
+        {
+            MeleeWeapon weapon = attackerPrimary.GetComponent<MeleeWeapon>();
+            if(weapon != null)
+            {
+                attackDamage = weapon.Damage;
+                attackCost = weapon.AttackCost;
+            }
+        }
+
+        attacker.GetComponent<EnergyHaver>().Energy -= attackCost;
+
+        targetHealth.CurrentHealth -= Mathf.Max(0, attackDamage - targetHealth.Defense);
     }
     public static void Pickup(GameObject pickerUpper, Item item)
     {

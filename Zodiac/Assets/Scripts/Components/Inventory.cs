@@ -27,8 +27,17 @@ public class Inventory : MonoBehaviour
 
     public bool Equip(Equippable equippable)
     {
+        // find open slot
         Slot slot = GetOpenSlot(equippable.slotType);
-        // check if possible to equip
+        
+        // if no open slot, empty the first slot of the appropriate type and use that
+        if (slot == null)
+        {
+            slot = GetFirstSlot(equippable.slotType);
+            UnequipToItems(slot);
+        }
+
+        // check if any good slot was found
         if (slot == null)
             return false;
 
@@ -52,10 +61,28 @@ public class Inventory : MonoBehaviour
     public Slot GetOpenSlot(SlotType type)
     {
         foreach (Slot slot in Slots)
+            if (slot.type == type && slot.Empty())
+                return slot;
+
+        return null;
+    }
+    public Slot GetFirstSlot(SlotType type)
+    {
+        foreach (Slot slot in Slots)
             if (slot.type == type)
                 return slot;
 
         return null;
+    }
+
+    public Equippable GetPrimary()
+    {
+        if (Slots.Count < 1)
+            return null;
+        if (Slots[0] == null)
+            return null;
+
+        return Slots[0].equippable;
     }
 
     [System.Serializable]
@@ -63,5 +90,10 @@ public class Inventory : MonoBehaviour
     {
         public SlotType type;
         public Equippable equippable;
+
+        public bool Empty()
+        {
+            return equippable == null;
+        }
     }
 }
