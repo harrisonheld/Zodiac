@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Equippable : MonoBehaviour
 {
-    [SerializeField] public Slot slot;
+    [SerializeField] public SlotType slotType;
 }
 
-public enum Slot
+public enum SlotType
 {
+    Hand,
     Head,
     Body,
     Legs

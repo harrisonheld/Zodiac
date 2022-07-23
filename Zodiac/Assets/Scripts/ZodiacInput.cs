@@ -7,6 +7,10 @@ public static class ZodiacInput
 {
     private static ZodiacInputMap inputMap;
     public static ZodiacInputMap InputMap { get => inputMap; }
+
+    // the current player gameobject who is doing input
+    private static GameObject player;
+    public static GameObject Player { get => player; }
     static ZodiacInput()
     {
         // initialize
@@ -14,8 +18,9 @@ public static class ZodiacInput
         inputMap.Enable();
     }
 
-    public static IEnumerator DoPlayerInput(GameObject player)
+    public static IEnumerator DoPlayerInput(GameObject _player)
     {
+        player = _player;
         // useful stuff
         Vector2Int playerPos = player.GetComponent<Physical>().Position;
 

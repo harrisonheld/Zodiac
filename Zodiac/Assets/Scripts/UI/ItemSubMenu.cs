@@ -68,8 +68,9 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
         {
             AddButton("Equip", () =>
             {
-                Common.alertMenu.SetText("YOU GAY!!!! BITCH!");
-                Common.menuManager.Open(Common.alertMenu);
+                ZodiacInput.Player.GetComponent<Inventory>().Equip(equippable);
+                // refresh inv UI to account for the removed item
+                Common.inventoryMenu.RefreshUI();
             });
         }
     }
