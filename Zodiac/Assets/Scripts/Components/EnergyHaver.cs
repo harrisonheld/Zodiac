@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class EnergyHaver : MonoBehaviour
 {
-    [SerializeField] public int Speed = 1000; // how much energy is recovered per round
+    [SerializeField] public int Quickness = 1000; // how much energy is recovered per round, as well as the cap of how much energy the entity can have
     [SerializeField] public int Energy = 0;
-
-    public bool OutOfEnergy()
-    {
-        return Energy <= 0;
-    }
 }

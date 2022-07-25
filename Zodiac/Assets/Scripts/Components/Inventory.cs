@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class Inventory : MonoBehaviour
 {
     public List<Item> Items;
@@ -9,13 +10,6 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(Item item)
     {
-        // get the gameobject
-        GameObject go = item.gameObject;
-
-        // remove the Physical component, if it has one
-        Physical phys = go.GetComponent<Physical>();
-        Destroy(phys);
-
         Items.Add(item);
     }
     public bool RemoveItem(Item item)

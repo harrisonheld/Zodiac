@@ -24,24 +24,27 @@ public static class ZodiacInput
 
         while (true)
         {
-            // useful stuff
-            Vector2Int playerPos = player.GetComponent<Physical>().Position;
-
-
-
             // player voluntarilly forfeits their turn
             if (inputMap.FreeRoam.ForfeitTurn.triggered)
                 yield break;
-
             // out of energy, turn is over
-            if (player.GetComponent<EnergyHaver>().OutOfEnergy())
+            if (player.GetComponent<EnergyHaver>().Energy <= 0)
                 yield break;
+            // player is no longer in control of this character
+            if (player.GetComponent<Brain>().Ai != AiType.PlayerControlled)
+                yield break;
+
+
+
+            // useful stuff
+            Vector2Int playerPos = player.GetComponent<Position>().Pos;
 
             // get item
             if (inputMap.FreeRoam.Pickup.triggered)
             {
                 var items = new List<Item>();
-                foreach(GameObject candidate in GameManager.EntitiesAt(playerPos))
+                var pickupCandidates = GameManager.EntitiesAt(playerPos);
+                foreach(GameObject candidate in pickupCandidates)
                 {
                     Item item = candidate.GetComponent<Item>();
                     if (item != null)
@@ -67,19 +70,19 @@ public static class ZodiacInput
             {
                 inputMap.FreeRoam.Move.Reset();
 
-                Physical playerPhys = player.GetComponent<Physical>();
-                Vector2Int destPosition = playerPhys.Position + move;
+                Position playerPosComp = player.GetComponent<Position>();
+                Vector2Int destPosition = playerPosComp.Pos + move;
 
-                GameObject target = GameManager.EntityAt(destPosition);
-                if (target != null && target.GetComponent<Physical>().Solid)
+                if (GameManager.ValidMovePosition(destPosition))
                 {
-                    // attack
-                    GameManager.BumpAttack(player, target);
+                    // move
+                    GameManager.Move(player, playerPosComp.Pos + move);
                 }
                 else
                 {
-                    // move
-                    GameManager.Move(player, player.GetComponent<Physical>().Position + move);
+                    // attack
+                    GameObject target = GameManager.EntityAt(destPosition);
+                    GameManager.BumpAttack(player, target);
                 }
             }
 

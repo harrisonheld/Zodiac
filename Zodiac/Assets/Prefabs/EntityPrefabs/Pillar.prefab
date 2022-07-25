@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9089315935599584679}
   - component: {fileID: 9089315935599584696}
   - component: {fileID: 9089315935599584699}
+  - component: {fileID: -2846681559685127331}
   m_Layer: 0
   m_Name: Pillar
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9089315935599584676}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7, y: -2, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -96,11 +97,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 9089315935599584676}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0c10afe0af052b4fbf60895162ca5fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 4019d2b69f3a84942b5d2ea0f4c8e22a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Solid: 1
-  OccludesVison: 1
 --- !u!114 &9089315935599584696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 30
-  CurrentHealth: 30
+  currentHealth: 10
   Defense: 3
 --- !u!114 &9089315935599584699
 MonoBehaviour:
@@ -130,3 +129,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayName: 
   sprite: {fileID: 0}
+--- !u!114 &-2846681559685127331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9089315935599584676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0c10afe0af052b4fbf60895162ca5fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Solid: 0
+  OccludesVison: 0
+  Weight: 1000

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6338041430994155932}
   - component: {fileID: 6338041430994155935}
   - component: {fileID: 6338041430994155934}
+  - component: {fileID: 5768113610208451049}
   m_Layer: 0
   m_Name: Dagger
   m_TagString: Untagged
@@ -127,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c9fc8d3409dfe448be2894badb74c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 6
+  Damage: 3
   AttackCost: 500
 --- !u!114 &6338041430994155935
 MonoBehaviour:
@@ -138,11 +139,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6338041430994155929}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0c10afe0af052b4fbf60895162ca5fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 4019d2b69f3a84942b5d2ea0f4c8e22a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Solid: 0
-  OccludesVison: 0
 --- !u!114 &6338041430994155934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,3 +156,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayName: Dagger
   sprite: {fileID: 0}
+--- !u!114 &5768113610208451049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6338041430994155929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0c10afe0af052b4fbf60895162ca5fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Solid: 0
+  OccludesVison: 0
+  Weight: 3

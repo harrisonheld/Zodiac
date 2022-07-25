@@ -18,9 +18,9 @@ public class GameManager : MonoBehaviour
         Common.alertMenu = GameObject.Find("AlertMenu").GetComponent<AlertMenu>();
 
         // get all entities
-        foreach (Physical phys in GameObject.FindObjectsOfType<Physical>())
+        foreach (Position posComp in GameObject.FindObjectsOfType<Position>())
         {
-            Entities.Add(phys.gameObject);
+            Entities.Add(posComp.gameObject);
         }
 
         // start tick loop
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     {
         foreach(GameObject entity in Entities)
         {
-            if (entity.GetComponent<Physical>().Position == pos)
+            if (entity.GetComponent<Position>().Pos == pos)
                 return entity;
         }
 
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
 
         foreach (GameObject entity in Entities)
         {
-            if (entity.GetComponent<Physical>().Position == pos)
+            if (entity.GetComponent<Position>().Pos == pos)
                 result.Add(entity);
         }
 
@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
         // position is valid if nothing solid is here
         foreach(GameObject entity in EntitiesAt(toCheck))
         {
-            if (entity.GetComponent<Physical>().Solid)
+            if (entity.GetComponent<PhysicalAttributes>().Solid)
                 return false;
         }
 
@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
 
         // calculate attack stats
         int attackDamage = 1;
-        int attackCost = Constants.COST_ATTACK; // cost of the attack in energy
+        int attackCost = 1000; // cost of the attack in energy
 
         Equippable attackerPrimary = attacker.GetComponent<Inventory>().GetPrimary();
         if(attackerPrimary != null)
@@ -131,21 +131,27 @@ public class GameManager : MonoBehaviour
     public static void Pickup(GameObject pickerUpper, Item item)
     {
         Entities.Remove(item.gameObject);
+
+        // destroy pos, if it has one
+        Position posComp = item.GetComponent<Position>();
+        Destroy(posComp);
+
         pickerUpper.GetComponent<Inventory>().AddItem(item);
     }
     public static void Drop(GameObject dropper, Item toDrop)
     {
         dropper.GetComponent<Inventory>().RemoveItem(toDrop);
+
         // copy droppers position
-        toDrop.gameObject.AddComponent<Physical>()
-            .Position = dropper.GetComponent<Physical>().Position;
+        toDrop.gameObject.AddComponent<Position>()
+            .Pos = dropper.GetComponent<Position>().Pos;
 
         Entities.Add(toDrop.gameObject);
     }
     public static void Move(GameObject toMove, Vector2Int destination)
     {
         toMove.GetComponent<EnergyHaver>().Energy -= Constants.COST_MOVE;
-        toMove.GetComponent<Physical>().Position = destination;
+        toMove.GetComponent<Position>().Pos = destination;
     }
 
     public static int Distance(Vector2Int a, Vector2Int b)
@@ -165,10 +171,8 @@ public class GameManager : MonoBehaviour
     {
         foreach (EnergyHaver energyHaver in GameObject.FindObjectsOfType<EnergyHaver>())
         {
-            energyHaver.Energy += energyHaver.Speed;
-
-            if (energyHaver.Energy >= Constants.ENERGY_CAP)
-                energyHaver.Energy = Constants.ENERGY_CAP;
+            energyHaver.Energy += energyHaver.Quickness;
+            energyHaver.Energy = Mathf.Min(energyHaver.Energy, energyHaver.Quickness); // cap energy at Quickness
         }
 
         yield return null;
@@ -185,16 +189,10 @@ public class GameManager : MonoBehaviour
             if (!Entities.Contains(brain.gameObject))
                 continue;
 
-            Physical myPhys = brain.gameObject.GetComponent<Physical>();
+            Position myPosComp = brain.gameObject.GetComponent<Position>();
             EnergyHaver energyHaver = brain.gameObject.GetComponent<EnergyHaver>();
 
-            // any entity that has more than 0 energy can do whatever move they want
-            // if it costs too much, they will simply go into the negative and be unable to do anything
-            // until they are above zero energy
-            if (energyHaver.Energy < Constants.COST_MOVE) 
-                continue;
-
-            Vector2Int myPos = myPhys.Position;
+            Vector2Int myPos = myPosComp.Pos;
 
             switch (brain.Ai) 
             {
@@ -206,7 +204,10 @@ public class GameManager : MonoBehaviour
 
                 case AiType.Seeker:
                     {
-                        Vector2Int targetPos = brain.Target.GetComponent<Physical>().Position;
+                        if (energyHaver.Energy <= 0)
+                            break;
+
+                        Vector2Int targetPos = brain.Target.GetComponent<Position>().Pos;
                         Vector2Int towards = targetPos - myPos;
                         Vector2Int delta = towards;
                         delta.Clamp(new Vector2Int(-1, -1), new Vector2Int(1, 1));
@@ -215,6 +216,10 @@ public class GameManager : MonoBehaviour
                         if(towards == delta)
                         {
                             BumpAttack(brain.gameObject, brain.Target);
+
+                            // if target was killed
+                            if (brain.Target == null)
+                                brain.Ai = AiType.Wanderer;
                         }
                         else
                         {
@@ -228,6 +233,9 @@ public class GameManager : MonoBehaviour
 
                 case AiType.Wanderer:
                     {
+                        if (energyHaver.Energy <= 0)
+                            break;
+
                         // [-1, 2) implies [-1, 1]
                         int moveX = Random.Range(-1, 2);
                         int moveY = Random.Range(-1, 2);
