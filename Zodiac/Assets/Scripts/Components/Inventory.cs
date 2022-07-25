@@ -11,18 +11,21 @@ public class Inventory : MonoBehaviour
     {
         // get the gameobject
         GameObject go = item.gameObject;
+
         // remove the Physical component, if it has one
         Physical phys = go.GetComponent<Physical>();
         Destroy(phys);
-
-        item.ContainingInventory = this;
 
         Items.Add(item);
     }
     public bool RemoveItem(Item item)
     {
-        item.ContainingInventory = null;
         return Items.Remove(item);
+    }
+
+    public bool HasItems()
+    {
+        return Items.Count != 0;
     }
 
     public bool Equip(Equippable equippable)
@@ -54,8 +57,18 @@ public class Inventory : MonoBehaviour
         Equippable equippable = slot.equippable;
         slot.equippable = null;
 
+        // if nothing was removed
+        if (equippable == null)
+            return;
+
         // put the item in the items
         AddItem(equippable.GetComponent<Item>());
+    }
+
+    public void UnequipEverything()
+    {
+        foreach (Slot slot in Slots)
+            UnequipToItems(slot);
     }
 
     public Slot GetOpenSlot(SlotType type)

@@ -7,7 +7,7 @@ Shader "Unlit/PaletteSwap"
         _Out2 ("Secondary", Color) = (0, 255, 0, 255)
         _Out3 ("Tertiary", Color) = (0, 0, 255, 255)
         _In1 ("Red value 1",Integer) = 255
-        _In2 ("Red value 2", Integer) = 200
+        _In2 ("Red value 2", Integer) = 150
         _In3 ("Red value 3", Integer) = 0
     }
     SubShader

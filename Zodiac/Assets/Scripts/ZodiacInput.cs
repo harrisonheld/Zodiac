@@ -21,11 +21,14 @@ public static class ZodiacInput
     public static IEnumerator DoPlayerInput(GameObject _player)
     {
         player = _player;
-        // useful stuff
-        Vector2Int playerPos = player.GetComponent<Physical>().Position;
 
         while (true)
         {
+            // useful stuff
+            Vector2Int playerPos = player.GetComponent<Physical>().Position;
+
+
+
             // player voluntarilly forfeits their turn
             if (inputMap.FreeRoam.ForfeitTurn.triggered)
                 yield break;

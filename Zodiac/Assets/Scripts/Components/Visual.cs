@@ -24,13 +24,15 @@ public class Visual : MonoBehaviour
         // grab values from unity
         if(DisplayName == "")
             DisplayName = gameObject.name;
-
         if (sprite == null)
             Sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
 
         // add shader
         Material material = new Material(Shader.Find("Unlit/PaletteSwap"));
-        material.color = Color.green;
+        material.SetColor("_Out1", Color.white);
+        material.SetColor("_Out2", Color.grey);
+        material.SetColor("_Out3", Color.black);
+
         // assign the material to the renderer
         GetComponent<SpriteRenderer>().material = material;
     }

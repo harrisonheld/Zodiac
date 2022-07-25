@@ -41,7 +41,7 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
 
         AddButton("Drop", () =>
         {
-            GameManager.Drop(item.ContainingInventory.gameObject, item);
+            GameManager.Drop(ZodiacInput.Player, item);
             // refresh inv UI to account for the removed item
             Common.inventoryMenu.RefreshUI();
         });

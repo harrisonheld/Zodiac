@@ -39,7 +39,6 @@ public class GameManager : MonoBehaviour
     {
         yield return StartCoroutine(EnergySystem());
         yield return StartCoroutine(BrainSystem());
-        yield return StartCoroutine(HealthSystem());
         yield return null;
     }
 
@@ -70,8 +69,22 @@ public class GameManager : MonoBehaviour
 
         return result;
     }
-    public static void Destroy(GameObject toDestroy)
+    public static void BreakEntity(GameObject toDestroy)
     {
+        // drop all this entities stuff
+        Inventory inv = toDestroy.GetComponent<Inventory>();
+        if(inv != null)
+        {
+            // uneqip everything
+            inv.UnequipEverything();
+            // drop it all
+            while(inv.HasItems())
+            {
+                Drop(toDestroy, inv.Items[0]);
+            }
+        }
+
+        // bye bye!
         Entities.Remove(toDestroy);
         GameObject.Destroy(toDestroy);
     }
@@ -164,7 +177,11 @@ public class GameManager : MonoBehaviour
     {
         foreach (Brain brain in Object.FindObjectsOfType<Brain>()) 
         {
+            // check if null in case another AI's action caused this object to be destroyed
+            if (brain == null)
+                continue;
 
+            // check if this entity is on the map
             if (!Entities.Contains(brain.gameObject))
                 continue;
 
@@ -190,13 +207,22 @@ public class GameManager : MonoBehaviour
                 case AiType.Seeker:
                     {
                         Vector2Int targetPos = brain.Target.GetComponent<Physical>().Position;
-                        Vector2Int delta = targetPos - myPos;
-
+                        Vector2Int towards = targetPos - myPos;
+                        Vector2Int delta = towards;
                         delta.Clamp(new Vector2Int(-1, -1), new Vector2Int(1, 1));
-                        Vector2Int moveIntention = myPos + delta;
-                        bool valid = ValidMovePosition(moveIntention);
-                        if(valid)
-                            Move(brain.gameObject, moveIntention);
+
+                        // if we are next to the target, attack
+                        if(towards == delta)
+                        {
+                            BumpAttack(brain.gameObject, brain.Target);
+                        }
+                        else
+                        {
+                            Vector2Int moveIntention = myPos + delta;
+                            bool valid = ValidMovePosition(moveIntention);
+                            if (valid)
+                                Move(brain.gameObject, moveIntention);
+                        }
                     }
                 break;
 
@@ -216,16 +242,6 @@ public class GameManager : MonoBehaviour
                 default:
                     break;
             }
-        }
-
-        yield return null;
-    }
-    private IEnumerator HealthSystem()
-    {
-        foreach (Health health in Object.FindObjectsOfType<Health>())
-        {
-            if (health.CurrentHealth <= 0)
-                Destroy(health.gameObject);
         }
 
         yield return null;
