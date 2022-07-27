@@ -15,4 +15,5 @@ public enum AiType
     PlayerControlled,
     Wanderer,
     Seeker,
+    Projectile, // arrows
 }

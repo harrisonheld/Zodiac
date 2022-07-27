@@ -112,8 +112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 756a0f604082bf64ea97d2c771caac90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 30
-  currentHealth: 10
+  MaxHealth: 100
+  currentHealth: 100
   Defense: 3
 --- !u!114 &9089315935599584699
 MonoBehaviour:
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0701bf855ca3d940ab78c5bc81dfbb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DisplayName: 
+  DisplayName: Pillar
   sprite: {fileID: 0}
 --- !u!114 &-2846681559685127331
 MonoBehaviour:
@@ -141,6 +141,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0c10afe0af052b4fbf60895162ca5fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Solid: 0
-  OccludesVison: 0
+  Solid: 1
+  OccludesVison: 1
   Weight: 1000

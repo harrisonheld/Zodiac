@@ -73,7 +73,7 @@ public static class ZodiacInput
                 Position playerPosComp = player.GetComponent<Position>();
                 Vector2Int destPosition = playerPosComp.Pos + move;
 
-                if (GameManager.ValidMovePosition(destPosition))
+                if (GameManager.isValidMovePosition(destPosition))
                 {
                     // move
                     GameManager.Move(player, playerPosComp.Pos + move);

@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
         Entities.Remove(toDestroy);
         GameObject.Destroy(toDestroy);
     }
-    public static bool ValidMovePosition(Vector2Int toCheck)
+    public static bool isValidMovePosition(Vector2Int toCheck)
     {
         // position is valid if nothing solid is here
         foreach(GameObject entity in EntitiesAt(toCheck))
@@ -98,6 +98,29 @@ public class GameManager : MonoBehaviour
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Move to the specified position with no checks. Energy is deducted.
+    /// </summary>
+    public static void Move(GameObject toMove, Vector2Int destination)
+    {
+        toMove.GetComponent<EnergyHaver>().Energy -= Constants.COST_MOVE;
+        toMove.GetComponent<Position>().Pos = destination;
+    }
+    /// <summary>
+    /// Attempts to move to this destination, checking if the destination position is valid.
+    /// </summary>
+    /// <returns><see langword="true"/> if the move was successful, <see langword="false"/> otherwise.</returns>
+    public static bool AttemptMove(GameObject toMove, Vector2Int destination)
+    {
+        if (isValidMovePosition(destination))
+        {
+            Move(toMove, destination);
+            return true;
+        }
+
+        return false;
     }
 
     public static void BumpAttack(GameObject attacker, GameObject target)
@@ -147,11 +170,6 @@ public class GameManager : MonoBehaviour
             .Pos = dropper.GetComponent<Position>().Pos;
 
         Entities.Add(toDrop.gameObject);
-    }
-    public static void Move(GameObject toMove, Vector2Int destination)
-    {
-        toMove.GetComponent<EnergyHaver>().Energy -= Constants.COST_MOVE;
-        toMove.GetComponent<Position>().Pos = destination;
     }
 
     public static int Distance(Vector2Int a, Vector2Int b)
@@ -224,12 +242,10 @@ public class GameManager : MonoBehaviour
                         else
                         {
                             Vector2Int moveIntention = myPos + delta;
-                            bool valid = ValidMovePosition(moveIntention);
-                            if (valid)
-                                Move(brain.gameObject, moveIntention);
+                            AttemptMove(brain.gameObject, moveIntention);
                         }
                     }
-                break;
+                    break;
 
                 case AiType.Wanderer:
                     {
@@ -241,9 +257,16 @@ public class GameManager : MonoBehaviour
                         int moveY = Random.Range(-1, 2);
                         Vector2Int randomMove = new Vector2Int(moveX, moveY);
                         Vector2Int moveIntention = myPos + randomMove;
-                        Move(brain.gameObject, moveIntention);
+                        AttemptMove(brain.gameObject, moveIntention);
                     }
-                break;
+                    break;
+
+                case AiType.Projectile:
+                    {
+                        if (energyHaver.Energy <= 0)
+                            break;
+                    }
+                    break;
 
 
                 case AiType.Inert:

@@ -11,6 +11,7 @@ public class Equippable : MonoBehaviour
 public enum SlotType
 {
     Hand,
+    Missile, // for your ranged weapon
     Head,
     Body,
     Legs
