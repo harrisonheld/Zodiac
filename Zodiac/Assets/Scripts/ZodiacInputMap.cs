@@ -62,6 +62,15 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GoToLookMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""3c75bacd-66d0-4bf6-8855-c5c464b52638"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -293,6 +302,17 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""OpenInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c4aedfe7-aab9-404a-8f29-aac154cc2584"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GoToLookMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -813,6 +833,272 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Look"",
+            ""id"": ""e6dbc1ef-0921-4ada-a83d-c5759aabd326"",
+            ""actions"": [
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""f76c9356-27b5-4a35-8f8c-86e833ec3c85"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Cycle"",
+                    ""type"": ""Value"",
+                    ""id"": ""814ca178-5105-421f-9a5a-2e44402bb906"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""508e2788-c6ec-495a-abf4-00f8d50b8198"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""Directions"",
+                    ""id"": ""4569b6d0-1cef-4788-b1ba-9c279f4ce8e8"",
+                    ""path"": ""Dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""71c6360a-454b-4d43-b4f8-ad60074a0f47"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""799decf2-7fc0-4f32-8fe1-53f318e0d7a8"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""3be2a047-e824-4086-93d3-a93524a2802f"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""37fd5c37-b684-434e-afbe-ed8acd1106d6"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""9967a537-434d-4dfc-9165-daf290c9538e"",
+                    ""path"": ""<Keyboard>/numpad8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""0791ea58-33f2-4855-8ba9-cd061d114cf9"",
+                    ""path"": ""<Keyboard>/numpad2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""1e76b849-0d22-4730-bd88-387b486d1692"",
+                    ""path"": ""<Keyboard>/numpad4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""e6429699-f4b8-42a6-93b1-ed106c858ecd"",
+                    ""path"": ""<Keyboard>/numpad6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""2c6d3f59-fc87-4c83-a039-f9afd8231a1e"",
+                    ""path"": ""<Keyboard>/numpad9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""633a992c-c448-40c8-8fec-ccdf329c979b"",
+                    ""path"": ""<Keyboard>/numpad9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""1ea35e40-c4ab-4f0a-a464-0d1304f83509"",
+                    ""path"": ""<Keyboard>/numpad7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""a16a65ae-2bb0-423a-81c2-2077085c1640"",
+                    ""path"": ""<Keyboard>/numpad7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""15bbd15f-b685-4eee-a6e6-1a2a014bebf8"",
+                    ""path"": ""<Keyboard>/numpad3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""06515e2a-ca96-44bf-bd7b-dbf570c533b9"",
+                    ""path"": ""<Keyboard>/numpad3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""e0995d55-7da2-47d6-87e7-9e20f649f587"",
+                    ""path"": ""<Keyboard>/numpad1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""eb5fbaf6-d158-41be-82b5-b7132557bc90"",
+                    ""path"": ""<Keyboard>/numpad1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Axis"",
+                    ""id"": ""5a347d25-9e92-43ba-919e-dcc3e36e303f"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cycle"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""b0c0492b-170d-4d66-9cec-80d0c1c4abde"",
+                    ""path"": ""<Keyboard>/numpadMinus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cycle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""da6d8ba4-f7b5-4fd8-90a0-5bcbd565937a"",
+                    ""path"": ""<Keyboard>/numpadPlus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cycle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7ba49a61-8be2-43e8-b5ed-bab826a864df"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -884,6 +1170,7 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         m_FreeRoam_ForfeitTurn = m_FreeRoam.FindAction("ForfeitTurn", throwIfNotFound: true);
         m_FreeRoam_Pickup = m_FreeRoam.FindAction("Pickup", throwIfNotFound: true);
         m_FreeRoam_OpenInventory = m_FreeRoam.FindAction("OpenInventory", throwIfNotFound: true);
+        m_FreeRoam_GoToLookMode = m_FreeRoam.FindAction("GoToLookMode", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -896,6 +1183,11 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        // Look
+        m_Look = asset.FindActionMap("Look", throwIfNotFound: true);
+        m_Look_Move = m_Look.FindAction("Move", throwIfNotFound: true);
+        m_Look_Cycle = m_Look.FindAction("Cycle", throwIfNotFound: true);
+        m_Look_Cancel = m_Look.FindAction("Cancel", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -959,6 +1251,7 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_FreeRoam_ForfeitTurn;
     private readonly InputAction m_FreeRoam_Pickup;
     private readonly InputAction m_FreeRoam_OpenInventory;
+    private readonly InputAction m_FreeRoam_GoToLookMode;
     public struct FreeRoamActions
     {
         private @ZodiacInputMap m_Wrapper;
@@ -967,6 +1260,7 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         public InputAction @ForfeitTurn => m_Wrapper.m_FreeRoam_ForfeitTurn;
         public InputAction @Pickup => m_Wrapper.m_FreeRoam_Pickup;
         public InputAction @OpenInventory => m_Wrapper.m_FreeRoam_OpenInventory;
+        public InputAction @GoToLookMode => m_Wrapper.m_FreeRoam_GoToLookMode;
         public InputActionMap Get() { return m_Wrapper.m_FreeRoam; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -988,6 +1282,9 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                 @OpenInventory.started -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOpenInventory;
                 @OpenInventory.performed -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOpenInventory;
                 @OpenInventory.canceled -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOpenInventory;
+                @GoToLookMode.started -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnGoToLookMode;
+                @GoToLookMode.performed -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnGoToLookMode;
+                @GoToLookMode.canceled -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnGoToLookMode;
             }
             m_Wrapper.m_FreeRoamActionsCallbackInterface = instance;
             if (instance != null)
@@ -1004,6 +1301,9 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                 @OpenInventory.started += instance.OnOpenInventory;
                 @OpenInventory.performed += instance.OnOpenInventory;
                 @OpenInventory.canceled += instance.OnOpenInventory;
+                @GoToLookMode.started += instance.OnGoToLookMode;
+                @GoToLookMode.performed += instance.OnGoToLookMode;
+                @GoToLookMode.canceled += instance.OnGoToLookMode;
             }
         }
     }
@@ -1113,6 +1413,55 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // Look
+    private readonly InputActionMap m_Look;
+    private ILookActions m_LookActionsCallbackInterface;
+    private readonly InputAction m_Look_Move;
+    private readonly InputAction m_Look_Cycle;
+    private readonly InputAction m_Look_Cancel;
+    public struct LookActions
+    {
+        private @ZodiacInputMap m_Wrapper;
+        public LookActions(@ZodiacInputMap wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_Look_Move;
+        public InputAction @Cycle => m_Wrapper.m_Look_Cycle;
+        public InputAction @Cancel => m_Wrapper.m_Look_Cancel;
+        public InputActionMap Get() { return m_Wrapper.m_Look; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(LookActions set) { return set.Get(); }
+        public void SetCallbacks(ILookActions instance)
+        {
+            if (m_Wrapper.m_LookActionsCallbackInterface != null)
+            {
+                @Move.started -= m_Wrapper.m_LookActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_LookActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_LookActionsCallbackInterface.OnMove;
+                @Cycle.started -= m_Wrapper.m_LookActionsCallbackInterface.OnCycle;
+                @Cycle.performed -= m_Wrapper.m_LookActionsCallbackInterface.OnCycle;
+                @Cycle.canceled -= m_Wrapper.m_LookActionsCallbackInterface.OnCycle;
+                @Cancel.started -= m_Wrapper.m_LookActionsCallbackInterface.OnCancel;
+                @Cancel.performed -= m_Wrapper.m_LookActionsCallbackInterface.OnCancel;
+                @Cancel.canceled -= m_Wrapper.m_LookActionsCallbackInterface.OnCancel;
+            }
+            m_Wrapper.m_LookActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
+                @Cycle.started += instance.OnCycle;
+                @Cycle.performed += instance.OnCycle;
+                @Cycle.canceled += instance.OnCycle;
+                @Cancel.started += instance.OnCancel;
+                @Cancel.performed += instance.OnCancel;
+                @Cancel.canceled += instance.OnCancel;
+            }
+        }
+    }
+    public LookActions @Look => new LookActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -1164,6 +1513,7 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         void OnForfeitTurn(InputAction.CallbackContext context);
         void OnPickup(InputAction.CallbackContext context);
         void OnOpenInventory(InputAction.CallbackContext context);
+        void OnGoToLookMode(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
@@ -1177,5 +1527,11 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+    }
+    public interface ILookActions
+    {
+        void OnMove(InputAction.CallbackContext context);
+        void OnCycle(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
     }
 }

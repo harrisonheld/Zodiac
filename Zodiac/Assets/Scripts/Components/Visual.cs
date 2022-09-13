@@ -6,6 +6,7 @@ using UnityEngine;
 public class Visual : MonoBehaviour
 {
     [SerializeField] public string DisplayName = "";
+    [SerializeField] public string Description = "";
     [SerializeField] private Sprite sprite = null;
     public Sprite Sprite
     {

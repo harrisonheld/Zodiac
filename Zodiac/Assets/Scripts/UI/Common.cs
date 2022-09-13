@@ -9,10 +9,15 @@ using TMPro;
 /// </summary>
 public static class Common
 {
+    /*
+     *  WHEN ADDING SOMETHING NEW HERE, REMEMBER TO MODIFY GameManager.cs TO INITIALIZE IT
+     */
+
     public static MenuManager menuManager;
 
-    // when adding a new menu here, remember to edit the start function in GameManager.cs to intialize it
     public static InventoryMenu inventoryMenu;
     public static ItemSubMenu itemSubMenu;
     public static AlertMenu alertMenu;
+
+    public static GameObject cursor;
 }

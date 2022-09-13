@@ -11,6 +11,17 @@ public static class ZodiacInput
     // the current player gameobject who is doing input
     private static GameObject player;
     public static GameObject Player { get => player; }
+
+    private static Vector2Int lookCursorPos;
+
+    private enum InputMode
+    {
+        FreeRoam,
+        Look,
+        Menu,
+    }
+    private static InputMode inputMode = InputMode.FreeRoam;
+
     static ZodiacInput()
     {
         // initialize
@@ -34,69 +45,129 @@ public static class ZodiacInput
             if (player.GetComponent<Brain>().Ai != AiType.PlayerControlled)
                 yield break;
 
-
-
-            // useful stuff
-            Vector2Int playerPos = player.GetComponent<Position>().Pos;
-
-            // get item
-            if (inputMap.FreeRoam.Pickup.triggered)
+            switch (inputMode)
             {
-                var items = new List<Item>();
-                var pickupCandidates = GameManager.EntitiesAt(playerPos);
-                foreach(GameObject candidate in pickupCandidates)
-                {
-                    Item item = candidate.GetComponent<Item>();
-                    if (item != null)
-                        items.Add(item);
-                }
+                case InputMode.FreeRoam:
+                    DoFreeRoamInput();
+                    break;
 
-                foreach(Item item in items)
-                    GameManager.Pickup(player, item);
+                case InputMode.Look:
+                    DoLookInput();
+                    break;
+
+                default:
+                    break;
             }
 
-            // open inventory
-            if(inputMap.FreeRoam.OpenInventory.triggered)
-            {
-                var inv = player.GetComponent<Inventory>();
-                Common.inventoryMenu.SetInventory(inv);
-                Common.menuManager.Open(Common.inventoryMenu);
-                yield return null;
-            }
-
-            // movement
-            Vector2Int move = Vector2Int.RoundToInt(inputMap.FreeRoam.Move.ReadValue<Vector2>());
-            if (move != Vector2Int.zero)
-            {
-                inputMap.FreeRoam.Move.Reset();
-
-                Position playerPosComp = player.GetComponent<Position>();
-                Vector2Int destPosition = playerPosComp.Pos + move;
-
-                if (GameManager.isValidMovePosition(destPosition))
-                {
-                    // move
-                    GameManager.Move(player, playerPosComp.Pos + move);
-                }
-                else
-                {
-                    // attack
-                    GameObject target = GameManager.EntityAt(destPosition);
-                    GameManager.BumpAttack(player, target);
-                }
-            }
-
-            // player didnt give any valid input
+            // player didnt give any valid input, so try again
             yield return null;
+        }
+    }
+
+    private static void DoFreeRoamInput()
+    {
+        // useful stuff
+        Vector2Int playerPos = player.GetComponent<Position>().Pos;
+
+        // look mode
+        if(inputMap.FreeRoam.GoToLookMode.triggered)
+        {
+            LookMode();
+            return;
+        }
+
+        // get item
+        if (inputMap.FreeRoam.Pickup.triggered)
+        {
+            var items = new List<Item>();
+            var pickupCandidates = GameManager.EntitiesAt(playerPos);
+            foreach (GameObject candidate in pickupCandidates)
+            {
+                Item item = candidate.GetComponent<Item>();
+                if (item != null)
+                    items.Add(item);
+            }
+
+            foreach (Item item in items)
+                GameManager.Pickup(player, item);
+
+            return;
+        }
+
+        // open inventory
+        if (inputMap.FreeRoam.OpenInventory.triggered)
+        {
+            Debug.Log("Open Inventory button pressed.");
+            var inv = player.GetComponent<Inventory>();
+            Common.inventoryMenu.SetInventory(inv);
+            Common.menuManager.Open(Common.inventoryMenu);
+
+            return;
+        }
+
+        // movement
+        Vector2Int move = Vector2Int.RoundToInt(inputMap.FreeRoam.Move.ReadValue<Vector2>());
+        if (move != Vector2Int.zero)
+        {
+            inputMap.FreeRoam.Move.Reset();
+
+            Position playerPosComp = player.GetComponent<Position>();
+            Vector2Int destPosition = playerPosComp.Pos + move;
+
+            if (GameManager.isValidMovePosition(destPosition))
+            {
+                // move
+                GameManager.Move(player, playerPosComp.Pos + move);
+            }
+            else
+            {
+                // attack
+                GameObject target = GameManager.EntityAt(destPosition);
+                GameManager.BumpAttack(player, target);
+            }
+
+            return;
+        }
+    }
+    private static void DoLookInput()
+    {
+        // back to free roam mode
+        if(inputMap.Look.Cancel.triggered)
+        {
+            FreeRoamMode();
+            return;
+        }
+
+        // move cursor
+        Vector2Int move = Vector2Int.RoundToInt(inputMap.FreeRoam.Move.ReadValue<Vector2>());
+        if (move != Vector2Int.zero)
+        {
+            inputMap.FreeRoam.Move.Reset();
+            lookCursorPos += move;
+            Common.cursor.transform.position = (Vector2)lookCursorPos;
+
+            return;
         }
     }
 
     public static void FreeRoamMode()
     {
-        inputMap.FreeRoam.Enable();
+        Common.cursor.SetActive(false);
+
+        inputMode = InputMode.FreeRoam;
     }
     public static void MenuMode()
     {
-        inputMap.FreeRoam.Disable();
+        Common.cursor.SetActive(false);
+
+        inputMode = InputMode.Menu;
+    }
+    public static void LookMode()
+    {
+        lookCursorPos = player.GetComponent<Position>().Pos;
+        Common.cursor.transform.transform.position = (Vector2)lookCursorPos;
+        Common.cursor.SetActive(true);
+
+        inputMode = InputMode.Look;
     }
 }

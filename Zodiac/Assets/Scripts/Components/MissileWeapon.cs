@@ -9,9 +9,3 @@ public class MissileWeapon : MonoBehaviour
     [SerializeField] public int AttackCost = 1000;
     [SerializeField] public AmmoType AmmoType;
 }
-
-public enum AmmoType
-{
-    Bullet,
-    Arrow
-}
