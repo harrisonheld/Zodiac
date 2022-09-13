@@ -112,9 +112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 756a0f604082bf64ea97d2c771caac90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 100
-  currentHealth: 100
-  Defense: 3
+  HealthMax: 100
+  healthCurrent: 100
+  Defense: 6
 --- !u!114 &9089315935599584699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,6 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DisplayName: Pillar
+  Description: No description.
   sprite: {fileID: 0}
 --- !u!114 &-2846681559685127331
 MonoBehaviour:

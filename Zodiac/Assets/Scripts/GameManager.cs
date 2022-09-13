@@ -151,7 +151,7 @@ public class GameManager : MonoBehaviour
 
         attacker.GetComponent<EnergyHaver>().Energy -= attackCost;
 
-        targetHealth.CurrentHealth -= Mathf.Max(0, attackDamage - targetHealth.Defense);
+        targetHealth.HealthCurrent -= Mathf.Max(0, attackDamage - targetHealth.Defense);
     }
     public static void Pickup(GameObject pickerUpper, Item item)
     {
