@@ -20,4 +20,5 @@ public static class Common
     public static AlertMenu alertMenu;
 
     public static GameObject cursor;
+    public static LookMenu lookMenu;
 }

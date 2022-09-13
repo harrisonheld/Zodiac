@@ -146,27 +146,35 @@ public static class ZodiacInput
             lookCursorPos += move;
             Common.cursor.transform.position = (Vector2)lookCursorPos;
 
+            // no need to check if null, lookmenu will handle that
+            GameObject lookingAt = GameManager.EntityAt(lookCursorPos);
+            Common.lookMenu.SetSubject(lookingAt);
+
             return;
         }
     }
 
     public static void FreeRoamMode()
     {
+        // disable look mode stuff
         Common.cursor.SetActive(false);
+        Common.lookMenu.Canvas.enabled = false;
 
         inputMode = InputMode.FreeRoam;
     }
     public static void MenuMode()
     {
-        Common.cursor.SetActive(false);
-
         inputMode = InputMode.Menu;
     }
     public static void LookMode()
     {
+        // setup cursor
         lookCursorPos = player.GetComponent<Position>().Pos;
         Common.cursor.transform.transform.position = (Vector2)lookCursorPos;
         Common.cursor.SetActive(true);
+
+        // show look menu
+        Common.lookMenu.Canvas.enabled = true;
 
         inputMode = InputMode.Look;
     }

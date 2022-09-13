@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
         Common.itemSubMenu = GameObject.Find("ItemSubMenu").GetComponent<ItemSubMenu>();
         Common.alertMenu = GameObject.Find("AlertMenu").GetComponent<AlertMenu>();
         Common.cursor = GameObject.Find("Cursor");
+        Common.lookMenu = GameObject.Find("LookMenu").GetComponent<LookMenu>();
 
         // get all entities
         foreach (Position posComp in GameObject.FindObjectsOfType<Position>())
