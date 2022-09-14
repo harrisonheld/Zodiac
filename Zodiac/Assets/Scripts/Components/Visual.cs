@@ -5,8 +5,8 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Visual : MonoBehaviour
 {
-    [SerializeField] public string DisplayName = "";
-    [SerializeField] public string Description = "";
+    [SerializeField] public string DisplayName = "DISPLAY_NAME_HERE";
+    [SerializeField] public string Description = "DESCRIPTION_HERE";
     [SerializeField] private Sprite sprite = null;
     public Sprite Sprite
     {
@@ -21,7 +21,7 @@ public class Visual : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         // grab values from unity
         if(DisplayName == "")

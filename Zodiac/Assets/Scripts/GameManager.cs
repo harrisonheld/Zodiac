@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
     public static void Move(GameObject toMove, Vector2Int destination)
     {
         toMove.GetComponent<EnergyHaver>().Energy -= Constants.COST_MOVE;
-        toMove.GetComponent<Position>().Pos = destination;
+        toMove.GetComponent<Position>().SmoothMove(destination);
     }
     /// <summary>
     /// Attempts to move to this destination, checking if the destination position is valid.
@@ -168,8 +168,8 @@ public class GameManager : MonoBehaviour
         dropper.GetComponent<Inventory>().RemoveItem(toDrop);
 
         // copy droppers position
-        toDrop.gameObject.AddComponent<Position>()
-            .Pos = dropper.GetComponent<Position>().Pos;
+        Position newPos = toDrop.gameObject.AddComponent<Position>();
+        newPos.Pos = dropper.GetComponent<Position>().Pos;
 
         Entities.Add(toDrop.gameObject);
     }

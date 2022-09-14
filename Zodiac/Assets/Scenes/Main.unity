@@ -267,7 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0701bf855ca3d940ab78c5bc81dfbb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DisplayName: a
+  DisplayName: You
   Description: you
   sprite: {fileID: 0}
 --- !u!114 &31183694
@@ -912,6 +912,7 @@ GameObject:
   - component: {fileID: 560835221}
   - component: {fileID: 560835227}
   - component: {fileID: 560835228}
+  - component: {fileID: 560835229}
   m_Layer: 0
   m_Name: Bow
   m_TagString: Untagged
@@ -1069,6 +1070,21 @@ MonoBehaviour:
   Damage: 10
   AttackCost: 1000
   AmmoType: 1
+--- !u!114 &560835229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560835219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 756a0f604082bf64ea97d2c771caac90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthMax: 10
+  healthCurrent: 10
+  Defense: 0
 --- !u!114 &565006254 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -500079116528371538, guid: e91c2d9937bdb1e46bc6dd2307b10400, type: 3}
@@ -2224,7 +2240,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1577942162}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 1928566844}
@@ -2294,8 +2310,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0, y: -216.02}
+  m_SizeDelta: {x: 302, y: 96.463}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1590367484
 MonoBehaviour:
@@ -3036,7 +3052,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 213200}
+  m_AnchoredPosition: {x: 0, y: 257600}
   m_SizeDelta: {x: 584, y: 2000}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &1824815626
@@ -3198,8 +3214,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -51, y: 239.25}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0, y: 239.25}
+  m_SizeDelta: {x: 302, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1916664044
 MonoBehaviour:
@@ -3411,6 +3427,7 @@ GameObject:
   - component: {fileID: 1976670620}
   - component: {fileID: 1976670619}
   - component: {fileID: 1976670618}
+  - component: {fileID: 1976670626}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -3553,6 +3570,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1976670626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976670617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 756a0f604082bf64ea97d2c771caac90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthMax: 10
+  healthCurrent: 10
+  Defense: 0
 --- !u!1001 &2006745688
 PrefabInstance:
   m_ObjectHideFlags: 0

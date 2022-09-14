@@ -22,6 +22,7 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
             healthText.text = "";
             return;
         }
+
         Visual vis = subject.GetComponent<Visual>();
         title.text = vis.DisplayName;
         body.text = vis.Description;
