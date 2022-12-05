@@ -9,7 +9,6 @@ public class InventoryMenu : MonoBehaviour, IZodiacMenu
     [SerializeField] GameObject itemSlotPrefab;
 
     private Inventory inventory;
-    private int selectedIdx = 0;
     public Canvas Canvas { get => GetComponent<Canvas>(); }
     public CanvasGroup CanvasGroup { get => GetComponent<CanvasGroup>(); }
 

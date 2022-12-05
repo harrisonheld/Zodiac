@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Ammo : MonoBehaviour
+public class Ammo : ZodiacComponent
 {
     public AmmoType AmmoType;
 }

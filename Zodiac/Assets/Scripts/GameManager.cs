@@ -5,9 +5,26 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [Header("Info")]
-    [SerializeField] int tick = 0;
+    [SerializeField] int turn = 0;
 
     public static List<GameObject> Entities = new List<GameObject>();
+    [SerializeField] public GameObject ThePlayer;
+
+    // a reference to the one game manager in the scene
+    public static GameManager Instance;
+
+    public void Awake()
+    {
+        if (Instance == null) // If there is no instance already
+        {
+            DontDestroyOnLoad(this.gameObject); // Keep the GameObject, this component is attached to, across different scenes
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject); // Destroy the GameObject, this component is attached to
+        }
+    }
 
     public void Start()
     {
@@ -16,6 +33,7 @@ public class GameManager : MonoBehaviour
         Common.inventoryMenu = GameObject.Find("InventoryMenu").GetComponent<InventoryMenu>();
         Common.itemSubMenu = GameObject.Find("ItemSubMenu").GetComponent<ItemSubMenu>();
         Common.alertMenu = GameObject.Find("AlertMenu").GetComponent<AlertMenu>();
+        Common.pickObjectMenu = GameObject.Find("PickObjectMenu").GetComponent<PickObjectMenu>();
         Common.cursor = GameObject.Find("Cursor");
         Common.lookMenu = GameObject.Find("LookMenu").GetComponent<LookMenu>();
 
@@ -24,24 +42,22 @@ public class GameManager : MonoBehaviour
         {
             Entities.Add(posComp.gameObject);
         }
+    }
 
-        // start tick loop
-        StartCoroutine(TickLoop());
-    }
-    private IEnumerator TickLoop()
+    public void Update()
     {
-        while(true)
-        {
-            yield return StartCoroutine(Tick());
-            tick++;
-            yield return null;
-        }
+        bool inputDone = ZodiacInput.DoPlayerInput();
+        
+        if(inputDone)
+            DoTurn();
     }
-    private IEnumerator Tick()
+    private void DoTurn()
     {
-        yield return StartCoroutine(EnergySystem());
-        yield return StartCoroutine(BrainSystem());
-        yield return null;
+        EnergySystem();
+        AbilitySystem();
+        BrainSystem();
+
+        turn++;
     }
 
 
@@ -187,17 +203,15 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private IEnumerator EnergySystem()
+    private void EnergySystem()
     {
         foreach (EnergyHaver energyHaver in GameObject.FindObjectsOfType<EnergyHaver>())
         {
             energyHaver.Energy += energyHaver.Quickness;
             energyHaver.Energy = Mathf.Min(energyHaver.Energy, energyHaver.Quickness); // cap energy at Quickness
         }
-
-        yield return null;
     }
-    private IEnumerator BrainSystem()
+    private void BrainSystem()
     {
         foreach (Brain brain in Object.FindObjectsOfType<Brain>()) 
         {
@@ -216,12 +230,6 @@ public class GameManager : MonoBehaviour
 
             switch (brain.Ai) 
             {
-                case AiType.PlayerControlled:
-                    {
-                        yield return StartCoroutine(ZodiacInput.DoPlayerInput(brain.gameObject));
-                    }
-                    break;
-
                 case AiType.Seeker:
                     {
                         if (energyHaver.Energy <= 0)
@@ -276,7 +284,13 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
-
-        yield return null;
+    }
+    private void AbilitySystem()
+    {
+        foreach (Ability ability in GameObject.FindObjectsOfType<Ability>())
+        {
+            if (ability.Cooldown > 0)
+                ability.Cooldown--;
+        }
     }
 }

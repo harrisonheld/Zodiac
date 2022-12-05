@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Inventory : MonoBehaviour
+public class Inventory : ZodiacComponent
 {
     public List<Item> Items;
     public List<Slot> Slots;

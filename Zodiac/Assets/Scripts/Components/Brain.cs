@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Brain : MonoBehaviour
+public class Brain : ZodiacComponent
 {
     [SerializeField] public AiType Ai;
     [SerializeField] public GameObject Target;

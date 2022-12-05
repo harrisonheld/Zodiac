@@ -41,7 +41,7 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
 
         AddButton("Drop", () =>
         {
-            GameManager.Drop(ZodiacInput.Player, item);
+            GameManager.Drop(GameManager.Instance.ThePlayer, item);
             // refresh inv UI to account for the removed item
             Common.inventoryMenu.RefreshUI();
         });
@@ -68,7 +68,7 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
         {
             AddButton("Equip", () =>
             {
-                ZodiacInput.Player.GetComponent<Inventory>().Equip(equippable);
+                GameManager.Instance.ThePlayer.GetComponent<Inventory>().Equip(equippable);
                 // refresh inv UI to account for the removed item
                 Common.inventoryMenu.RefreshUI();
             });

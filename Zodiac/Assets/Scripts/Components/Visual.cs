@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Visual : MonoBehaviour
+public class Visual : ZodiacComponent
 {
     [SerializeField] public string DisplayName = "DISPLAY_NAME_HERE";
     [SerializeField] public string Description = "DESCRIPTION_HERE";

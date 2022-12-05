@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class PhysicalAttributes : MonoBehaviour
+public class PhysicalAttributes : ZodiacComponent
 {
     [SerializeField] public bool Solid = false; // can other entities walk through this?
     [SerializeField] public bool OccludesVison = false; // should this block line of sight?

@@ -18,6 +18,7 @@ public static class Common
     public static InventoryMenu inventoryMenu;
     public static ItemSubMenu itemSubMenu;
     public static AlertMenu alertMenu;
+    public static PickObjectMenu pickObjectMenu;
 
     public static GameObject cursor;
     public static LookMenu lookMenu;

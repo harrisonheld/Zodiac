@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Equippable : MonoBehaviour
+public class Equippable : ZodiacComponent
 {
     [SerializeField] public SlotType slotType;
 }

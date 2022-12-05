@@ -8,10 +8,6 @@ public static class ZodiacInput
     private static ZodiacInputMap inputMap;
     public static ZodiacInputMap InputMap { get => inputMap; }
 
-    // the current player gameobject who is doing input
-    private static GameObject player;
-    public static GameObject Player { get => player; }
-
     private static Vector2Int lookCursorPos;
 
     private enum InputMode
@@ -29,45 +25,42 @@ public static class ZodiacInput
         inputMap.Enable();
     }
 
-    public static IEnumerator DoPlayerInput(GameObject _player)
+    /// <summary>
+    /// Returns true when the player has finished their turn.
+    /// False if they have not.
+    /// </summary>
+    /// <param name="_player">The GameObject which is the player.</param>
+    /// <returns></returns>
+    public static bool DoPlayerInput()
     {
-        player = _player;
+        // player voluntarilly forfeits their turn
+        if (inputMap.FreeRoam.ForfeitTurn.triggered)
+            return true;
+        // out of energy, turn is over
+        if (GameManager.Instance.ThePlayer.GetComponent<EnergyHaver>().Energy <= 0)
+            return true;
 
-        while (true)
+        switch (inputMode)
         {
-            // player voluntarilly forfeits their turn
-            if (inputMap.FreeRoam.ForfeitTurn.triggered)
-                yield break;
-            // out of energy, turn is over
-            if (player.GetComponent<EnergyHaver>().Energy <= 0)
-                yield break;
-            // player is no longer in control of this character
-            if (player.GetComponent<Brain>().Ai != AiType.PlayerControlled)
-                yield break;
+            case InputMode.FreeRoam:
+                DoFreeRoamInput();
+                break;
 
-            switch (inputMode)
-            {
-                case InputMode.FreeRoam:
-                    DoFreeRoamInput();
-                    break;
+            case InputMode.Look:
+                DoLookInput();
+                break;
 
-                case InputMode.Look:
-                    DoLookInput();
-                    break;
-
-                default:
-                    break;
-            }
-
-            // player didnt give any valid input, so try again
-            yield return null;
+            default:
+                break;
         }
+        
+        return false;
     }
 
     private static void DoFreeRoamInput()
     {
         // useful stuff
-        Vector2Int playerPos = player.GetComponent<Position>().Pos;
+        Vector2Int playerPos = GameManager.Instance.ThePlayer.GetComponent<Position>().Pos;
 
         // look mode
         if(inputMap.FreeRoam.GoToLookMode.triggered)
@@ -79,6 +72,7 @@ public static class ZodiacInput
         // get item
         if (inputMap.FreeRoam.Pickup.triggered)
         {
+            /*
             var items = new List<Item>();
             var pickupCandidates = GameManager.EntitiesAt(playerPos);
             foreach (GameObject candidate in pickupCandidates)
@@ -92,13 +86,26 @@ public static class ZodiacInput
                 GameManager.Pickup(player, item);
 
             return;
+            */
+            
+            // find all entities with item component
+            var items = new List<GameObject>();
+            foreach (GameObject obj in GameManager.EntitiesAt(playerPos))
+            {
+                if (obj.GetComponent<Item>())
+                    items.Add(obj);
+            }
+            // let player select and pick up all
+            foreach(Item selected in Common.pickObjectMenu.SelectMultiple(items))
+                GameManager.Pickup(GameManager.Instance.ThePlayer, selected);
+
+            return ;
         }
 
         // open inventory
         if (inputMap.FreeRoam.OpenInventory.triggered)
         {
-            Debug.Log("Open Inventory button pressed.");
-            var inv = player.GetComponent<Inventory>();
+            var inv = GameManager.Instance.ThePlayer.GetComponent<Inventory>();
             Common.inventoryMenu.SetInventory(inv);
             Common.menuManager.Open(Common.inventoryMenu);
 
@@ -111,19 +118,19 @@ public static class ZodiacInput
         {
             inputMap.FreeRoam.Move.Reset();
 
-            Position playerPosComp = player.GetComponent<Position>();
+            Position playerPosComp = GameManager.Instance.ThePlayer.GetComponent<Position>();
             Vector2Int destPosition = playerPosComp.Pos + move;
 
             if (GameManager.isValidMovePosition(destPosition))
             {
                 // move
-                GameManager.Move(player, playerPosComp.Pos + move);
+                GameManager.Move(GameManager.Instance.ThePlayer, playerPosComp.Pos + move);
             }
             else
             {
                 // attack
                 GameObject target = GameManager.EntityAt(destPosition);
-                GameManager.BumpAttack(player, target);
+                GameManager.BumpAttack(GameManager.Instance.ThePlayer, target);
             }
 
             return;
@@ -169,7 +176,7 @@ public static class ZodiacInput
     public static void LookMode()
     {
         // setup cursor
-        lookCursorPos = player.GetComponent<Position>().Pos;
+        lookCursorPos = GameManager.Instance.ThePlayer.GetComponent<Position>().Pos;
         Common.cursor.transform.transform.position = (Vector2)lookCursorPos;
         Common.cursor.SetActive(true);
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Position : MonoBehaviour
+public class Position : ZodiacComponent
 {
     [SerializeField] private Vector2Int pos;
     public Vector2Int Pos

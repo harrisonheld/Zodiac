@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Health : MonoBehaviour
+public class Health : ZodiacComponent
 {
     [SerializeField] public int HealthMax = 10;
     [SerializeField] private int healthCurrent = 10;
