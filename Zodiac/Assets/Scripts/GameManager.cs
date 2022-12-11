@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject ThePlayer;
 
     // a reference to the one game manager in the scene
-    public static GameManager Instance;
+    public static GameManager Instance { get; private set; }
 
     public void Awake()
     {
@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
         Common.inventoryMenu = GameObject.Find("InventoryMenu").GetComponent<InventoryMenu>();
         Common.itemSubMenu = GameObject.Find("ItemSubMenu").GetComponent<ItemSubMenu>();
         Common.alertMenu = GameObject.Find("AlertMenu").GetComponent<AlertMenu>();
-        Common.pickObjectMenu = GameObject.Find("PickObjectMenu").GetComponent<PickObjectMenu>();
         Common.cursor = GameObject.Find("Cursor");
         Common.lookMenu = GameObject.Find("LookMenu").GetComponent<LookMenu>();
 
@@ -47,8 +46,7 @@ public class GameManager : MonoBehaviour
     public void Update()
     {
         bool inputDone = ZodiacInput.DoPlayerInput();
-        
-        if(inputDone)
+        if (inputDone)
             DoTurn();
     }
     private void DoTurn()
@@ -178,6 +176,7 @@ public class GameManager : MonoBehaviour
         Destroy(posComp);
 
         pickerUpper.GetComponent<Inventory>().AddItem(item);
+        pickerUpper.GetComponent<EnergyHaver>().Energy -= Constants.COST_PICKUP;
     }
     public static void Drop(GameObject dropper, Item toDrop)
     {

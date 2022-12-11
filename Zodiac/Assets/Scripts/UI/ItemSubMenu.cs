@@ -44,7 +44,7 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
             GameManager.Drop(GameManager.Instance.ThePlayer, item);
             // refresh inv UI to account for the removed item
             Common.inventoryMenu.RefreshUI();
-        });
+        }, closeMenuOnUse: false);
         AddButton("Inspect", () =>
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
@@ -71,7 +71,7 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
                 GameManager.Instance.ThePlayer.GetComponent<Inventory>().Equip(equippable);
                 // refresh inv UI to account for the removed item
                 Common.inventoryMenu.RefreshUI();
-            });
+            }, closeMenuOnUse: false);
         }
     }
     public void GainFocus()
@@ -84,11 +84,11 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
 
     private Button AddButton(string text, UnityEngine.Events.UnityAction action, bool closeMenuOnUse = true)
     {
-        GameObject dropButtonGo = Instantiate(buttonPrefab, itemActionPanel.transform);
-        dropButtonGo.name = text;
-        Button dropButtonComp = dropButtonGo.GetComponent<Button>();
+        GameObject buttonGo = Instantiate(buttonPrefab, itemActionPanel.transform);
+        buttonGo.name = text;
+        Button dropButtonComp = buttonGo.GetComponent<Button>();
 
-        dropButtonGo.GetComponentInChildren<TextMeshProUGUI>().text = text;
+        buttonGo.GetComponentInChildren<TextMeshProUGUI>().text = text;
 
 
         dropButtonComp.onClick.AddListener(action);

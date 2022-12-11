@@ -96,10 +96,9 @@ public static class ZodiacInput
                     items.Add(obj);
             }
             // let player select and pick up all
-            foreach(Item selected in Common.pickObjectMenu.SelectMultiple(items))
-                GameManager.Pickup(GameManager.Instance.ThePlayer, selected);
+            PickMenu.Instance.ShowGetMenu(items);
 
-            return ;
+            return;
         }
 
         // open inventory

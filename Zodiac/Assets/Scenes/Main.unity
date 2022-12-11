@@ -1036,7 +1036,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 560835219}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11, y: 5, z: 0}
+  m_LocalPosition: {x: 12, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1553,6 +1553,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a71aafbbe74cfba468edc3391ca2ec07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  optionsContainer: {fileID: 1354556000}
+  optionPrefab: {fileID: 2272163786963881772, guid: 01a3ff050ad978546beb0d024cb10700, type: 3}
 --- !u!225 &961079441
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1982,7 +1984,7 @@ GameObject:
   - component: {fileID: 1354556003}
   - component: {fileID: 1354556002}
   m_Layer: 5
-  m_Name: ItemsContainer
+  m_Name: OptionsContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3302,7 +3304,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 344450}
+  m_AnchoredPosition: {x: 0, y: 366050}
   m_SizeDelta: {x: 584, y: 2000}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &1824815626

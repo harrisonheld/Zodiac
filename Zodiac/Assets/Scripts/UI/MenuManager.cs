@@ -8,6 +8,21 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour {
 
+    // singleton
+    public static MenuManager Instance { get; private set; }
+    public void Awake()
+    {
+        if (Instance == null) // If there is no instance already
+        {
+            DontDestroyOnLoad(this.gameObject); // Keep the GameObject, this component is attached to, across different scenes
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject); // Destroy the GameObject, this component is attached to
+        }
+    }
+
     // list of menus, in order of precedence. The menu at the end is the topmost menu.
     // i would use a stack but sometimes you want to close a menu that isnt the top most.
     private static List<IZodiacMenu> menus = new List<IZodiacMenu> ();
