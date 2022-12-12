@@ -14,13 +14,6 @@ public class Health : ZodiacComponent
             if (healthCurrent <= 0)
             {   
                 GameManager.Instance.BreakEntity(this.gameObject);
-
-                if (this.gameObject == GameManager.Instance.ThePlayer)
-                {
-                    MenuManager.Instance.CloseAll();
-                    AlertMenu.Instance.ShowText("You have died.");
-                }
-
             }
         } 
     }

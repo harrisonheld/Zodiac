@@ -45,10 +45,15 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
+        // death
         if(ThePlayer == null)
         {
-            // unfortunately, we are dead, nonexistent, or worse
-            // therefore, do nothing
+            // tell the player this
+            if(!AlertMenu.Instance.Canvas.isActiveAndEnabled)
+            {
+                MenuManager.Instance.CloseAll();
+                AlertMenu.Instance.ShowText("Unfortunately, you have died or otherwise ceased to exist.");
+            }
             return;
         }
 
