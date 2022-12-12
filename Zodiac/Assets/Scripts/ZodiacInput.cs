@@ -98,8 +98,9 @@ public static class ZodiacInput
 
             if (items.Count == 1)
                 GameManager.Instance.Pickup(GameManager.Instance.ThePlayer, items[0].GetComponent<Item>());
-            // let player select and pick up all
-            PickMenu.Instance.ShowGetMenu(items);
+            else if (items.Count > 1)
+                PickMenu.Instance.ShowGetMenu(items);
+            // else if (items.Count == 0), do nothing cuz theres nothing here
 
             return;
         }

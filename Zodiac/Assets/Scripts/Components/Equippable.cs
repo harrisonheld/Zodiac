@@ -5,7 +5,7 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Equippable : ZodiacComponent
 {
-    [SerializeField] public SlotType slotType;
+    [SerializeField] public SlotType slotType { get; set; }
 }
 
 public enum SlotType

@@ -5,20 +5,29 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Visual : ZodiacComponent
 {
-    [SerializeField] public string DisplayName = "DISPLAY_NAME_HERE";
-    [SerializeField] public string Description = "DESCRIPTION_HERE";
-    [SerializeField] private Sprite sprite = null;
-    public Sprite Sprite
+    [SerializeField] public string DisplayName { get; set; } = "DISPLAY_NAME_HERE";
+    [SerializeField] public string Description { get; set; } = "DESCRIPTION_HERE";
+    [SerializeField] private string spriteName = "";
+
+    /// <summary>
+    /// The sprite as a string.
+    /// </summary>
+    public string Sprite
     {
         get
         {
-            return sprite;
+            return spriteName;
         }
         set
         {
-            gameObject.GetComponent<SpriteRenderer>().sprite = value;
-            sprite = value;
+            gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/" + value);
+            spriteName = value;
         }
+    }
+
+    public Sprite GetUnitySprite()
+    {
+        return GetComponent<SpriteRenderer>().sprite;
     }
 
     private void Awake()
@@ -26,8 +35,8 @@ public class Visual : ZodiacComponent
         // grab values from unity
         if(DisplayName == "")
             DisplayName = gameObject.name;
-        if (sprite == null)
-            Sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
+        if (spriteName == "")
+            spriteName = gameObject.GetComponent<SpriteRenderer>().sprite.name;
 
         // add shader
         Material material = new Material(Shader.Find("Unlit/PaletteSwap"));

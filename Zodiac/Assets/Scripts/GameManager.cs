@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
         Common.menuManager = GetComponent<MenuManager>();
         Common.inventoryMenu = GameObject.Find("InventoryMenu").GetComponent<InventoryMenu>();
         Common.itemSubMenu = GameObject.Find("ItemSubMenu").GetComponent<ItemSubMenu>();
-        Common.alertMenu = GameObject.Find("AlertMenu").GetComponent<AlertMenu>();
         Common.cursor = GameObject.Find("Cursor");
         Common.lookMenu = GameObject.Find("LookMenu").GetComponent<LookMenu>();
 
@@ -41,6 +40,8 @@ public class GameManager : MonoBehaviour
         {
             Entities.Add(posComp.gameObject);
         }
+
+        Serialization.SerailizeToFile(ThePlayer, "C:/Users/johnd/Desktop/test.xml");
     }
 
     public void Update()
@@ -49,7 +50,7 @@ public class GameManager : MonoBehaviour
         if(ThePlayer == null)
         {
             // tell the player this
-            if(!AlertMenu.Instance.Canvas.isActiveAndEnabled)
+            if (!AlertMenu.Instance.Canvas.enabled)
             {
                 MenuManager.Instance.CloseAll();
                 AlertMenu.Instance.ShowText("Unfortunately, you have died or otherwise ceased to exist.");

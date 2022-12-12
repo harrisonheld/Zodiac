@@ -6,7 +6,8 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class CameraRig : MonoBehaviour
 {
-    [SerializeField] private float height; // (in tiles)
+    [SerializeField] float height = 10.0f; // (in tiles)
+
 
     private void Update()
     {

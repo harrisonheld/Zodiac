@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class Ability : MonoBehaviour
 {
-    public int RechargeTime = 10;
-    public int Cooldown = 0;
+    public int RechargeTime { get; set; } = 10;
+    public int Cooldown { get; set; } = 0;
 
     public virtual void Activate()
     {

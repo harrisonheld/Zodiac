@@ -24,7 +24,7 @@ public class ItemSlot : MonoBehaviour
             text.text += " x" + item.Count;
 
         // set icon
-        icon.sprite = vis.Sprite;
+        icon.sprite = vis.GetUnitySprite();
     }
 
     public void ItemSelected()

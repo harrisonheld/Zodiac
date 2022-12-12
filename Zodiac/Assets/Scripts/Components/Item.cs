@@ -5,5 +5,5 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Item : ZodiacComponent
 {
-    [SerializeField] public int Count = 1; // how many are in the stack
+    [SerializeField] public int Count { get; set; } = 1; // how many are in the stack
 }

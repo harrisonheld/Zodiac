@@ -39,20 +39,20 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
         // add buttons
         //
 
-        AddButton("Drop", () =>
+        AddButtonInternal("Drop", () =>
         {
             GameManager.Instance.Drop(GameManager.Instance.ThePlayer, item);
             // refresh inv UI to account for the removed item
             Common.inventoryMenu.RefreshUI();
-        }, closeMenuOnUse: false);
-        AddButton("Inspect", () =>
+        });
+        AddButtonInternal("Inspect", () =>
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
-            
-            foreach(Component comp in item.gameObject.GetComponents<Component>())
+
+            foreach (Component comp in item.gameObject.GetComponents<Component>())
             {
                 sb.AppendLine($"<{comp.GetType().Name}>");
-                foreach(System.Reflection.FieldInfo fieldInfo in comp.GetType().GetFields())
+                foreach (System.Reflection.FieldInfo fieldInfo in comp.GetType().GetFields())
                 {
                     sb.AppendLine($"{fieldInfo.Name}: {fieldInfo.GetValue(comp)}");
                 }
@@ -63,14 +63,14 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
         }, closeMenuOnUse: false);
 
         Equippable equippable;
-        if(item.gameObject.TryGetComponent<Equippable>(out equippable))
+        if (item.gameObject.TryGetComponent<Equippable>(out equippable))
         {
-            AddButton("Equip", () =>
+            AddButtonInternal("Equip", () =>
             {
                 GameManager.Instance.ThePlayer.GetComponent<Inventory>().Equip(equippable);
                 // refresh inv UI to account for the removed item
                 Common.inventoryMenu.RefreshUI();
-            }, closeMenuOnUse: false);
+            });
         }
     }
     public void GainFocus()
@@ -81,7 +81,7 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
         }
     }
 
-    private Button AddButton(string text, UnityEngine.Events.UnityAction action, bool closeMenuOnUse = true)
+    private void AddButtonInternal(string text, UnityEngine.Events.UnityAction action, bool closeMenuOnUse = true)
     {
         GameObject buttonGo = Instantiate(buttonPrefab, itemActionPanel.transform);
         buttonGo.name = text;
@@ -98,7 +98,9 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
                 Common.menuManager.Close(this);
             });
         }
-
-        return dropButtonComp;
+    }
+    public void AddButton(string text, UnityEngine.Events.UnityAction action, bool closeMenuOnUse = true)
+    {
+        AddButtonInternal(text, action, closeMenuOnUse);
     }
 }

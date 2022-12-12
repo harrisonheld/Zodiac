@@ -5,8 +5,8 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Inventory : ZodiacComponent
 {
-    public List<Item> Items;
-    public List<Slot> Slots;
+    public List<Item> Items { get; set; }
+    public List<Slot> Slots { get; set; }
 
     public void AddItem(Item item)
     {
