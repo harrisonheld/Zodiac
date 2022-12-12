@@ -12,7 +12,6 @@ public class Brain : ZodiacComponent
 public enum AiType
 {
     Inert,
-    PlayerControlled,
     Wanderer,
     Seeker,
     Projectile, // arrows

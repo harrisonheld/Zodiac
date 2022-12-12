@@ -84,7 +84,7 @@ public class Inventory : ZodiacComponent
 
     public Equippable GetPrimary()
     {
-        if (Slots.Count < 1)
+        if (Slots.Count == 0)
             return null;
         if (Slots[0] == null)
             return null;

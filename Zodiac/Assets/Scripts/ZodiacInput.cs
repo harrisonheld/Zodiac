@@ -90,11 +90,14 @@ public static class ZodiacInput
             
             // find all entities with item component
             var items = new List<GameObject>();
-            foreach (GameObject obj in GameManager.EntitiesAt(playerPos))
+            foreach (GameObject obj in GameManager.Instance.EntitiesAt(playerPos))
             {
                 if (obj.GetComponent<Item>())
                     items.Add(obj);
             }
+
+            if (items.Count == 1)
+                GameManager.Instance.Pickup(GameManager.Instance.ThePlayer, items[0].GetComponent<Item>());
             // let player select and pick up all
             PickMenu.Instance.ShowGetMenu(items);
 
@@ -120,16 +123,16 @@ public static class ZodiacInput
             Position playerPosComp = GameManager.Instance.ThePlayer.GetComponent<Position>();
             Vector2Int destPosition = playerPosComp.Pos + move;
 
-            if (GameManager.isValidMovePosition(destPosition))
+            if (GameManager.Instance.isValidMovePosition(destPosition))
             {
                 // move
-                GameManager.Move(GameManager.Instance.ThePlayer, playerPosComp.Pos + move);
+                GameManager.Instance.Move(GameManager.Instance.ThePlayer, playerPosComp.Pos + move);
             }
             else
             {
                 // attack
-                GameObject target = GameManager.EntityAt(destPosition);
-                GameManager.BumpAttack(GameManager.Instance.ThePlayer, target);
+                GameObject target = GameManager.Instance.EntityAt(destPosition);
+                GameManager.Instance.BumpAttack(GameManager.Instance.ThePlayer, target);
             }
 
             return;
@@ -153,7 +156,7 @@ public static class ZodiacInput
             Common.cursor.transform.position = (Vector2)lookCursorPos;
 
             // no need to check if null, lookmenu will handle that
-            GameObject lookingAt = GameManager.EntityAt(lookCursorPos);
+            GameObject lookingAt = GameManager.Instance.EntityAt(lookCursorPos);
             Common.lookMenu.SetSubject(lookingAt);
 
             return;

@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     [Header("Info")]
     [SerializeField] int turn = 0;
 
-    public static List<GameObject> Entities = new List<GameObject>();
+    public List<GameObject> Entities = new List<GameObject>();
     [SerializeField] public GameObject ThePlayer;
 
     // a reference to the one game manager in the scene
@@ -45,6 +45,13 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
+        if(ThePlayer == null)
+        {
+            // unfortunately, we are dead, nonexistent, or worse
+            // therefore, do nothing
+            return;
+        }
+
         bool inputDone = ZodiacInput.DoPlayerInput();
         if (inputDone)
             DoTurn();
@@ -63,7 +70,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Get the entity at the specified position.
     /// </summary>
-    public static GameObject EntityAt(Vector2Int pos)
+    public GameObject EntityAt(Vector2Int pos)
     {
         foreach(GameObject entity in Entities)
         {
@@ -73,7 +80,7 @@ public class GameManager : MonoBehaviour
 
         return null;
     }
-    public static List<GameObject> EntitiesAt(Vector2Int pos)
+    public List<GameObject> EntitiesAt(Vector2Int pos)
     {
         var result = new List<GameObject>();
 
@@ -85,7 +92,7 @@ public class GameManager : MonoBehaviour
 
         return result;
     }
-    public static void BreakEntity(GameObject toDestroy)
+    public void BreakEntity(GameObject toDestroy)
     {
         // drop all this entities stuff
         Inventory inv = toDestroy.GetComponent<Inventory>();
@@ -104,7 +111,7 @@ public class GameManager : MonoBehaviour
         Entities.Remove(toDestroy);
         GameObject.Destroy(toDestroy);
     }
-    public static bool isValidMovePosition(Vector2Int toCheck)
+    public bool isValidMovePosition(Vector2Int toCheck)
     {
         // position is valid if nothing solid is here
         foreach(GameObject entity in EntitiesAt(toCheck))
@@ -119,7 +126,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Move to the specified position with no checks. Energy is deducted.
     /// </summary>
-    public static void Move(GameObject toMove, Vector2Int destination)
+    public void Move(GameObject toMove, Vector2Int destination)
     {
         toMove.GetComponent<EnergyHaver>().Energy -= Constants.COST_MOVE;
         toMove.GetComponent<Position>().SmoothMove(destination);
@@ -128,7 +135,7 @@ public class GameManager : MonoBehaviour
     /// Attempts to move to this destination, checking if the destination position is valid.
     /// </summary>
     /// <returns><see langword="true"/> if the move was successful, <see langword="false"/> otherwise.</returns>
-    public static bool AttemptMove(GameObject toMove, Vector2Int destination)
+    public bool AttemptMove(GameObject toMove, Vector2Int destination)
     {
         if (isValidMovePosition(destination))
         {
@@ -139,7 +146,7 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    public static void BumpAttack(GameObject attacker, GameObject target)
+    public void BumpAttack(GameObject attacker, GameObject target)
     {
         var targetHealth = target.GetComponent<Health>();
         if (targetHealth == null)
@@ -167,19 +174,27 @@ public class GameManager : MonoBehaviour
 
         targetHealth.HealthCurrent -= Mathf.Max(0, attackDamage - targetHealth.Defense);
     }
-    public static void Pickup(GameObject pickerUpper, Item item)
+    public void Pickup(GameObject pickerUpper, Item item)
     {
         Entities.Remove(item.gameObject);
 
         // destroy pos, if it has one
         Position posComp = item.GetComponent<Position>();
-        Destroy(posComp);
-
+        // Destroy() is not instant, it actually occurs at the end of the Update() frame.
+        // therefore, i use DestroyImmediate().
+        DestroyImmediate(posComp);
+        
         pickerUpper.GetComponent<Inventory>().AddItem(item);
         pickerUpper.GetComponent<EnergyHaver>().Energy -= Constants.COST_PICKUP;
+        Debug.Log("Picked up " + item.name);
     }
-    public static void Drop(GameObject dropper, Item toDrop)
+    public void Drop(GameObject dropper, Item toDrop)
     {
+        if (toDrop.name == "Bow")
+        {
+            // do nothing yay
+        }
+
         dropper.GetComponent<Inventory>().RemoveItem(toDrop);
 
         // copy droppers position
@@ -220,6 +235,8 @@ public class GameManager : MonoBehaviour
 
             // check if this entity is on the map
             if (!Entities.Contains(brain.gameObject))
+                continue;
+            if (brain.gameObject == null)
                 continue;
 
             Position myPosComp = brain.gameObject.GetComponent<Position>();

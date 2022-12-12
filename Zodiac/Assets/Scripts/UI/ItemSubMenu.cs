@@ -41,7 +41,7 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
 
         AddButton("Drop", () =>
         {
-            GameManager.Drop(GameManager.Instance.ThePlayer, item);
+            GameManager.Instance.Drop(GameManager.Instance.ThePlayer, item);
             // refresh inv UI to account for the removed item
             Common.inventoryMenu.RefreshUI();
         }, closeMenuOnUse: false);
@@ -59,8 +59,7 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
                 sb.AppendLine();
             }
 
-            Common.alertMenu.SetText(sb.ToString());
-            Common.menuManager.Open(Common.alertMenu);
+            Common.alertMenu.ShowText(sb.ToString());
         }, closeMenuOnUse: false);
 
         Equippable equippable;

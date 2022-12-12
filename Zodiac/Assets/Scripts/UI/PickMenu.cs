@@ -44,7 +44,8 @@ public class PickMenu : MonoBehaviour, IZodiacMenu
             optionButton.GetComponent<Button>().onClick.AddListener(() =>
             {
                 options.Remove(option);
-                GameManager.Pickup(GameManager.Instance.ThePlayer, option.GetComponent<Item>());
+
+                GameManager.Instance.Pickup(GameManager.Instance.ThePlayer, option.GetComponent<Item>());
 
                 if (options.Count == 0)
                 {
