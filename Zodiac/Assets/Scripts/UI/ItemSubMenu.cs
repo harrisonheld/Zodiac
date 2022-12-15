@@ -56,7 +56,8 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
         AddButton("Drop", () =>
         {
             GameManager.Instance.Drop(GameManager.Instance.ThePlayer, item);
-        }, refreshMenuOnUse: true);
+            InventoryMenu.Instance.RefreshUI();
+        }, closeMenuOnUse: true);
         
         AddButton("Dev Inspect", () =>
         {
