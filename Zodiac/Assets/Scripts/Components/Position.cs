@@ -25,8 +25,6 @@ public class Position : ZodiacComponent
 
     private IEnumerator LerpTo(Vector2Int destination)
     {
-        Debug.Log(gameObject.name + " " + transform.position + " " + destination);
-
         Vector2 start = transform.position;
         Vector2 end = (Vector2)destination;
 

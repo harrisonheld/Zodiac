@@ -6,7 +6,8 @@ using UnityEngine;
 
 public static class Serialization
 {
-    public static void SerailizeToFile(GameObject obj, string path)
+    const string ENTITY = "Entity"; // the start marker for an entity
+    public static void SerializeToFile(GameObject obj, string path)
     {
         XmlWriterSettings settings = new()
         {
@@ -15,7 +16,7 @@ public static class Serialization
             NewLineOnAttributes = true
         };
         XmlWriter writer = XmlWriter.Create(path, settings);
-        writer.WriteStartElement("root");
+        writer.WriteStartElement(ENTITY);
 
         foreach(ZodiacComponent comp in obj.GetComponents<ZodiacComponent>())
         {
@@ -55,17 +56,38 @@ public static class Serialization
             switch(reader.NodeType)
             {
                 case XmlNodeType.Element: // The node is an element.
-                    Console.Write("<" + reader.Name);
-                    Console.WriteLine(">");
+                    if (reader.Name == ENTITY)
+                        continue;
+                    // create the component
+                    Type compType = Type.GetType(reader.Name);
+                    ZodiacComponent comp = (ZodiacComponent)entity.AddComponent(compType);
+                    // set props
+                    for(int i = 0; i < reader.AttributeCount; i++)
+                    {
+                        reader.MoveToAttribute(i);
+                        string propertyName = reader.Name;
+                        string propertyValueString = reader.Value;
+                        
+                        try
+                        {
+                            PropertyInfo prop = compType.GetProperty(propertyName);
+                            var propertyValue = Convert.ChangeType(propertyValueString, prop.PropertyType);
+                            prop.SetValue(comp, propertyValue);
+                        }
+                        catch(Exception ex)
+                        {
+                            Debug.Log(ex.Message);
+                        }
+
+                    }
                     break;
 
                 case XmlNodeType.Text: //Display the text in each element.
-                    Console.WriteLine(reader.Value);
+                    Debug.Log(reader.Value);
                     break;
 
                 case XmlNodeType.EndElement: //Display the end of the element.
-                    Console.Write("</" + reader.Name);
-                    Console.WriteLine(">");
+                    Debug.Log("<" + reader.Name + ">");
                     break;
             }
         }

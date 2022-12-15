@@ -5,8 +5,8 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Inventory : ZodiacComponent
 {
-    public List<Item> Items { get; set; }
-    public List<Slot> Slots { get; set; }
+    public List<Item> Items { get; set; } = new();
+    public List<Slot> Slots { get; set; } = new();
 
     public void AddItem(Item item)
     {
@@ -24,6 +24,10 @@ public class Inventory : ZodiacComponent
 
     public bool Equip(Equippable equippable)
     {
+        // see if creature even has a good slot
+        if (GetFirstSlot(equippable.slotType) == null)
+            return false;
+        
         // find open slot
         Slot slot = GetOpenSlot(equippable.slotType);
         

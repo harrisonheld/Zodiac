@@ -29,7 +29,7 @@ public class ItemSlot : MonoBehaviour
 
     public void ItemSelected()
     {
-        Common.itemSubMenu.SetItem(item);
-        Common.menuManager.Open(Common.itemSubMenu);
+        ItemSubMenu.Instance.SetItem(item);
+        MenuManager.Instance.Open(ItemSubMenu.Instance);
     }
 }

@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 31183695}
   - component: {fileID: 31183696}
   m_Layer: 0
-  m_Name: Player
+  m_Name: HARRISON <3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -238,9 +238,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 756a0f604082bf64ea97d2c771caac90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HealthMax: 10
-  Defense: 0
-  healthCurrent: 10
 --- !u!114 &31183692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,8 +250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe4a294053d78244dbe9488ee18ad4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Quickness: 1000
-  Energy: 1000
 --- !u!114 &31183693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,9 +262,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0701bf855ca3d940ab78c5bc81dfbb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DisplayName: You
-  Description: you
-  sprite: {fileID: 0}
 --- !u!114 &31183695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,18 +274,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0ae4f7d90cc1d4aa3f66d4859fa144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Items: []
-  Slots:
-  - type: 0
-    equippable: {fileID: 1483419975}
-  - type: 1
-    equippable: {fileID: 0}
-  - type: 2
-    equippable: {fileID: 0}
-  - type: 3
-    equippable: {fileID: 0}
-  - type: 0
-    equippable: {fileID: 0}
 --- !u!114 &31183696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,9 +286,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0c10afe0af052b4fbf60895162ca5fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Solid: 1
-  OccludesVison: 0
-  Weight: 170
 --- !u!1 &46995894
 GameObject:
   m_ObjectHideFlags: 0
@@ -920,9 +897,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0701bf855ca3d940ab78c5bc81dfbb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DisplayName: Bow
-  Description: shooty shooty
-  sprite: {fileID: 0}
 --- !u!114 &560835222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -948,7 +922,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3f8499c0be458343bac6a0d402d78a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Count: 1
 --- !u!114 &560835224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -961,7 +934,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c992b049190ebee47938f946adce04ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotType: 1
 --- !u!212 &560835225
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1041,9 +1013,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0c10afe0af052b4fbf60895162ca5fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Solid: 0
-  OccludesVison: 0
-  Weight: 12
 --- !u!114 &560835228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1056,9 +1025,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97e2f6f71cf04ea428b13fe79dadba01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 10
-  AttackCost: 1000
-  AmmoType: 1
 --- !u!114 &560835229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1069,42 +1035,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 756a0f604082bf64ea97d2c771caac90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HealthMax: 10
-  Defense: 0
-  healthCurrent: 10
---- !u!114 &565006254 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -500079116528371538, guid: e91c2d9937bdb1e46bc6dd2307b10400, type: 3}
-  m_PrefabInstance: {fileID: 929129925}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3f8499c0be458343bac6a0d402d78a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &568151099 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -500079116528371538, guid: e91c2d9937bdb1e46bc6dd2307b10400, type: 3}
-  m_PrefabInstance: {fileID: 1299103010}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3f8499c0be458343bac6a0d402d78a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &631263854 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -500079116528371538, guid: e91c2d9937bdb1e46bc6dd2307b10400, type: 3}
-  m_PrefabInstance: {fileID: 6928017192322702032}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3f8499c0be458343bac6a0d402d78a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &754243503
@@ -2300,17 +2230,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1384891296}
   m_CullTransparentMesh: 1
---- !u!114 &1483419975 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6338041430994155906, guid: beeb2cafe533c764b8418bccecf6c860, type: 3}
-  m_PrefabInstance: {fileID: 1683245051}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c992b049190ebee47938f946adce04ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1489518577
 GameObject:
   m_ObjectHideFlags: 0
@@ -3019,8 +2938,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe4a294053d78244dbe9488ee18ad4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Quickness: 750
-  Energy: 0
 --- !u!114 &1774628366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3046,9 +2963,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 756a0f604082bf64ea97d2c771caac90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HealthMax: 10
-  Defense: 0
-  healthCurrent: 10
 --- !u!114 &1774628368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3061,8 +2975,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6d78f3f53653241b1836e7f6639ce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ai: 2
-  Target: {fileID: 31183686}
 --- !u!212 &1774628369
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3142,10 +3054,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0701bf855ca3d940ab78c5bc81dfbb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DisplayName: Frog Warden
-  Description: The humble frog warden collects frogs for some reason nobody has ever
-    bothered to ask. His voice oozes out as blood from a wound.
-  sprite: {fileID: 0}
 --- !u!114 &1774628372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3158,13 +3066,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0ae4f7d90cc1d4aa3f66d4859fa144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Items:
-  - {fileID: 631263854}
-  - {fileID: 565006254}
-  - {fileID: 568151099}
-  Slots:
-  - type: 0
-    equippable: {fileID: 6338041430736578899}
 --- !u!114 &1774628373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3177,9 +3078,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0c10afe0af052b4fbf60895162ca5fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Solid: 1
-  OccludesVison: 0
-  Weight: 170
 --- !u!1 &1815941696
 GameObject:
   m_ObjectHideFlags: 0
@@ -3298,7 +3196,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 58550}
+  m_AnchoredPosition: {x: 0, y: 241550}
   m_SizeDelta: {x: 584, y: 2000}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &1824815626
@@ -3693,7 +3591,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2e3ff2ea5b97514d88d84c1f499f018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AmmoType: 1
 --- !u!114 &1976670619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3706,9 +3603,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0c10afe0af052b4fbf60895162ca5fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Solid: 0
-  OccludesVison: 0
-  Weight: 1
 --- !u!114 &1976670620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3721,9 +3615,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0701bf855ca3d940ab78c5bc81dfbb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DisplayName: Arrow
-  Description: yeooouch
-  sprite: {fileID: 0}
 --- !u!114 &1976670621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3749,7 +3640,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3f8499c0be458343bac6a0d402d78a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Count: 1
 --- !u!212 &1976670624
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3810,7 +3700,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1976670617}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12, y: 5, z: 0}
+  m_LocalPosition: {x: 13, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3829,9 +3719,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 756a0f604082bf64ea97d2c771caac90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HealthMax: 10
-  Defense: 0
-  healthCurrent: 10
 --- !u!1001 &2006745688
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4187,17 +4074,6 @@ PrefabInstance:
     - {fileID: 0}
     - {fileID: 6338041430994155935, guid: beeb2cafe533c764b8418bccecf6c860, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: beeb2cafe533c764b8418bccecf6c860, type: 3}
---- !u!114 &6338041430736578899 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6338041430994155906, guid: beeb2cafe533c764b8418bccecf6c860, type: 3}
-  m_PrefabInstance: {fileID: 6338041430736578898}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c992b049190ebee47938f946adce04ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!222 &6707290614782689896
 CanvasRenderer:
   m_ObjectHideFlags: 0

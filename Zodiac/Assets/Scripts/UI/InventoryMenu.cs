@@ -11,6 +11,19 @@ public class InventoryMenu : MonoBehaviour, IZodiacMenu
     private Inventory inventory;
     public Canvas Canvas { get => GetComponent<Canvas>(); }
     public CanvasGroup CanvasGroup { get => GetComponent<CanvasGroup>(); }
+    public static InventoryMenu Instance { get; private set; }
+    public void Awake()
+    {
+        if (Instance == null) // If there is no instance already
+        {
+            DontDestroyOnLoad(this.gameObject); // Keep the GameObject, this component is attached to, across different scenes
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject); // Destroy the GameObject, this component is attached to
+        }
+    }
 
     public void RefreshUI()
     {

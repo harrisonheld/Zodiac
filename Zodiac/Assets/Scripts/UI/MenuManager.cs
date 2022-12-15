@@ -83,4 +83,9 @@ public class MenuManager : MonoBehaviour {
             TopMenu().GainFocus();
         }
     }
+
+    public bool isOpen(IZodiacMenu toCheck)
+    {
+        return toCheck.Canvas.enabled;
+    }
 }

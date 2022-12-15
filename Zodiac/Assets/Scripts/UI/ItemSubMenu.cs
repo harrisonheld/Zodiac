@@ -14,6 +14,20 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
     public Canvas Canvas { get => GetComponent<Canvas>(); }
     public CanvasGroup CanvasGroup { get => GetComponent<CanvasGroup>(); }
 
+    public static ItemSubMenu Instance { get; private set; }
+    public void Awake()
+    {
+        if (Instance == null) // If there is no instance already
+        {
+            DontDestroyOnLoad(this.gameObject); // Keep the GameObject, this component is attached to, across different scenes
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject); // Destroy the GameObject, this component is attached to
+        }
+    }
+
     private void Clear()
     {
         foreach (Transform child in itemActionPanel.transform)
@@ -39,39 +53,41 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
         // add buttons
         //
 
-        AddButtonInternal("Drop", () =>
+        AddButton("Drop", () =>
         {
             GameManager.Instance.Drop(GameManager.Instance.ThePlayer, item);
-            // refresh inv UI to account for the removed item
-            Common.inventoryMenu.RefreshUI();
-        });
-        AddButtonInternal("Inspect", () =>
+        }, refreshMenuOnUse: true);
+        
+        AddButton("Dev Inspect", () =>
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
             foreach (Component comp in item.gameObject.GetComponents<Component>())
             {
                 sb.AppendLine($"<{comp.GetType().Name}>");
-                foreach (System.Reflection.FieldInfo fieldInfo in comp.GetType().GetFields())
+                var propInfos = comp.GetType().GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.DeclaredOnly);
+                foreach (System.Reflection.PropertyInfo propInfo in propInfos)
                 {
-                    sb.AppendLine($"{fieldInfo.Name}: {fieldInfo.GetValue(comp)}");
+                    sb.AppendLine($"{propInfo.Name}: {propInfo.GetValue(comp)}");
                 }
                 sb.AppendLine();
             }
 
-            Common.alertMenu.ShowText(sb.ToString());
+            AlertMenu.Instance.ShowText(sb.ToString());
         }, closeMenuOnUse: false);
 
         Equippable equippable;
         if (item.gameObject.TryGetComponent<Equippable>(out equippable))
         {
-            AddButtonInternal("Equip", () =>
+            AddButton("Equip", () =>
             {
                 GameManager.Instance.ThePlayer.GetComponent<Inventory>().Equip(equippable);
-                // refresh inv UI to account for the removed item
-                Common.inventoryMenu.RefreshUI();
-            });
+            }, refreshMenuOnUse: true);
         }
+
+        AddButton("KILL YOURSELF", () => {
+            GameManager.Instance.BreakEntity(GameManager.Instance.ThePlayer);
+        });
     }
     public void GainFocus()
     {
@@ -81,7 +97,7 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
         }
     }
 
-    private void AddButtonInternal(string text, UnityEngine.Events.UnityAction action, bool closeMenuOnUse = true)
+    private void AddButtonInternal(string text, UnityEngine.Events.UnityAction action, bool closeMenuOnUse, bool refreshMenuOnUse)
     {
         GameObject buttonGo = Instantiate(buttonPrefab, itemActionPanel.transform);
         buttonGo.name = text;
@@ -90,17 +106,18 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
         buttonGo.GetComponentInChildren<TextMeshProUGUI>().text = text;
 
 
-        dropButtonComp.onClick.AddListener(action);
-        if (closeMenuOnUse)
+        dropButtonComp.onClick.AddListener(() =>
         {
-            // add an action to close this menu
-            dropButtonComp.onClick.AddListener(() => {
-                Common.menuManager.Close(this);
-            });
-        }
+            action();
+            if (refreshMenuOnUse)
+                RefreshUI();
+            if (closeMenuOnUse)
+                MenuManager.Instance.Close(this);
+        });
+
     }
-    public void AddButton(string text, UnityEngine.Events.UnityAction action, bool closeMenuOnUse = true)
+    public void AddButton(string text, UnityEngine.Events.UnityAction action, bool closeMenuOnUse = true, bool refreshMenuOnUse = false)
     {
-        AddButtonInternal(text, action, closeMenuOnUse);
+        AddButtonInternal(text, action, closeMenuOnUse, refreshMenuOnUse);
     }
 }

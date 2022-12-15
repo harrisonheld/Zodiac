@@ -7,7 +7,7 @@ public class Visual : ZodiacComponent
 {
     [SerializeField] public string DisplayName { get; set; } = "DISPLAY_NAME_HERE";
     [SerializeField] public string Description { get; set; } = "DESCRIPTION_HERE";
-    [SerializeField] private string spriteName = "";
+    private string spriteName = "";
 
     /// <summary>
     /// The sprite as a string.

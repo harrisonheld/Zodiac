@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,8 @@ public class PickMenu : MonoBehaviour, IZodiacMenu
     [SerializeField] GameObject optionsContainer;
     [SerializeField] GameObject buttonPrefab;
 
-    private List<GameObject> options; // the items to be picked from
+    private List<GameObject> options; // the things to be picked from
+    private Action<GameObject> action; // what to do with the thing when it is picked
 
     public static PickMenu Instance { get; private set; }
     public void Awake()
@@ -44,8 +46,7 @@ public class PickMenu : MonoBehaviour, IZodiacMenu
             optionButton.GetComponent<Button>().onClick.AddListener(() =>
             {
                 options.Remove(option);
-
-                GameManager.Instance.Pickup(GameManager.Instance.ThePlayer, option.GetComponent<Item>());
+                action(option); // perform the action on the option
 
                 if (options.Count == 0)
                 {
@@ -83,9 +84,10 @@ public class PickMenu : MonoBehaviour, IZodiacMenu
 
 
 
-    public void ShowGetMenu(List<GameObject> candidates)
+    public void PickMultiple(List<GameObject> _options, Action<GameObject> _action)
     {
-        options = candidates;
+        options = _options;
+        action = _action;
         RefreshUI();
         MenuManager.Instance.Open(this);
     }

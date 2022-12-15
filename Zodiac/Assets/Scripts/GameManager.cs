@@ -28,20 +28,15 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-        // get stuff
-        Common.menuManager = GetComponent<MenuManager>();
-        Common.inventoryMenu = GameObject.Find("InventoryMenu").GetComponent<InventoryMenu>();
-        Common.itemSubMenu = GameObject.Find("ItemSubMenu").GetComponent<ItemSubMenu>();
-        Common.cursor = GameObject.Find("Cursor");
-        Common.lookMenu = GameObject.Find("LookMenu").GetComponent<LookMenu>();
-
         // get all entities
         foreach (Position posComp in GameObject.FindObjectsOfType<Position>())
         {
             Entities.Add(posComp.gameObject);
         }
 
-        Serialization.SerailizeToFile(ThePlayer, "C:/Users/johnd/Desktop/test.xml");
+        string path = "C:/Users/johnd/Desktop/test.xml";
+        Serialization.SerializeToFile(ThePlayer, path);
+        GameObject playerDeseralized = Serialization.Deserialize(path);
     }
 
     public void Update()
@@ -50,7 +45,7 @@ public class GameManager : MonoBehaviour
         if(ThePlayer == null)
         {
             // tell the player this
-            if (!AlertMenu.Instance.Canvas.enabled)
+            if (!MenuManager.Instance.isOpen(AlertMenu.Instance))
             {
                 MenuManager.Instance.CloseAll();
                 AlertMenu.Instance.ShowText("Unfortunately, you have died or otherwise ceased to exist.");
@@ -192,15 +187,17 @@ public class GameManager : MonoBehaviour
         
         pickerUpper.GetComponent<Inventory>().AddItem(item);
         pickerUpper.GetComponent<EnergyHaver>().Energy -= Constants.COST_PICKUP;
+
+        var @event = new PickedUpEvent()
+        {
+            pickerUpper = pickerUpper
+        };
+        item.gameObject.FireEvent(@event);
+
         Debug.Log("Picked up " + item.name);
     }
     public void Drop(GameObject dropper, Item toDrop)
     {
-        if (toDrop.name == "Bow")
-        {
-            // do nothing yay
-        }
-
         dropper.GetComponent<Inventory>().RemoveItem(toDrop);
 
         // copy droppers position
