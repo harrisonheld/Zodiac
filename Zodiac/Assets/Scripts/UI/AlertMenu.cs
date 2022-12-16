@@ -6,8 +6,10 @@ using TMPro;
 public class AlertMenu : MonoBehaviour, IZodiacMenu
 {
     [SerializeField] TextMeshProUGUI textmesh;
+    [SerializeField] RectTransform contextBox;
     public Canvas Canvas { get => GetComponent<Canvas>(); }
     public CanvasGroup CanvasGroup { get => GetComponent<CanvasGroup>(); }
+
 
     public static AlertMenu Instance { get; private set; }
     public void Awake()
@@ -29,6 +31,7 @@ public class AlertMenu : MonoBehaviour, IZodiacMenu
     public void ShowText(string _text)
     {
         textmesh.text = _text;
+        contextBox.sizeDelta = new(contextBox.sizeDelta.x, textmesh.preferredHeight);
         MenuManager.Instance.Open(this);
     }
 }
