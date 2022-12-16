@@ -13,7 +13,7 @@
 		Quickness="300"
 		Energy="300" />
 	<Visual
-		DisplayName="Critter"
+		DisplayName="critter"
 		Description="It meanders."
 		Sprite="frog" />
 	<Inventory

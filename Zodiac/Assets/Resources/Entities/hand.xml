@@ -7,15 +7,15 @@
 		Defense="0"
 		HealthCurrent="10" />
 	<Position
-		X="1"
-		Y="5" />
+		X="4"
+		Y="4" />
 	<EnergyHaver
 		Quickness="1000"
 		Energy="1000" />
 	<Visual
-		DisplayName="human"
-		Description="A featherless biped."
-		Sprite="human1" />
+		DisplayName="The Hand That Feeds"
+		Description="Unburdened by laws of light transport, features shimmer and flicker onto your hyperplane. It doesn’t move clasically, instead ungilating greasily through Euclidean timespace. Smoke-like vortices circle in languish where sensory organs might go. Its voice oozes from within as pus from a wound."
+		Sprite="voidbird" />
 	<Inventory
 		Items="System.Collections.Generic.List`1[Item]"
 		Slots="System.Collections.Generic.List`1[Inventory+Slot]" />

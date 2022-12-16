@@ -5,7 +5,20 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Visual : ZodiacComponent
 {
-    [field: SerializeField] public string DisplayName { get; set; } = "DISPLAY_NAME_HERE";
+    private string displayName;
+    [field: SerializeField]
+    public string DisplayName
+    {
+        get
+        {
+            return displayName;
+        }
+        set
+        {
+            this.gameObject.name = value;
+            displayName = value;
+        }
+    }
     [field: SerializeField] public string Description { get; set; } = "DESCRIPTION_HERE";
     [field: SerializeField] private string spriteName = "";
 

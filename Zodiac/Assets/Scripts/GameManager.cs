@@ -37,6 +37,10 @@ public class GameManager : MonoBehaviour
         string path = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\";
         Entities.Add(Serialization.Deserialize(path + "human.xml"));
         Entities.Add(Serialization.Deserialize(path + "critter.xml"));
+        Entities.Add(Serialization.Deserialize(path + "beacon.xml"));
+        Entities.Add(Serialization.Deserialize(path + "pillar.xml"));
+        Entities.Add(Serialization.Deserialize(path + "hand.xml"));
+        Entities.Add(ThePlayer = Serialization.Deserialize(path + "player.xml"));
     }
 
     public void Update()

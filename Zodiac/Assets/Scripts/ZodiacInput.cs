@@ -189,6 +189,7 @@ public static class ZodiacInput
         cursor.SetActive(true);
 
         // show look menu
+        LookMenu.Instance.SetSubject(GameManager.Instance.ThePlayer);
         MenuManager.Instance.Open(LookMenu.Instance);
 
         inputMode = InputMode.Look;

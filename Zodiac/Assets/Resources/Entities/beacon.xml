@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Entity>
+	<Health
+		HealthMax="10"
+		Defense="0"
+		HealthCurrent="10" />
+	<Position
+		X="10"
+		Y="5" />
+	<Visual
+		DisplayName="beacon"
+		Description="This is an item I made to do all kinds of crazy shit - Harrison Dev."
+		Sprite="marble" />
+	<PhysicalAttributes
+		Solid="False"
+		OccludesVison="False"
+		Weight="1" />
+  <Item 
+    Count="1" />
+  <TheBeacon />
+</Entity>
