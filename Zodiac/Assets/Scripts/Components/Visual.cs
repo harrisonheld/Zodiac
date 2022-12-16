@@ -5,8 +5,8 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Visual : ZodiacComponent
 {
-    private string displayName;
-    [field: SerializeField]
+    [SerializeField]
+    private string displayName = "DISPLAY_NAME_HERE";
     public string DisplayName
     {
         get

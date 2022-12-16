@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Xml;
@@ -18,36 +20,46 @@ public static class Serialization
         XmlWriter writer = XmlWriter.Create(path, settings);
         writer.WriteStartElement(ENTITY);
 
-        foreach(ZodiacComponent comp in obj.GetComponents<ZodiacComponent>())
-        {
-            Type compType = comp.GetType();
-            writer.WriteStartElement(compType.Name);
-
-            // get all public instance (ie, non static) fields
-            PropertyInfo[] propertyInfos = compType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-            foreach (var propertyInfo in propertyInfos)
-            {
-                // check if the property has the ZodiacNoSerialize attribute
-                if (Attribute.IsDefined(propertyInfo, typeof(ZodiacNoSerializeAttribute)))
-                    continue;
-                
-                try
-                {
-                    var fieldName = propertyInfo.Name;
-                    object fieldValue = propertyInfo.GetValue(comp);
-                    writer.WriteAttributeString(fieldName, fieldValue.ToString());
-                }
-                catch
-                {
-                    Debug.Log($"Cannot serailize property {propertyInfo.Name} of type {propertyInfo.PropertyType} for component type {compType.Name}");
-                }
-            }
-
-            writer.WriteEndElement();
-        }
+        foreach (ZodiacComponent comp in obj.GetComponents<ZodiacComponent>())
+            SerializeComponent(writer, comp);
 
         writer.WriteEndElement();
         writer.Close();
+    }
+    private static void SerializeComponent(XmlWriter writer, object component)
+    {
+        Type compType = component.GetType();
+        writer.WriteStartElement(compType.Name);
+
+        // get all public instance (ie, non static) fields
+        PropertyInfo[] propertyInfos = compType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+        foreach (var propertyInfo in propertyInfos)
+            SerializeProperty(writer, component, propertyInfo);
+
+        writer.WriteEndElement();
+    }
+    private static void SerializeProperty(XmlWriter writer, object component, PropertyInfo propertyInfo)
+    {
+        // check if the property has the ZodiacNoSerialize attribute
+        if (Attribute.IsDefined(propertyInfo, typeof(ZodiacNoSerializeAttribute)))
+            return;
+
+        // if the property is a list, serialize each item in the list
+        if (propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(List<>))
+        {
+            writer.WriteStartElement(propertyInfo.Name);
+            // iterate over each element of the list
+            foreach (var element in (IEnumerable)propertyInfo.GetValue(component))
+                SerializeComponent(writer, element);
+
+            writer.WriteEndElement();
+            return;
+        }
+
+        var propName = propertyInfo.Name;
+        object propValue = propertyInfo.GetValue(component);
+        if(propValue != null)
+            writer.WriteAttributeString(propName, propValue.ToString());
     }
     public static GameObject Deserialize(string path)
     {

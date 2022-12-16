@@ -2548,7 +2548,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2040616610}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -2597,6 +2597,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textmesh: {fileID: 1020324167}
+  contextBox: {fileID: 1819945039}
 --- !u!1001 &6338041430736578898
 PrefabInstance:
   m_ObjectHideFlags: 0

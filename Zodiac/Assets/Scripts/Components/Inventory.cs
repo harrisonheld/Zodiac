@@ -25,16 +25,16 @@ public class Inventory : ZodiacComponent
     public bool Equip(Equippable equippable)
     {
         // see if creature even has a good slot
-        if (GetFirstSlot(equippable.slotType) == null)
+        if (GetFirstSlot(equippable.SlotType) == null)
             return false;
         
         // find open slot
-        Slot slot = GetOpenSlot(equippable.slotType);
+        Slot slot = GetOpenSlot(equippable.SlotType);
         
         // if no open slot, empty the first slot of the appropriate type and use that
         if (slot == null)
         {
-            slot = GetFirstSlot(equippable.slotType);
+            slot = GetFirstSlot(equippable.SlotType);
             UnequipToItems(slot);
         }
 
@@ -46,14 +46,14 @@ public class Inventory : ZodiacComponent
         RemoveItem(equippable.GetComponent<Item>());
 
         // equip it
-        slot.equippable = equippable;
+        slot.Equippable = equippable;
         return true; // success
     }
     public void UnequipToItems(Slot slot)
     {
         // remove the equippable
-        Equippable equippable = slot.equippable;
-        slot.equippable = null;
+        Equippable equippable = slot.Equippable;
+        slot.Equippable = null;
 
         // if nothing was removed
         if (equippable == null)
@@ -72,7 +72,7 @@ public class Inventory : ZodiacComponent
     public Slot GetOpenSlot(SlotType type)
     {
         foreach (Slot slot in Slots)
-            if (slot.type == type && slot.Empty())
+            if (slot.Type == type && slot.Empty())
                 return slot;
 
         return null;
@@ -80,7 +80,7 @@ public class Inventory : ZodiacComponent
     public Slot GetFirstSlot(SlotType type)
     {
         foreach (Slot slot in Slots)
-            if (slot.type == type)
+            if (slot.Type == type)
                 return slot;
 
         return null;
@@ -93,18 +93,18 @@ public class Inventory : ZodiacComponent
         if (Slots[0] == null)
             return null;
 
-        return Slots[0].equippable;
+        return Slots[0].Equippable;
     }
 
     [System.Serializable]
     public class Slot
     {
-        public SlotType type;
-        public Equippable equippable;
+        [field: SerializeField] public SlotType Type { get; set; }
+        [field: SerializeField] public Equippable Equippable { get; set; }
 
         public bool Empty()
         {
-            return equippable == null;
+            return Equippable == null;
         }
     }
 }
