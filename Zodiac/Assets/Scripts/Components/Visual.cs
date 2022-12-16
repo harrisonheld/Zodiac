@@ -5,9 +5,9 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Visual : ZodiacComponent
 {
-    [SerializeField] public string DisplayName { get; set; } = "DISPLAY_NAME_HERE";
-    [SerializeField] public string Description { get; set; } = "DESCRIPTION_HERE";
-    private string spriteName = "";
+    [field: SerializeField] public string DisplayName { get; set; } = "DISPLAY_NAME_HERE";
+    [field: SerializeField] public string Description { get; set; } = "DESCRIPTION_HERE";
+    [field: SerializeField] private string spriteName = "";
 
     /// <summary>
     /// The sprite as a string.
@@ -36,7 +36,7 @@ public class Visual : ZodiacComponent
         if(DisplayName == "")
             DisplayName = gameObject.name;
         if (spriteName == "")
-            spriteName = gameObject.GetComponent<SpriteRenderer>().sprite.name;
+            spriteName = gameObject.GetComponent<SpriteRenderer>().sprite?.name;
 
         // add shader
         Material material = new Material(Shader.Find("Unlit/PaletteSwap"));

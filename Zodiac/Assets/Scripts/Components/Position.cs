@@ -6,6 +6,8 @@ using UnityEngine;
 public class Position : ZodiacComponent
 {
     [SerializeField] private Vector2Int pos;
+
+    [ZodiacNoSerialize]
     public Vector2Int Pos
     {
         get => pos;
@@ -14,6 +16,22 @@ public class Position : ZodiacComponent
             pos = value;
             // update transform position
             gameObject.transform.position = (Vector2)value;
+        }
+    }
+    public int X
+    {
+        get => pos.x;
+        set
+        {
+            Pos = new Vector2Int(value, pos.y);
+        }
+    }
+    public int Y
+    {
+        get => pos.y;
+        set
+        {
+            Pos = new Vector2Int(pos.x, value);
         }
     }
 

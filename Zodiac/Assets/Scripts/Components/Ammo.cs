@@ -5,7 +5,7 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Ammo : ZodiacComponent
 {
-    public AmmoType AmmoType { get; set; }
+    [field: SerializeField] public AmmoType AmmoType { get; set; }
 }
 
 public enum AmmoType

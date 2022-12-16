@@ -27,6 +27,10 @@ public static class Serialization
             PropertyInfo[] propertyInfos = compType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
             foreach (var propertyInfo in propertyInfos)
             {
+                // check if the property has the ZodiacNoSerialize attribute
+                if (Attribute.IsDefined(propertyInfo, typeof(ZodiacNoSerializeAttribute)))
+                    continue;
+                
                 try
                 {
                     var fieldName = propertyInfo.Name;
@@ -45,12 +49,12 @@ public static class Serialization
         writer.WriteEndElement();
         writer.Close();
     }
-
     public static GameObject Deserialize(string path)
     {
         GameObject entity = new();
-        
-        XmlTextReader reader = new(path);
+        entity.AddComponent<SpriteRenderer>();
+
+        using XmlTextReader reader = new(path);
         while(reader.Read())
         {
             switch(reader.NodeType)
@@ -71,15 +75,20 @@ public static class Serialization
                         try
                         {
                             PropertyInfo prop = compType.GetProperty(propertyName);
-                            var propertyValue = Convert.ChangeType(propertyValueString, prop.PropertyType);
-                            prop.SetValue(comp, propertyValue);
+
+                            // convert the string to the correct type, including if the type is an enum
+                            if (prop.PropertyType.IsEnum)
+                                prop.SetValue(comp, Enum.Parse(prop.PropertyType, propertyValueString));
+                            else
+                                prop.SetValue(comp, Convert.ChangeType(propertyValueString, prop.PropertyType));
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             Debug.Log(ex.Message);
                         }
 
                     }
+
                     break;
 
                 case XmlNodeType.Text: //Display the text in each element.
@@ -94,4 +103,9 @@ public static class Serialization
 
         return entity;
     }
+}
+
+[System.AttributeUsage(System.AttributeTargets.Property)]
+public class ZodiacNoSerializeAttribute : System.Attribute
+{
 }

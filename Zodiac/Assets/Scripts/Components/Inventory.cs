@@ -5,8 +5,8 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Inventory : ZodiacComponent
 {
-    public List<Item> Items { get; set; } = new();
-    public List<Slot> Slots { get; set; } = new();
+    [field: SerializeField]  public List<Item> Items { get; set; } = new();
+    [field: SerializeField]  public List<Slot> Slots { get; set; } = new();
 
     public void AddItem(Item item)
     {

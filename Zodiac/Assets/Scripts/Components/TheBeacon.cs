@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class TheBeacon : ZodiacComponent
 {
+    public override List<IInteraction> GetInteractions()
+    {
+        return new List<IInteraction> { new FreezeTimeForWielder() };
+    }
     public override bool HandleEvent(PickedUpEvent e)
     {
         if(e.pickerUpper == GameManager.Instance.ThePlayer)

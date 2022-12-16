@@ -63,7 +63,7 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
-            foreach (Component comp in item.gameObject.GetComponents<Component>())
+            foreach (Component comp in item.gameObject.GetComponents<ZodiacComponent>())
             {
                 sb.AppendLine($"<{comp.GetType().Name}>");
                 var propInfos = comp.GetType().GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.DeclaredOnly);
@@ -86,9 +86,13 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
             }, refreshMenuOnUse: true);
         }
 
-        AddButton("KILL YOURSELF", () => {
-            GameManager.Instance.BreakEntity(GameManager.Instance.ThePlayer);
-        });
+        foreach (IInteraction interaction in item.gameObject.GetInteractions())
+        {
+            AddButton(interaction.Name, () =>
+            {
+                interaction.Perform();
+            });
+        }
     }
     public void GainFocus()
     {

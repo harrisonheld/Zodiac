@@ -34,9 +34,9 @@ public class GameManager : MonoBehaviour
             Entities.Add(posComp.gameObject);
         }
 
-        string path = "C:/Users/johnd/Desktop/test.xml";
-        Serialization.SerializeToFile(ThePlayer, path);
-        GameObject playerDeseralized = Serialization.Deserialize(path);
+        string path = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\";
+        Entities.Add(Serialization.Deserialize(path + "human.xml"));
+        Entities.Add(Serialization.Deserialize(path + "critter.xml"));
     }
 
     public void Update()
@@ -60,7 +60,6 @@ public class GameManager : MonoBehaviour
     private void DoTurn()
     {
         EnergySystem();
-        AbilitySystem();
         BrainSystem();
 
         turn++;
@@ -253,6 +252,8 @@ public class GameManager : MonoBehaviour
                     {
                         if (energyHaver.Energy <= 0)
                             break;
+                        if (brain.Target == null)
+                            break;
 
                         Vector2Int targetPos = brain.Target.GetComponent<Position>().Pos;
                         Vector2Int towards = targetPos - myPos;
@@ -302,14 +303,6 @@ public class GameManager : MonoBehaviour
                 default:
                     break;
             }
-        }
-    }
-    private void AbilitySystem()
-    {
-        foreach (Ability ability in GameObject.FindObjectsOfType<Ability>())
-        {
-            if (ability.Cooldown > 0)
-                ability.Cooldown--;
         }
     }
 }

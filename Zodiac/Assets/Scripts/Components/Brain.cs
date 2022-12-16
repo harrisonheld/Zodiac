@@ -5,8 +5,8 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Brain : ZodiacComponent
 {
-    [SerializeField] public AiType Ai { get; set; }
-    [SerializeField] public GameObject Target { get; set; }
+    [field: SerializeField] public AiType Ai { get; set; }
+    [field: SerializeField] public GameObject Target { get; set; }
 }
 
 public enum AiType

@@ -5,10 +5,10 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Health : ZodiacComponent
 {
-    [SerializeField] public int HealthMax { get; set; } = 10;
-    [SerializeField] public int Defense { get; set; } = 0;
-    private int healthCurrent = 10;
-    [SerializeField] public int HealthCurrent { get => healthCurrent;
+    [field: SerializeField] public int HealthMax { get; set; } = 10;
+    [field: SerializeField] public int Defense { get; set; } = 0;
+    [field: SerializeField] private int healthCurrent = 10;
+    public int HealthCurrent { get => healthCurrent;
         set {
             healthCurrent = value;
             if (healthCurrent <= 0)
