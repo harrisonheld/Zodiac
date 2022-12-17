@@ -57,5 +57,10 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
     {
         subject = newSubject;
         RefreshUI();
+
+        if (subject == null)
+            return;
+
+        newSubject.FireEvent(new LookedAtEvent());
     }
 }

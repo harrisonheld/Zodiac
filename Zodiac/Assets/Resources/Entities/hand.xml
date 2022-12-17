@@ -23,4 +23,6 @@
 		Solid="True"
 		OccludesVison="False"
 		Weight="200" />
+  <LookingHurts
+		DamageInflictedUponLook="1" />
 </Entity>

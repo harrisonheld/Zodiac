@@ -15,4 +15,5 @@ public abstract class ZodiacComponent : MonoBehaviour
         HandleEvent(casted);
     }
     public virtual bool HandleEvent(PickedUpEvent e) { return false; }
+    public virtual bool HandleEvent(LookedAtEvent e) { return false; }
 }
