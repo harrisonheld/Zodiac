@@ -238,11 +238,13 @@ public class GameManager : MonoBehaviour
             // check if null in case another AI's action caused this object to be destroyed
             if (brain == null)
                 continue;
-
+            if (brain.gameObject == null)
+                continue;
             // check if this entity is on the map
             if (!Entities.Contains(brain.gameObject))
                 continue;
-            if (brain.gameObject == null)
+            // if player controlled, dont do its AI
+            if (brain.gameObject == ThePlayer)
                 continue;
 
             Position myPosComp = brain.gameObject.GetComponent<Position>();
