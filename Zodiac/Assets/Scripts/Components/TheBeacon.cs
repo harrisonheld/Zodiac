@@ -12,7 +12,7 @@ public class TheBeacon : ZodiacComponent
     {
         if(e.pickerUpper == GameManager.Instance.ThePlayer)
         {
-            AlertMenu.Instance.ShowText("A NEW HAND TOUCHES THE BEACON.");
+            LogMenu.Instance.Log("A NEW HAND TOUCHES THE BEACON.");
         }
         return true;
     }

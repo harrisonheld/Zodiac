@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public abstract class ZodiacComponent : MonoBehaviour
 {
     public virtual List<IInteraction> GetInteractions() { return new(); }
+    public virtual string GetDescription() { return null; }
 
     public virtual void HandleEvent(ZodiacEvent e)
     {

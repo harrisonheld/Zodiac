@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Entity>
 	<Brain
-		Ai="Seeker" />
+		Ai="Wanderer" />
 	<Health
 		HealthMax="10"
 		Defense="0"
@@ -14,7 +14,7 @@
 		Energy="1000" />
 	<Visual
 		DisplayName="The Hand That Feeds"
-		Description="Unburdened by laws of light transport, features shimmer and flicker onto your hyperplane. It doesn’t move clasically, instead ungilating greasily through Euclidean timespace. Smoke-like vortices circle in languish where sensory organs might go. Its voice oozes from within as pus from a wound."
+		Description="Unburdened by laws of light transport, features shimmer and flicker onto your hyperplane. It doesn’t move classically, instead ungilating greasily through Euclidean timespace. Smoke-like vortices convect chilling air in sickening mockery of the human circulatory system. Its voice oozes from within as pus from a wound."
 		Sprite="voidbird" />
 	<Inventory
 		Items="System.Collections.Generic.List`1[Item]"

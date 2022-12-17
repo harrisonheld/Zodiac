@@ -46,6 +46,13 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
         int healthMax = health.HealthMax;
         float percent = 100.0f * (float)healthCurr / (float)healthMax;
         healthText.text = $"{healthCurr} / {healthMax} ({percent}%)";
+
+        foreach (var comp in subject.GetComponents<ZodiacComponent>())
+        {
+            string desc = comp.GetDescription();
+            if (desc != null)
+                body.text += "\n\n - " + desc;
+        }
     }
     public void GainFocus()
     {
