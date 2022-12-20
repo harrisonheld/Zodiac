@@ -22,7 +22,6 @@ public static class GameObjectExtentions {
 
     public static int GetGUID(this GameObject go)
     {
-        // holy shit!!!!!!!!!
         return 1;
     }
 }

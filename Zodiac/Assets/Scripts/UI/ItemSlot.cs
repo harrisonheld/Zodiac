@@ -8,9 +8,9 @@ public class ItemSlot : MonoBehaviour
     [SerializeField] Image icon;
     [SerializeField] TextMeshProUGUI text;
 
-    private Item item;
+    private GameObject item;
     
-    public void SetItem(Item _item)
+    public void SetItem(GameObject _item)
     {
         item = _item;
 
@@ -20,8 +20,8 @@ public class ItemSlot : MonoBehaviour
 
         // set name
         text.text = vis.DisplayName;
-        if (item.Count > 1)
-            text.text += " x" + item.Count;
+        if (item.GetComponent<Item>().Count > 1)
+            text.text += " x" + item.GetComponent<Item>().Count;
 
         // set icon
         icon.sprite = vis.GetUnitySprite();

@@ -31,7 +31,7 @@ public class InventoryMenu : MonoBehaviour, IZodiacMenu
 
         for (int i = 0; i < inventory.Items.Count; i++)
         {
-            Item item = inventory.Items[i];
+            GameObject item = inventory.Items[i];
             GameObject itemSlot = Instantiate(itemSlotPrefab);
             itemSlot.transform.SetParent(itemsContainer.transform, false);
             itemSlot.GetComponent<ItemSlot>().SetItem(item);

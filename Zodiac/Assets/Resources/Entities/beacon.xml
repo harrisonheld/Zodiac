@@ -18,4 +18,8 @@
   <Item 
     Count="1" />
   <TheBeacon />
+  <Equippable
+		Slot="Hand" />
+  <MeleeWeapon
+    Damage="1000" />
 </Entity>

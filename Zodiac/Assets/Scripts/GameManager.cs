@@ -38,9 +38,12 @@ public class GameManager : MonoBehaviour
         Entities.Add(Serialization.Deserialize(path + "human.xml"));
         Entities.Add(Serialization.Deserialize(path + "critter.xml"));
         Entities.Add(Serialization.Deserialize(path + "beacon.xml"));
+        Entities.Add(Serialization.Deserialize(path + "beacon.xml"));
         Entities.Add(Serialization.Deserialize(path + "pillar.xml"));
         Entities.Add(Serialization.Deserialize(path + "hand.xml"));
         Entities.Add(ThePlayer = Serialization.Deserialize(path + "player.xml"));
+
+        Serialization.SerializeEntities(Entities, path + "all_entities.xml");
     }
 
     public void Update()
@@ -163,7 +166,7 @@ public class GameManager : MonoBehaviour
         int attackDamage = 1;
         int attackCost = 1000; // cost of the attack in energy
 
-        Equippable attackerPrimary = attacker.GetComponent<Inventory>().GetPrimary();
+        GameObject attackerPrimary = attacker.GetComponent<Inventory>().GetPrimary();
         if(attackerPrimary != null)
         {
             MeleeWeapon weapon = attackerPrimary.GetComponent<MeleeWeapon>();
@@ -178,9 +181,9 @@ public class GameManager : MonoBehaviour
 
         targetHealth.HealthCurrent -= Mathf.Max(0, attackDamage - targetHealth.Defense);
     }
-    public void Pickup(GameObject pickerUpper, Item item)
+    public void Pickup(GameObject pickerUpper, GameObject item)
     {
-        Entities.Remove(item.gameObject);
+        Entities.Remove(item);
 
         // destroy pos, if it has one
         Position posComp = item.GetComponent<Position>();
@@ -195,11 +198,9 @@ public class GameManager : MonoBehaviour
         {
             pickerUpper = pickerUpper
         };
-        item.gameObject.FireEvent(@event);
-
-        Debug.Log("Picked up " + item.name);
+        item.FireEvent(@event);
     }
-    public void Drop(GameObject dropper, Item toDrop)
+    public void Drop(GameObject dropper, GameObject toDrop)
     {
         dropper.GetComponent<Inventory>().RemoveItem(toDrop);
 

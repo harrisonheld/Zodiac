@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
+using System.Reflection;
+using System.Xml;
 
 /// <summary>
 /// Base class for other components to inherit from
@@ -8,6 +11,30 @@ public abstract class ZodiacComponent : MonoBehaviour
 {
     public virtual List<IInteraction> GetInteractions() { return new(); }
     public virtual string GetDescription() { return null; }
+
+    
+    public virtual void Serialize(XmlWriter writer)
+    {
+        Type type = this.GetType();
+        writer.WriteStartElement(type.Name);
+
+        // get all public instance (ie, non static) fields
+        PropertyInfo[] propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+        foreach (var propertyInfo in propertyInfos)
+        {
+            // check if the property has the ZodiacNoSerialize attribute
+            if (Attribute.IsDefined(propertyInfo, typeof(ZodiacNoSerializeAttribute)))
+                continue;
+
+            var propName = propertyInfo.Name;
+            object propValue = propertyInfo.GetValue(this);
+            if (propValue != null)
+                writer.WriteAttributeString(propName, propValue.ToString());
+        }
+
+        writer.WriteEndElement();
+    }
+    
 
     public virtual void HandleEvent(ZodiacEvent e)
     {

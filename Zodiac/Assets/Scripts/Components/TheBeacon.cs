@@ -6,7 +6,7 @@ public class TheBeacon : ZodiacComponent
 {
     public override List<IInteraction> GetInteractions()
     {
-        return new List<IInteraction> { new FreezeTimeForWielder(), new ShootYourself(), new SerializePlayerInteraction() };
+        return new List<IInteraction> { new FreezeTimeForWielder(), new ShootYourself(), new SerializeInteraction() };
     }
     public override bool HandleEvent(PickedUpEvent e)
     {

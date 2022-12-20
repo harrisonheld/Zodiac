@@ -23,6 +23,8 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
         }
     }
 
+    private GameObject subject; // the thing we are looking at
+
     [SerializeField] TextMeshProUGUI title;
     [SerializeField] TextMeshProUGUI healthText;
     [SerializeField] TextMeshProUGUI body;
@@ -57,9 +59,6 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
     public void GainFocus()
     {
     }
-
-    private GameObject subject; // the thing we are looking at
-
     public void SetSubject(GameObject newSubject)
     {
         subject = newSubject;

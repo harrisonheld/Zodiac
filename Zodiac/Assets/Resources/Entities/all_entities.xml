@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Entities>
+	<Entity>
+		<Brain
+			Ai="Seeker" />
+		<Health
+			HealthMax="10"
+			Defense="0"
+			HealthCurrent="10" />
+		<Position
+			X="1"
+			Y="5" />
+		<EnergyHaver
+			Quickness="1000"
+			Energy="1000" />
+		<Visual
+			DisplayName="human"
+			Description="A featherless biped."
+			Sprite="human1" />
+		<Inventory>kys mf</Inventory>
+		<PhysicalAttributes
+			Solid="True"
+			OccludesVison="False"
+			Weight="200" />
+	</Entity>
+	<Entity>
+		<Brain
+			Ai="Wanderer" />
+		<Health
+			HealthMax="1"
+			Defense="0"
+			HealthCurrent="1" />
+		<Position
+			X="3"
+			Y="5" />
+		<EnergyHaver
+			Quickness="300"
+			Energy="300" />
+		<Visual
+			DisplayName="critter"
+			Description="It meanders."
+			Sprite="frog" />
+		<Inventory>kys mf</Inventory>
+		<PhysicalAttributes
+			Solid="False"
+			OccludesVison="False"
+			Weight="1" />
+		<Item
+			Count="1" />
+	</Entity>
+	<Entity>
+		<Health
+			HealthMax="10"
+			Defense="0"
+			HealthCurrent="10" />
+		<Position
+			X="10"
+			Y="5" />
+		<Visual
+			DisplayName="beacon"
+			Description="This is an item I made to do all kinds of crazy shit - Harrison Dev."
+			Sprite="marble" />
+		<PhysicalAttributes
+			Solid="False"
+			OccludesVison="False"
+			Weight="1" />
+		<Item
+			Count="1" />
+		<TheBeacon />
+		<Equippable
+			SlotType="Hand" />
+		<MeleeWeapon
+			Damage="1000"
+			AttackCost="1000" />
+	</Entity>
+	<Entity>
+		<Health
+			HealthMax="10"
+			Defense="0"
+			HealthCurrent="10" />
+		<Position
+			X="10"
+			Y="5" />
+		<Visual
+			DisplayName="beacon"
+			Description="This is an item I made to do all kinds of crazy shit - Harrison Dev."
+			Sprite="marble" />
+		<PhysicalAttributes
+			Solid="False"
+			OccludesVison="False"
+			Weight="1" />
+		<Item
+			Count="1" />
+		<TheBeacon />
+		<Equippable
+			SlotType="Hand" />
+		<MeleeWeapon
+			Damage="1000"
+			AttackCost="1000" />
+	</Entity>
+	<Entity>
+		<Visual
+			DisplayName="sculpted pillar"
+			Description="A marble white pillar in Tuscan style, too tall to peer over."
+			Sprite="dots2x2" />
+		<Position
+			X="-1"
+			Y="-1" />
+		<PhysicalAttributes
+			Solid="True"
+			OccludesVison="True"
+			Weight="2000" />
+		<Health
+			HealthMax="40"
+			Defense="6"
+			HealthCurrent="40" />
+	</Entity>
+	<Entity>
+		<Brain
+			Ai="Wanderer" />
+		<Health
+			HealthMax="10"
+			Defense="0"
+			HealthCurrent="10" />
+		<Position
+			X="4"
+			Y="4" />
+		<EnergyHaver
+			Quickness="1000"
+			Energy="1000" />
+		<Visual
+			DisplayName="The Hand That Feeds"
+			Description="Unburdened by laws of light transport, features shimmer and flicker onto your hyperplane. It doesn’t move classically, instead ungilating greasily through Euclidean timespace. Smoke-like vortices convect chilling air in sickening mockery of the human circulatory system. Its voice oozes from within as pus from a wound."
+			Sprite="voidbird" />
+		<Inventory>kys mf</Inventory>
+		<PhysicalAttributes
+			Solid="True"
+			OccludesVison="False"
+			Weight="200" />
+		<LookingHurts
+			DamageInflictedUponLook="1" />
+	</Entity>
+	<Entity>
+		<Health
+			HealthMax="10"
+			Defense="0"
+			HealthCurrent="10" />
+		<Position
+			X="10"
+			Y="5" />
+		<EnergyHaver
+			Quickness="1000"
+			Energy="1000" />
+		<Visual
+			DisplayName="You"
+			Description="It's you."
+			Sprite="human2" />
+		<Inventory>kys mf</Inventory>
+		<PhysicalAttributes
+			Solid="True"
+			OccludesVison="False"
+			Weight="200" />
+	</Entity>
+</Entities>

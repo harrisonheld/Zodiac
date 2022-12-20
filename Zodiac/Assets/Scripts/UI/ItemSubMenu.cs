@@ -10,7 +10,7 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
     [SerializeField] GameObject itemActionPanel;
     [SerializeField] GameObject buttonPrefab;
 
-    private Item item;
+    private GameObject item;
     public Canvas Canvas { get => GetComponent<Canvas>(); }
     public CanvasGroup CanvasGroup { get => GetComponent<CanvasGroup>(); }
 
@@ -37,7 +37,7 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
         itemActionPanel.transform.DetachChildren();
     }
 
-    public void SetItem(Item _item)
+    public void SetItem(GameObject _item)
     {
         item = _item;
     }
@@ -77,12 +77,11 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
             AlertMenu.Instance.ShowText(sb.ToString());
         }, closeMenuOnUse: false);
 
-        Equippable equippable;
-        if (item.gameObject.TryGetComponent<Equippable>(out equippable))
+        if (item.GetComponent<Equippable>())
         {
             AddButton("Equip", () =>
             {
-                GameManager.Instance.ThePlayer.GetComponent<Inventory>().Equip(equippable);
+                GameManager.Instance.ThePlayer.GetComponent<Inventory>().Equip(item);
             }, refreshMenuOnUse: true);
         }
 

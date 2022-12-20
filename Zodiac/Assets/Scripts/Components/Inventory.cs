@@ -1,18 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
 
 [DisallowMultipleComponent]
 public class Inventory : ZodiacComponent
 {
-    [field: SerializeField]  public List<Item> Items { get; set; } = new();
+    [field: SerializeField]  public List<GameObject> Items { get; set; } = new();
     [field: SerializeField]  public List<Slot> Slots { get; set; } = new();
 
-    public void AddItem(Item item)
+
+    public override void Serialize(XmlWriter writer)
+    {
+        writer.WriteElementString("Inventory", "kys mf");
+    }
+
+    public void AddItem(GameObject item)
     {
         Items.Add(item);
     }
-    public bool RemoveItem(Item item)
+    public bool RemoveItem(GameObject item)
     {
         return Items.Remove(item);
     }
@@ -22,19 +29,20 @@ public class Inventory : ZodiacComponent
         return Items.Count != 0;
     }
 
-    public bool Equip(Equippable equippable)
+    public bool Equip(GameObject equippable)
     {
+        SlotType slotType = equippable.GetComponent<Equippable>().SlotType;
         // see if creature even has a good slot
-        if (GetFirstSlot(equippable.SlotType) == null)
+        if (GetFirstSlot(slotType) == null)
             return false;
         
         // find open slot
-        Slot slot = GetOpenSlot(equippable.SlotType);
+        Slot slot = GetOpenSlot(slotType);
         
         // if no open slot, empty the first slot of the appropriate type and use that
         if (slot == null)
         {
-            slot = GetFirstSlot(equippable.SlotType);
+            slot = GetFirstSlot(slotType);
             UnequipToItems(slot);
         }
 
@@ -43,24 +51,24 @@ public class Inventory : ZodiacComponent
             return false;
 
         // remove it from inventory if possible
-        RemoveItem(equippable.GetComponent<Item>());
+        RemoveItem(equippable);
 
         // equip it
-        slot.Equippable = equippable;
+        slot.Contained = equippable;
         return true; // success
     }
     public void UnequipToItems(Slot slot)
     {
         // remove the equippable
-        Equippable equippable = slot.Equippable;
-        slot.Equippable = null;
+        GameObject equippable = slot.Contained;
+        slot.Contained = null;
 
         // if nothing was removed
         if (equippable == null)
             return;
 
         // put the item in the items
-        AddItem(equippable.GetComponent<Item>());
+        AddItem(equippable);
     }
 
     public void UnequipEverything()
@@ -86,25 +94,25 @@ public class Inventory : ZodiacComponent
         return null;
     }
 
-    public Equippable GetPrimary()
+    public GameObject GetPrimary()
     {
         if (Slots.Count == 0)
             return null;
         if (Slots[0] == null)
             return null;
 
-        return Slots[0].Equippable;
+        return Slots[0].Contained;
     }
 
     [System.Serializable]
     public class Slot
     {
         [field: SerializeField] public SlotType Type { get; set; }
-        [field: SerializeField] public Equippable Equippable { get; set; }
+        [field: SerializeField] public GameObject Contained { get; set; }
 
         public bool Empty()
         {
-            return Equippable == null;
+            return Contained == null;
         }
     }
 }

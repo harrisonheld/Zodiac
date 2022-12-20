@@ -100,9 +100,9 @@ public static class ZodiacInput
             }
 
             if (items.Count == 1)
-                GameManager.Instance.Pickup(GameManager.Instance.ThePlayer, items[0].GetComponent<Item>());
+                GameManager.Instance.Pickup(GameManager.Instance.ThePlayer, items[0]);
             else if (items.Count > 1)
-                PickMenu.Instance.PickMultiple(items, (GameObject item) => GameManager.Instance.Pickup(GameManager.Instance.ThePlayer, item.GetComponent<Item>()));
+                PickMenu.Instance.PickMultiple(items, (GameObject item) => GameManager.Instance.Pickup(GameManager.Instance.ThePlayer, item));
             // else if (items.Count == 0), do nothing cuz theres nothing here
 
             return;
