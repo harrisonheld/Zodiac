@@ -13,7 +13,7 @@ public abstract class ZodiacComponent : MonoBehaviour
     public virtual string GetDescription() { return null; }
 
     
-    public virtual void Serialize(XmlWriter writer)
+    public virtual void Serialize(EntitySerializer2 writer)
     {
         Type type = this.GetType();
         writer.WriteStartElement(type.Name);
@@ -28,13 +28,13 @@ public abstract class ZodiacComponent : MonoBehaviour
 
             var propName = propertyInfo.Name;
             object propValue = propertyInfo.GetValue(this);
-            if (propValue != null)
-                writer.WriteAttributeString(propName, propValue.ToString());
+
+            writer.WriteProperty(propName, propValue);
         }
 
         writer.WriteEndElement();
     }
-    
+
 
     public virtual void HandleEvent(ZodiacEvent e)
     {

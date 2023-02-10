@@ -35,15 +35,18 @@ public class GameManager : MonoBehaviour
         }
 
         string path = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\";
-        Entities.Add(Serialization.Deserialize(path + "human.xml"));
-        Entities.Add(Serialization.Deserialize(path + "critter.xml"));
-        Entities.Add(Serialization.Deserialize(path + "beacon.xml"));
-        Entities.Add(Serialization.Deserialize(path + "beacon.xml"));
-        Entities.Add(Serialization.Deserialize(path + "pillar.xml"));
-        Entities.Add(Serialization.Deserialize(path + "hand.xml"));
+        GameObject human;
+        GameObject beacon;
         Entities.Add(ThePlayer = Serialization.Deserialize(path + "player.xml"));
+        Entities.Add(human = Serialization.Deserialize(path + "human.xml"));
+        human.GetComponent<Brain>().Target = ThePlayer;
+        Entities.Add(beacon = Serialization.Deserialize(path + "beacon.xml"));
+        Pickup(ThePlayer, beacon);
 
-        Serialization.SerializeEntities(Entities, path + "all_entities.xml");
+        string testpath = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\serialize_scene_test.txt";
+        EntitySerializer2 serializer = new();
+        serializer.SerializeScene(new(){ ThePlayer, human, beacon }, testpath);
+        var deserialized = serializer.DeserializeScene(testpath) as List<GameObject>;
     }
 
     public void Update()

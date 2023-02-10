@@ -9,12 +9,6 @@ public class Inventory : ZodiacComponent
     [field: SerializeField]  public List<GameObject> Items { get; set; } = new();
     [field: SerializeField]  public List<Slot> Slots { get; set; } = new();
 
-
-    public override void Serialize(XmlWriter writer)
-    {
-        writer.WriteElementString("Inventory", "kys mf");
-    }
-
     public void AddItem(GameObject item)
     {
         Items.Add(item);

@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Xml;
 using UnityEngine;
 
-public static class Serialization
+public static class Serialization 
 {
     const string ENTITIES = "Entities"; // the start marker for all entities
     const string ENTITY = "Entity"; // the start marker for an entity
@@ -49,8 +49,8 @@ public static class Serialization
     {
         writer.WriteStartElement(ENTITY);
 
-        foreach (ZodiacComponent comp in entity.GetComponents<ZodiacComponent>())
-            comp.Serialize(writer);
+        //foreach (ZodiacComponent comp in entity.GetComponents<ZodiacComponent>())
+            //comp.Serialize(writer);
 
         writer.WriteEndElement();
     }

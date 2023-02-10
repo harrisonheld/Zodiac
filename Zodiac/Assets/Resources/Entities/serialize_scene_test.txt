@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Entities
+	EntityCount="3">
+	<Entity
+		ID="0">
+		<Health>
+			<HealthMax>10</HealthMax>
+			<Defense>0</Defense>
+			<HealthCurrent>10</HealthCurrent>
+		</Health>
+		<Position>
+			<X>10</X>
+			<Y>5</Y>
+		</Position>
+		<EnergyHaver>
+			<Quickness>1000</Quickness>
+			<Energy>0</Energy>
+		</EnergyHaver>
+		<Visual>
+			<DisplayName>You</DisplayName>
+			<Description>It's you.</Description>
+			<Sprite>human2</Sprite>
+		</Visual>
+		<Inventory>
+			<Items>
+				<Items>1</Items>
+			</Items>
+			<Slots />
+		</Inventory>
+		<PhysicalAttributes>
+			<Solid>True</Solid>
+			<OccludesVison>False</OccludesVison>
+			<Weight>200</Weight>
+		</PhysicalAttributes>
+	</Entity>
+	<Entity
+		ID="2">
+		<Brain>
+			<Ai>Seeker</Ai>
+			<Target>0</Target>
+		</Brain>
+		<Health>
+			<HealthMax>10</HealthMax>
+			<Defense>0</Defense>
+			<HealthCurrent>10</HealthCurrent>
+		</Health>
+		<Position>
+			<X>1</X>
+			<Y>5</Y>
+		</Position>
+		<EnergyHaver>
+			<Quickness>1000</Quickness>
+			<Energy>1000</Energy>
+		</EnergyHaver>
+		<Visual>
+			<DisplayName>human</DisplayName>
+			<Description>A featherless biped.</Description>
+			<Sprite>human1</Sprite>
+		</Visual>
+		<Inventory>
+			<Items />
+			<Slots />
+		</Inventory>
+		<PhysicalAttributes>
+			<Solid>True</Solid>
+			<OccludesVison>False</OccludesVison>
+			<Weight>200</Weight>
+		</PhysicalAttributes>
+	</Entity>
+	<Entity
+		ID="1">
+		<Health>
+			<HealthMax>10</HealthMax>
+			<Defense>0</Defense>
+			<HealthCurrent>10</HealthCurrent>
+		</Health>
+		<Visual>
+			<DisplayName>beacon</DisplayName>
+			<Description>This is an item I made to do all kinds of crazy shit - Harrison Dev.</Description>
+			<Sprite>marble</Sprite>
+		</Visual>
+		<PhysicalAttributes>
+			<Solid>False</Solid>
+			<OccludesVison>False</OccludesVison>
+			<Weight>1</Weight>
+		</PhysicalAttributes>
+		<Item>
+			<Count>1</Count>
+		</Item>
+		<TheBeacon />
+		<Equippable>
+			<SlotType>Hand</SlotType>
+		</Equippable>
+		<MeleeWeapon>
+			<Damage>1000</Damage>
+			<AttackCost>1000</AttackCost>
+		</MeleeWeapon>
+	</Entity>
+</Entities>
