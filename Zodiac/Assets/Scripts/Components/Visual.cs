@@ -45,8 +45,12 @@ public class Visual : ZodiacComponent
 
     private void Awake()
     {
+        // add sprite renderer if necessary
+        if (gameObject.GetComponent<SpriteRenderer>() == null)
+            gameObject.AddComponent<SpriteRenderer>();
+        
         // grab values from unity
-        if(DisplayName == "")
+        if (DisplayName == "")
             DisplayName = gameObject.name;
         if (spriteName == "")
             spriteName = gameObject.GetComponent<SpriteRenderer>().sprite?.name;

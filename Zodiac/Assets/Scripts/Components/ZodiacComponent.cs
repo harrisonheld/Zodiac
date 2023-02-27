@@ -16,7 +16,7 @@ public abstract class ZodiacComponent : MonoBehaviour
     public virtual void Serialize(EntitySerializer2 writer)
     {
         Type type = this.GetType();
-        writer.WriteStartElement(type.Name);
+        writer.WriteStartComponent(type.Name);
 
         // get all public instance (ie, non static) fields
         PropertyInfo[] propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
@@ -32,7 +32,7 @@ public abstract class ZodiacComponent : MonoBehaviour
             writer.WriteProperty(propName, propValue);
         }
 
-        writer.WriteEndElement();
+        writer.WriteEndComponent();
     }
 
 

@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     [Header("Info")]
     [SerializeField] int turn = 0;
 
-    public List<GameObject> Entities = new List<GameObject>();
+    [SerializeField] public List<GameObject> Entities = new List<GameObject>();
     [SerializeField] public GameObject ThePlayer;
 
     // a reference to the one game manager in the scene
@@ -27,26 +27,17 @@ public class GameManager : MonoBehaviour
     }
 
     public void Start()
-    {
+    {        
+        string testpath = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\serialize_scene_test.txt";
+        EntitySerializer2 serializer = new();
+        GameObject[] deserialized = serializer.DeserializeScene(testpath);
+        ThePlayer = deserialized[0];
+
         // get all entities
         foreach (Position posComp in GameObject.FindObjectsOfType<Position>())
         {
             Entities.Add(posComp.gameObject);
         }
-
-        string path = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\";
-        GameObject human;
-        GameObject beacon;
-        Entities.Add(ThePlayer = Serialization.Deserialize(path + "player.xml"));
-        Entities.Add(human = Serialization.Deserialize(path + "human.xml"));
-        human.GetComponent<Brain>().Target = ThePlayer;
-        Entities.Add(beacon = Serialization.Deserialize(path + "beacon.xml"));
-        Pickup(ThePlayer, beacon);
-
-        string testpath = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\serialize_scene_test.txt";
-        EntitySerializer2 serializer = new();
-        serializer.SerializeScene(new(){ ThePlayer, human, beacon }, testpath);
-        var deserialized = serializer.DeserializeScene(testpath) as List<GameObject>;
     }
 
     public void Update()
