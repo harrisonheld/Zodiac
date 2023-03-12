@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Entities EntityCount="3">
+<Entities EntityCount="6">
 	<Entity ID="0">
 		<Component Type="Health">
 			<Property PropertyName="HealthMax" PropertyValue="10" />
@@ -44,7 +44,7 @@
 			<Property PropertyName="Y" PropertyValue="6" />
 		</Component>
 		<Component Type="EnergyHaver">
-			<Property PropertyName="Quickness" PropertyValue="1000" />
+			<Property PropertyName="Quickness" PropertyValue="700" />
 			<Property PropertyName="Energy" PropertyValue="0" />
 		</Component>
 		<Component Type="Visual">
@@ -62,6 +62,69 @@
 		</Component>
 	</Entity>
 	<Entity ID="2">
+		<Component Type="Health">
+			<Property PropertyName="HealthMax" PropertyValue="10" />
+			<Property PropertyName="Defense" PropertyValue="0" />
+			<Property PropertyName="HealthCurrent" PropertyValue="10" />
+		</Component>
+		<Component Type="PhysicalAttributes">
+			<Property PropertyName="Solid" PropertyValue="True" />
+			<Property PropertyName="OccludesVison" PropertyValue="True" />
+			<Property PropertyName="Weight" PropertyValue="1000" />
+		</Component>
+		<Component Type="Position">
+			<Property PropertyName="X" PropertyValue="27" />
+			<Property PropertyName="Y" PropertyValue="20" />
+		</Component>
+		<Component Type="Visual">
+			<Property PropertyName="DisplayName" PropertyValue="oolitic limestone wall" />
+			<Property PropertyName="Description" PropertyValue="a sedimentary material formed from ooids" />
+			<Property PropertyName="Sprite" PropertyValue="dots2x2" />
+		</Component>
+	</Entity>
+	<Entity ID="3">
+		<Component Type="Health">
+			<Property PropertyName="HealthMax" PropertyValue="10" />
+			<Property PropertyName="Defense" PropertyValue="0" />
+			<Property PropertyName="HealthCurrent" PropertyValue="10" />
+		</Component>
+		<Component Type="PhysicalAttributes">
+			<Property PropertyName="Solid" PropertyValue="True" />
+			<Property PropertyName="OccludesVison" PropertyValue="True" />
+			<Property PropertyName="Weight" PropertyValue="1000" />
+		</Component>
+		<Component Type="Position">
+			<Property PropertyName="X" PropertyValue="0" />
+			<Property PropertyName="Y" PropertyValue="20" />
+		</Component>
+		<Component Type="Visual">
+			<Property PropertyName="DisplayName" PropertyValue="oolitic limestone wall" />
+			<Property PropertyName="Description" PropertyValue="a sedimentary material formed from ooids" />
+			<Property PropertyName="Sprite" PropertyValue="dots2x2" />
+		</Component>
+	</Entity>
+	<Entity ID="4">
+		<Component Type="Health">
+			<Property PropertyName="HealthMax" PropertyValue="10" />
+			<Property PropertyName="Defense" PropertyValue="0" />
+			<Property PropertyName="HealthCurrent" PropertyValue="10" />
+		</Component>
+		<Component Type="PhysicalAttributes">
+			<Property PropertyName="Solid" PropertyValue="True" />
+			<Property PropertyName="OccludesVison" PropertyValue="True" />
+			<Property PropertyName="Weight" PropertyValue="1000" />
+		</Component>
+		<Component Type="Position">
+			<Property PropertyName="X" PropertyValue="27" />
+			<Property PropertyName="Y" PropertyValue="0" />
+		</Component>
+		<Component Type="Visual">
+			<Property PropertyName="DisplayName" PropertyValue="oolitic limestone wall" />
+			<Property PropertyName="Description" PropertyValue="a sedimentary material formed from ooids" />
+			<Property PropertyName="Sprite" PropertyValue="dots2x2" />
+		</Component>
+	</Entity>
+	<Entity ID="5">
 		<Component Type="Health">
 			<Property PropertyName="HealthMax" PropertyValue="10" />
 			<Property PropertyName="Defense" PropertyValue="0" />

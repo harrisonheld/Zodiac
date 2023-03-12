@@ -10,7 +10,7 @@ public class LookingHurts : ZodiacComponent
     public override bool HandleEvent(LookedAtEvent e) 
     {
         GameManager.Instance.ThePlayer.GetComponent<Health>().HealthCurrent -= DamageInflictedUponLook;
-        LogMenu.Instance.Log($"You take {DamageInflictedUponLook} damage from looking at the {gameObject.GetComponent<Visual>().DisplayName}.");
+        StatusMenu.Instance.Log($"You take {DamageInflictedUponLook} damage from looking at the {gameObject.GetComponent<Visual>().DisplayName}.");
         return true; 
     }
 

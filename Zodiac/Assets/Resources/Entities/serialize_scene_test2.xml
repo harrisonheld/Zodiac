@@ -15,7 +15,7 @@
 			<Property PropertyName="Y" PropertyValue="6" />
 		</Component>
 		<Component Type="EnergyHaver">
-			<Property PropertyName="Quickness" PropertyValue="1000" />
+			<Property PropertyName="Quickness" PropertyValue="700" />
 			<Property PropertyName="Energy" PropertyValue="0" />
 		</Component>
 		<Component Type="Visual">

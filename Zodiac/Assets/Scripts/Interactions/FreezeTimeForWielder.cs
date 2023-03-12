@@ -8,6 +8,6 @@ class FreezeTimeForWielder : IInteraction
     {
         // add ten thousand energy
         GameManager.Instance.ThePlayer.GetComponent<EnergyHaver>().Energy += 10000;
-        LogMenu.Instance.Log("The flow of time is clotted as ten seconds coagulate.");
+        StatusMenu.Instance.Log("The flow of time is clotted as ten seconds coagulate.");
     }
 }
