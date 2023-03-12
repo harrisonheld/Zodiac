@@ -22,6 +22,11 @@ public class Visual : ZodiacComponent
     [field: SerializeField] public string Description { get; set; } = "DESCRIPTION_HERE";
     [field: SerializeField] private string spriteName = "";
 
+    public Color colorPrimary = Color.white;
+    private Color colorSecondary = Color.gray;
+    private Color colorTertiary = Color.black;
+    
+
     /// <summary>
     /// The sprite as a string.
     /// </summary>
@@ -57,9 +62,9 @@ public class Visual : ZodiacComponent
 
         // add shader
         Material material = new Material(Shader.Find("Unlit/PaletteSwap"));
-        material.SetColor("_Out1", Color.white);
-        material.SetColor("_Out2", Color.grey);
-        material.SetColor("_Out3", Color.black);
+        material.SetColor("_Out1", colorPrimary);
+        material.SetColor("_Out2", colorSecondary);
+        material.SetColor("_Out3", colorTertiary);
 
         // assign the material to the renderer
         GetComponent<SpriteRenderer>().material = material;

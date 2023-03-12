@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Entitites>
+  <Entity Name="PhysicsObject">
+    <Visual
+      DisplayName="[PhysicsObject]"
+      Description="[represents a physical object]"
+      Sprite="error" />
+    <Position />
+    <PhysicalAttributes
+      Solid="True"
+      OccludesVison="True" />
+    <Health />
+  </Entity>
+  <Entity Name="WallBase" Inherits="PhysicsObject">
+    <Visual
+      DisplayName="[WallBase]"
+      Description="[a wall]"
+      Sprite="dots2x2" />
+    <Health
+      HealthMax="500"
+      HealthCurrent="500"
+      Defense="6" />
+    <PhysicalAttributes
+      Weight="1000"
+    />
+  </Entity>
+  <Entity Name="LimestoneWall" Inherits="WallBase">
+    <Visual
+      DisplayName="oolitic limestone wall"
+      Description="a sedimentary material formed from ooids"
+      Sprite="dots2x2" />
+  </Entity>
+  <Entity Name="CreatureBase" Inherits="PhysicsObject">
+    <Visual
+      DisplayName="[CreatureBase]"
+      Description="[a creature]"
+      Sprite="frog" />
+    <Inventory />
+    <EnergyHaver />
+  </Entity>
+  <Entity Name="Human" Inherits="CreatureBase">
+    <Visual
+      DisplayName="[Human]"
+      Description="[humanoid]"
+      Sprite="human1" />
+    <Inventory />
+    <EnergyHaver />
+  </Entity>
+</Entitites>

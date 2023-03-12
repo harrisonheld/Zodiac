@@ -9,6 +9,8 @@ using System.Linq;
 
 public class EntitySerializer2
 {
+    private const string BLUEPRINTS_PATH = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\Blueprints.xml";
+
     private const string ENTITIES = "Entities"; // the start marker for all entities
     private const string ENTITY = "Entity"; // the start marker for an entity
     private const string ENTITY_ID = "ID"; // used to identify objects. entity references will use this
@@ -34,10 +36,14 @@ public class EntitySerializer2
     private Dictionary<GameObject, int> ObjectIds = new();
     private int entityCount = 0; // count entites to assign id's incrementally
 
-    public void SerializeScene(List<GameObject> toSerialize, string path)
+    public void SerializeScene(string path)
     {
         Clear();
-        
+        List<GameObject> toSerialize = GameObject.FindObjectsOfType<ZodiacComponent>()
+                                        .Select(c => c.gameObject)
+                                        .Distinct()
+                                        .ToList();
+
         writer = XmlWriter.Create(path, writerSettings);
         writer.WriteStartElement(ENTITIES);
         writer.WriteAttributeString(ENTITY_COUNT, toSerialize.Count.ToString());
@@ -94,32 +100,7 @@ public class EntitySerializer2
                         }
                         else if(reader.Name == PROPERTY)
                         {
-                            string propName = reader.GetAttribute(PROPERTY_NAME);
-                            string propValString = reader.GetAttribute(PROPERTY_VALUE);
-                            
-                            PropertyInfo propInfo = workingComponent.GetType().GetProperty(propName);
-                            Type propType = propInfo.PropertyType;
-
-                            // if the type is a kind of list
-                            if (typeof(IList).IsAssignableFrom(propType))
-                            {
-                                // do something i guess
-                            }
-                            else if(propType.IsEnum)
-                            {
-                                object propVal = Enum.Parse(propType, propValString);
-                                propInfo.SetValue(workingComponent, propVal);
-                            }
-                            else if(propType == typeof(GameObject))
-                            {
-                                int id = int.Parse(propValString);
-                                propInfo.SetValue(workingComponent, entities[id]);
-                            }
-                            else
-                            {
-                                object propVal = System.Convert.ChangeType(propValString, propType);
-                                propInfo.SetValue(workingComponent, propVal);
-                            }
+                            AssignPropertyFromNode(workingComponent, entities);
                         }
                         break;
                     }
@@ -127,6 +108,34 @@ public class EntitySerializer2
         }
 
         return entities;
+    }
+    private void AssignPropertyFromNode(ZodiacComponent component, GameObject[] entities)
+    {
+        string propName = reader.GetAttribute(PROPERTY_NAME);
+        string propValString = reader.GetAttribute(PROPERTY_VALUE);
+
+        PropertyInfo propInfo = component.GetType().GetProperty(propName);
+        Type propType = propInfo.PropertyType;
+
+        // if the type is a kind of list
+        if (typeof(IList).IsAssignableFrom(propType))
+        {
+        }
+        else if (propType.IsEnum)
+        {
+            object propVal = Enum.Parse(propType, propValString);
+            propInfo.SetValue(component, propVal);
+        }
+        else if (propType == typeof(GameObject))
+        {
+            int id = int.Parse(propValString);
+            propInfo.SetValue(component, entities[id]);
+        }
+        else
+        {
+            object propVal = System.Convert.ChangeType(propValString, propType);
+            propInfo.SetValue(component, propVal);
+        }
     }
 
     private void Clear()
@@ -161,16 +170,6 @@ public class EntitySerializer2
             value = GetId(entity);
         }
 
-        if(value is IEnumerable<GameObject> entityList)
-        {
-            int[] ids = new int[entityList.Count()];
-            
-            for(int i = 0; i < entityList.Count(); i++)
-                ids[i] = GetId(entityList.ElementAt(i));
-
-            value = ids;
-        }
-
         // if the property is a collection, write all the elements in it
         if (value is IList collection)
         {
@@ -190,7 +189,13 @@ public class EntitySerializer2
 
             return;
         }
-        
+
+        // if it is an enum
+        if (value.GetType().IsEnum)
+        {
+            value = value.ToString();
+        }
+
         // write
         writer.WriteStartElement(PROPERTY);
         writer.WriteAttributeString(PROPERTY_NAME, propName);

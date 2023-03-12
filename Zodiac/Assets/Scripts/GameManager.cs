@@ -28,10 +28,12 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {        
-        string testpath = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\serialize_scene_test.txt";
+        string testpath = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\serialize_scene_test2.xml";
         EntitySerializer2 serializer = new();
         GameObject[] deserialized = serializer.DeserializeScene(testpath);
-        ThePlayer = deserialized[0];
+        ThePlayer = deserialized[1];
+
+        serializer.SerializeScene(@"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\moonshinercave.xml");
 
         // get all entities
         foreach (Position posComp in GameObject.FindObjectsOfType<Position>())
@@ -160,7 +162,8 @@ public class GameManager : MonoBehaviour
         int attackDamage = 1;
         int attackCost = 1000; // cost of the attack in energy
 
-        GameObject attackerPrimary = attacker.GetComponent<Inventory>().GetPrimary();
+        // get the equippable in the first slot
+        GameObject attackerPrimary = attacker.GetComponent<Slot>()?.Contained;
         if(attackerPrimary != null)
         {
             MeleeWeapon weapon = attackerPrimary.GetComponent<MeleeWeapon>();

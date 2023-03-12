@@ -3,9 +3,10 @@ using UnityEngine;
 
 class SerializeInteraction : IInteraction
 {
-    public string Name => "Serialize Player";
+    public string Name => "Serialize Scene";
     public void Perform()
     {
-        Serialization.SerializeEntity(GameManager.Instance.ThePlayer, @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\test.xml");
+        EntitySerializer2 serializer = new EntitySerializer2();
+        serializer.SerializeScene(@"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\serialize_scene_test2.xml");
     }
 }

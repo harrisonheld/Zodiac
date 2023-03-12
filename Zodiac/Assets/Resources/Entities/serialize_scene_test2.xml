@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Entities EntityCount="2">
+	<Entity ID="0">
+		<Component Type="Brain">
+			<Property PropertyName="Ai" PropertyValue="Seeker" />
+			<Property PropertyName="Target" PropertyValue="1" />
+		</Component>
+		<Component Type="Health">
+			<Property PropertyName="HealthMax" PropertyValue="5" />
+			<Property PropertyName="Defense" PropertyValue="0" />
+			<Property PropertyName="HealthCurrent" PropertyValue="5" />
+		</Component>
+		<Component Type="Position">
+			<Property PropertyName="X" PropertyValue="5" />
+			<Property PropertyName="Y" PropertyValue="6" />
+		</Component>
+		<Component Type="EnergyHaver">
+			<Property PropertyName="Quickness" PropertyValue="1000" />
+			<Property PropertyName="Energy" PropertyValue="0" />
+		</Component>
+		<Component Type="Visual">
+			<Property PropertyName="DisplayName" PropertyValue="apprentice alchemist I" />
+			<Property PropertyName="Description" PropertyValue="he is cool and his nuts are fat." />
+			<Property PropertyName="Sprite" PropertyValue="human3" />
+		</Component>
+		<Component Type="Inventory">
+			<Property PropertyName="Items" />
+		</Component>
+		<Component Type="PhysicalAttributes">
+			<Property PropertyName="Solid" PropertyValue="True" />
+			<Property PropertyName="OccludesVison" PropertyValue="False" />
+			<Property PropertyName="Weight" PropertyValue="200" />
+		</Component>
+	</Entity>
+	<Entity ID="1">
+		<Component Type="Health">
+			<Property PropertyName="HealthMax" PropertyValue="10" />
+			<Property PropertyName="Defense" PropertyValue="0" />
+			<Property PropertyName="HealthCurrent" PropertyValue="10" />
+		</Component>
+		<Component Type="Position">
+			<Property PropertyName="X" PropertyValue="0" />
+			<Property PropertyName="Y" PropertyValue="10" />
+		</Component>
+		<Component Type="EnergyHaver">
+			<Property PropertyName="Quickness" PropertyValue="1000" />
+			<Property PropertyName="Energy" PropertyValue="1000" />
+		</Component>
+		<Component Type="Visual">
+			<Property PropertyName="DisplayName" PropertyValue="You" />
+			<Property PropertyName="Description" PropertyValue="It's you." />
+			<Property PropertyName="Sprite" PropertyValue="human2" />
+		</Component>
+		<Component Type="Inventory">
+			<Property PropertyName="Items">
+				<Property PropertyName="Items" PropertyValue="2" />
+			</Property>
+		</Component>
+		<Component Type="PhysicalAttributes">
+			<Property PropertyName="Solid" PropertyValue="True" />
+			<Property PropertyName="OccludesVison" PropertyValue="False" />
+			<Property PropertyName="Weight" PropertyValue="200" />
+		</Component>
+		<Component Type="Slot" />
+	</Entity>
+</Entities>

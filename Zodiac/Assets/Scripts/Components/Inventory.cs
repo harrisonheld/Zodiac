@@ -7,7 +7,6 @@ using UnityEngine;
 public class Inventory : ZodiacComponent
 {
     [field: SerializeField]  public List<GameObject> Items { get; set; } = new();
-    [field: SerializeField]  public List<Slot> Slots { get; set; } = new();
 
     public void AddItem(GameObject item)
     {
@@ -67,46 +66,24 @@ public class Inventory : ZodiacComponent
 
     public void UnequipEverything()
     {
-        foreach (Slot slot in Slots)
+        foreach (Slot slot in gameObject.GetComponents<Slot>())
             UnequipToItems(slot);
     }
 
     public Slot GetOpenSlot(SlotType type)
     {
-        foreach (Slot slot in Slots)
-            if (slot.Type == type && slot.Empty())
+        foreach (Slot slot in gameObject.GetComponents<Slot>())
+            if (slot.Type == type && slot.IsEmpty())
                 return slot;
 
         return null;
     }
     public Slot GetFirstSlot(SlotType type)
     {
-        foreach (Slot slot in Slots)
+        foreach (Slot slot in gameObject.GetComponents<Slot>())
             if (slot.Type == type)
                 return slot;
 
         return null;
-    }
-
-    public GameObject GetPrimary()
-    {
-        if (Slots.Count == 0)
-            return null;
-        if (Slots[0] == null)
-            return null;
-
-        return Slots[0].Contained;
-    }
-
-    [System.Serializable]
-    public class Slot
-    {
-        [field: SerializeField] public SlotType Type { get; set; }
-        [field: SerializeField] public GameObject Contained { get; set; }
-
-        public bool Empty()
-        {
-            return Contained == null;
-        }
     }
 }
