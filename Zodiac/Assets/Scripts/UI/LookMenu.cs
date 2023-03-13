@@ -9,6 +9,8 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
     public Canvas Canvas { get => GetComponent<Canvas>(); }
     public CanvasGroup CanvasGroup { get => GetComponent<CanvasGroup>(); }
 
+    private RectTransform panelRectTransform;
+
     public static LookMenu Instance { get; private set; }
     public void Awake()
     {
@@ -16,6 +18,8 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
         {
             DontDestroyOnLoad(this.gameObject); // Keep the GameObject, this component is attached to, across different scenes
             Instance = this;
+            
+            panelRectTransform = GetComponentInChildren<VerticalLayoutGroup>().GetComponent<RectTransform>();
         }
         else if (Instance != this)
         {
@@ -68,5 +72,23 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
             return;
 
         newSubject.FireEvent(new LookedAtEvent());
+    }
+    public void SetSide(bool isLeft)
+    {
+        if (isLeft)
+        {
+            panelRectTransform.anchorMin = new Vector2(0, 0);
+            panelRectTransform.anchorMax = new Vector2(0, 1);
+            panelRectTransform.pivot = new Vector2(0, 0);
+            panelRectTransform.anchoredPosition = new Vector2(0, 0);
+        }
+        else
+        {
+            panelRectTransform.anchorMin = new Vector2(1, 0);
+            panelRectTransform.anchorMax = new Vector2(1, 1);
+            panelRectTransform.pivot = new Vector2(1, 0);
+            float offset = Screen.width - Camera.main.pixelWidth;
+            panelRectTransform.anchoredPosition = new Vector2(-offset, 0);
+        }
     }
 }

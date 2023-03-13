@@ -163,6 +163,9 @@ public static class ZodiacInput
             GameObject lookingAt = GameManager.Instance.EntityAt(lookCursorPos);
             LookMenu.Instance.SetSubject(lookingAt);
 
+            bool isLeft = lookCursorPos.x > (CameraRig.GAMEAREA_WIDTH / 2);
+            LookMenu.Instance.SetSide(isLeft);
+
             return;
         }
     }
@@ -191,6 +194,10 @@ public static class ZodiacInput
         // show look menu
         LookMenu.Instance.SetSubject(GameManager.Instance.ThePlayer);
         MenuManager.Instance.Open(LookMenu.Instance);
+
+        // put it on correct side
+        bool isLeft = lookCursorPos.x > (CameraRig.GAMEAREA_WIDTH / 2);
+        LookMenu.Instance.SetSide(isLeft);
 
         inputMode = InputMode.Look;
     }

@@ -51,10 +51,9 @@ public class StatusMenu : MonoBehaviour, IZodiacMenu
         }
         statsText.text = stats;
     }
-
-    public void SetPosition(Vector2 pos)
+    public void SetSize(Vector2 size)
     {
-        rectTransform.anchoredPosition = pos;
+        rectTransform.sizeDelta = size;
     }
 
     public void RefreshUI() { }
