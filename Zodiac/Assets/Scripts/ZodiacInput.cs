@@ -36,9 +36,6 @@ public static class ZodiacInput
     /// <returns></returns>
     public static bool DoPlayerInput()
     {
-        // player voluntarilly forfeits their turn
-        if (inputMap.FreeRoam.ForfeitTurn.triggered)
-            return true;
         // out of energy, turn is over
         if (GameManager.Instance.ThePlayer.GetComponent<EnergyHaver>().Energy <= 0)
             return true;
@@ -46,6 +43,9 @@ public static class ZodiacInput
         switch (inputMode)
         {
             case InputMode.FreeRoam:
+                // player voluntarilly forfeits their turn
+                if (inputMap.FreeRoam.ForfeitTurn.triggered)
+                    return true;
                 DoFreeRoamInput();
                 break;
 
