@@ -31,6 +31,9 @@
 			<Property PropertyName="OccludesVison" PropertyValue="False" />
 			<Property PropertyName="Weight" PropertyValue="200" />
 		</Component>
+    <Component Type="LookingHurts">
+      <Property PropertyName="DamageInflictedUponLook" PropertyValue="1" />
+    </Component>
 	</Entity>
 	<Entity ID="1">
 		<Component Type="Health">
@@ -62,5 +65,21 @@
 			<Property PropertyName="Weight" PropertyValue="200" />
 		</Component>
 		<Component Type="Slot" />
+    <Component Type="Stat">
+      <Property PropertyName="StatType" PropertyValue="Vigor" />
+      <Property PropertyName="BaseValue" PropertyValue="10" />
+    </Component>
+    <Component Type="Stat">
+      <Property PropertyName="StatType" PropertyValue="Prowess" />
+      <Property PropertyName="BaseValue" PropertyValue="10" />
+    </Component>
+    <Component Type="Stat">
+      <Property PropertyName="StatType" PropertyValue="Dexterity" />
+      <Property PropertyName="BaseValue" PropertyValue="10" />
+      <Component Type="Stat">
+        <Property PropertyName="StatType" PropertyValue="Arcane" />
+        <Property PropertyName="BaseValue" PropertyValue="10" />
+      </Component>
+    </Component>
 	</Entity>
 </Entities>

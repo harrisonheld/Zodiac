@@ -9,7 +9,7 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
     public Canvas Canvas { get => GetComponent<Canvas>(); }
     public CanvasGroup CanvasGroup { get => GetComponent<CanvasGroup>(); }
 
-    private RectTransform panelRectTransform;
+    [SerializeField] private RectTransform panelRectTransform;
 
     public static LookMenu Instance { get; private set; }
     public void Awake()
@@ -18,8 +18,6 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
         {
             DontDestroyOnLoad(this.gameObject); // Keep the GameObject, this component is attached to, across different scenes
             Instance = this;
-            
-            panelRectTransform = GetComponentInChildren<VerticalLayoutGroup>().GetComponent<RectTransform>();
         }
         else if (Instance != this)
         {

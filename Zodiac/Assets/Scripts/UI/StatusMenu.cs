@@ -12,6 +12,7 @@ public class StatusMenu : MonoBehaviour, IZodiacMenu
 
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI statsText;
+    [SerializeField] private TextMeshProUGUI logText;
 
     public static StatusMenu Instance { get; private set; }
     private void Awake()
@@ -47,7 +48,7 @@ public class StatusMenu : MonoBehaviour, IZodiacMenu
         string stats = "";
         foreach (Stat stat in player.GetComponents<Stat>())
         {
-            stats += (stat.StatType.ToString() + ": ").PadRight(padding) + stat.GetEffectiveValue() + "\n";
+            stats += (stat.StatType.ToString() + ": ").PadRight(padding) + stat.EffectiveValue() + "\n";
         }
         statsText.text = stats;
     }
@@ -62,5 +63,6 @@ public class StatusMenu : MonoBehaviour, IZodiacMenu
     public void Log(string text)
     {
         Debug.Log(text);
+        logText.text += text + "\n";
     }
 }
