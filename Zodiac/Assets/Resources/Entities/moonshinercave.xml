@@ -88,6 +88,7 @@
 		<Component Type="Slot">
 			<Property PropertyName="SlotType" PropertyValue="Hand" />
 		</Component>
+		<Component Type="Living" />
 		<Component Type="Stat">
 			<Property PropertyName="StatType" PropertyValue="Vigor" />
 			<Property PropertyName="BaseValue" PropertyValue="40" />
@@ -136,6 +137,7 @@
 			<Property PropertyName="OccludesVison" PropertyValue="False" />
 			<Property PropertyName="Weight" PropertyValue="200" />
 		</Component>
+		<Component Type="Living" />
 		<Component Type="Slot">
 			<Property PropertyName="SlotType" PropertyValue="Hand" />
 			<Property PropertyName="Contained" PropertyValue="1" />

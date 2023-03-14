@@ -110,6 +110,12 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        // tell user
+        string deathMessage = $"The {toDestroy.GetComponent<Visual>().DisplayName} is destroyed.";
+        if (toDestroy.GetComponent<Living>() != null)
+            deathMessage = $"The {toDestroy.GetComponent<Visual>().DisplayName} dies.";
+        StatusMenu.Instance.Log(deathMessage);
+
         // bye bye!
         Entities.Remove(toDestroy);
         GameObject.Destroy(toDestroy);
