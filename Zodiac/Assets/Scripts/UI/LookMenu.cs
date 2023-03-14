@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class LookMenu : MonoBehaviour, IZodiacMenu
 {
@@ -33,7 +34,7 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
 
     public void RefreshUI()
     {
-        if(subject == null)
+        if (subject == null)
         {
             title.text = "";
             body.text = "";
@@ -51,12 +52,23 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
         float percent = 100.0f * (float)healthCurr / (float)healthMax;
         healthText.text = $"{healthCurr} / {healthMax} ({percent}%)";
 
+        // add flavor texts for components
         foreach (var comp in subject.GetComponents<ZodiacComponent>())
         {
             string desc = comp.GetDescription();
             if (desc != null)
-                body.text += "\n\n - " + desc;
+                body.text += "\n\n * " + desc;
         }
+
+        // add list of equipment
+        Slot[] slots = subject.GetComponents<Slot>();
+        string eqDesc = slots.Aggregate("", 
+            (string str, Slot s) => { return (s.Contained ? str + s.Contained.GetComponent<Visual>().DisplayName + "," : str); }, 
+            (string str) => { return str.TrimEnd(','); 
+        });
+        if (eqDesc != "")
+            eqDesc = "\n\nEquipment: " + eqDesc;
+        body.text += eqDesc;
     }
     public void GainFocus()
     {

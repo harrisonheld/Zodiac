@@ -8,8 +8,10 @@ public class Health : ZodiacComponent
     [field: SerializeField] public int HealthMax { get; set; } = 10;
     [field: SerializeField] public int Defense { get; set; } = 0;
     [SerializeField] private int healthCurrent = 10;
-    public int HealthCurrent { get => healthCurrent;
-        set {
+    public int HealthCurrent { 
+        get => healthCurrent;
+        set 
+        {
             healthCurrent = value;
             if (healthCurrent <= 0)
             {   

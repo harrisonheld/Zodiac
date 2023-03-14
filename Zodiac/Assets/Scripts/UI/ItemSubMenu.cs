@@ -82,6 +82,7 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
             AddButton("Equip", () =>
             {
                 GameManager.Instance.ThePlayer.GetComponent<Inventory>().Equip(item);
+                InventoryMenu.Instance.RefreshUI();
             }, refreshMenuOnUse: true);
         }
 

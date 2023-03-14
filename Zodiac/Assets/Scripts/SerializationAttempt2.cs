@@ -115,6 +115,11 @@ public class EntitySerializer2
         string propValString = reader.GetAttribute(PROPERTY_VALUE);
 
         PropertyInfo propInfo = component.GetType().GetProperty(propName);
+        if(propInfo == null)
+        {
+            string errorMsg = $"Type '{component.GetType().FullName}' has no property '{propName}'.";
+            throw new Exception(errorMsg);
+        }
         Type propType = propInfo.PropertyType;
 
         // if the type is a kind of list
