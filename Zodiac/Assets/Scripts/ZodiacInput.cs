@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Linq;
 
 public static class ZodiacInput
 {
@@ -9,6 +10,7 @@ public static class ZodiacInput
     public static ZodiacInputMap InputMap { get => inputMap; }
 
     private static GameObject cursor;
+    private static int lookIdx; // which entity to look at, if there are multiple
     private static Vector2Int lookCursorPos;
 
     private enum InputMode
@@ -152,21 +154,39 @@ public static class ZodiacInput
         }
 
         // move cursor
-        Vector2Int move = Vector2Int.RoundToInt(inputMap.FreeRoam.Move.ReadValue<Vector2>());
+        Vector2Int move = Vector2Int.RoundToInt(inputMap.Look.Move.ReadValue<Vector2>());
+        int cycle = (int)InputMap.Look.Cycle.ReadValue<float>();
         if (move != Vector2Int.zero)
         {
-            inputMap.FreeRoam.Move.Reset();
+            inputMap.Look.Move.Reset();
+            
+            lookIdx = 0;
+
             lookCursorPos += move;
             cursor.transform.position = (Vector2)lookCursorPos;
 
             // no need to check if null, lookmenu will handle that
-            GameObject lookingAt = GameManager.Instance.EntityAt(lookCursorPos);
+            GameObject lookingAt = GameManager.Instance.EntitiesAt(lookCursorPos).FirstOrDefault();
             LookMenu.Instance.SetSubject(lookingAt);
 
             bool isLeft = lookCursorPos.x > (CameraRig.GAMEAREA_WIDTH / 2);
             LookMenu.Instance.SetSide(isLeft);
 
             return;
+        }
+        else if(cycle != 0)
+        {
+            List<GameObject> atPos = GameManager.Instance.EntitiesAt(lookCursorPos);
+            if (atPos.Count == 0)
+                return;
+            
+            lookIdx += cycle;
+            if (lookIdx < 0)
+                lookIdx = atPos.Count - 1;
+            else if (lookIdx >= atPos.Count)
+                lookIdx = 0;
+
+            LookMenu.Instance.SetSubject(atPos[lookIdx]);
         }
     }
 
