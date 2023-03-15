@@ -85,6 +85,7 @@ public class EntitySerializer
                             for (int i = 0; i < toCreate; i++)
                             {
                                 entities[i] = new GameObject();
+                                entities[i].transform.position = new Vector2(-1, -1);
                                 ObjectIds[entities[i]] = i;
                             }
                         }

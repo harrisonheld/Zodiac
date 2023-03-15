@@ -183,7 +183,7 @@
     </Component>
     <Component Type="Visual">
       <Property PropertyName="DisplayName" PropertyValue="porcelain frog" />
-      <Property PropertyName="Description" PropertyValue="a frog made entirely of porcelain. Its body is smooth and glossy" />
+      <Property PropertyName="Description" PropertyValue="a frog made entirely of porcelain. Its alabaster body is smooth and glossy" />
       <Property PropertyName="Sprite" PropertyValue="frog_critter" />
     </Component>
     <Component Type="PhysicalAttributes">
