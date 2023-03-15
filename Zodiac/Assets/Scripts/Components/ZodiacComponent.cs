@@ -13,7 +13,7 @@ public abstract class ZodiacComponent : MonoBehaviour
     public virtual string GetDescription() { return null; }
 
     
-    public virtual void Serialize(EntitySerializer2 writer)
+    public virtual void Serialize(EntitySerializer writer)
     {
         Type type = this.GetType();
         writer.WriteStartComponent(type.Name);

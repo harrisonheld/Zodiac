@@ -28,12 +28,10 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {        
-        string testpath = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\serialize_scene_test2.xml";
-        EntitySerializer2 serializer = new();
+        string testpath = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\moonshinercave.xml";
+        EntitySerializer serializer = new();
         GameObject[] deserialized = serializer.DeserializeScene(testpath);
-        ThePlayer = deserialized[1];
-
-        serializer.SerializeScene(@"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\moonshinercave.xml");
+        ThePlayer = deserialized[2];
 
         // get all entities
         foreach (Position posComp in GameObject.FindObjectsOfType<Position>())
@@ -66,6 +64,10 @@ public class GameManager : MonoBehaviour
         BrainSystem();
 
         turn++;
+    }
+    public int GetTurn()
+    {
+        return turn;
     }
 
 
@@ -202,6 +204,15 @@ public class GameManager : MonoBehaviour
             pickerUpper = pickerUpper
         };
         item.FireEvent(@event);
+
+        if (pickerUpper == ThePlayer)
+        {
+            StatusMenu.Instance.Log($"You pick up the {item.GetComponent<Visual>().DisplayName}");
+        }
+        else
+        {
+            StatusMenu.Instance.Log($"The {pickerUpper.GetComponent<Visual>().DisplayName} picks up the {item.GetComponent<Visual>().DisplayName}");
+        }
     }
     public void Drop(GameObject dropper, GameObject toDrop)
     {

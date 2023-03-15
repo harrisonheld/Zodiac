@@ -19,4 +19,9 @@ public class Health : ZodiacComponent
             }
         } 
     }
+
+    public string GetHealthString()
+    {
+        return $"{HealthCurrent} / {HealthMax}";
+    }
 }

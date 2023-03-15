@@ -39,16 +39,16 @@ public class StatusMenu : MonoBehaviour, IZodiacMenu
             return;
         }
         
-        int padding = 20;
+        int padding = 11    ;
         
         Health health = player.GetComponent<Health>();
-        healthText.text = "HP: " + health.HealthCurrent + " /" + health.HealthMax + "\n" +
+        healthText.text = "HP: " + health.GetHealthString() + "\n" +
             "DP: " + health.Defense;
 
         string stats = "";
         foreach (Stat stat in player.GetComponents<Stat>())
         {
-            stats += (stat.StatType.ToString() + ": ").PadRight(padding) + stat.EffectiveValue() + "\n";
+            stats += stat.StatType.ToString().PadRight(padding, '.') + stat.EffectiveValue() + "\n";
         }
         statsText.text = stats;
     }
@@ -63,6 +63,6 @@ public class StatusMenu : MonoBehaviour, IZodiacMenu
     public void Log(string text)
     {
         Debug.Log(text);
-        logText.text += text + "\n";
+        logText.text += $"<{GameManager.Instance.GetTurn()}>: {text}\n";
     }
 }

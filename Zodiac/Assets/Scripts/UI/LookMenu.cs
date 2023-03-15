@@ -47,10 +47,7 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
         body.text = vis.Description;
 
         Health health = subject.GetComponent<Health>();
-        int healthCurr = health.HealthCurrent;
-        int healthMax = health.HealthMax;
-        float percent = 100.0f * (float)healthCurr / (float)healthMax;
-        healthText.text = $"{healthCurr} / {healthMax} ({percent}%)";
+        healthText.text = health.GetHealthString();
 
         // add flavor texts for components
         foreach (var comp in subject.GetComponents<ZodiacComponent>())

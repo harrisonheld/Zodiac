@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 0c0bf7080a52d464ea3dfc019bfc09bc
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Anonymous Pro
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: cbce4e3ec76f7eb4b81e836adbf7f365, type: 3}
+  - {fileID: 12800000, guid: 644dfe08716776c4a95ccaaaae08dd96, type: 3}
+  - {fileID: 12800000, guid: d6a89b6c45d394d40987a41dd088ffd7, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

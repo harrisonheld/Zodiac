@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 45456ca06b5685f4caf2db71a00f4c7e
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Envy Code R
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 403bdd7b3beefcd4cb126e09780d0800, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
