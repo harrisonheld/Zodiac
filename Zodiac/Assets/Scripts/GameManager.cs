@@ -33,6 +33,9 @@ public class GameManager : MonoBehaviour
         GameObject[] deserialized = serializer.DeserializeScene(testpath);
         ThePlayer = deserialized[2];
 
+        // generate caverns
+        Entities.AddRange(WorldGen.World.GenerateScreen(0, 0));
+
         // get all entities
         foreach (Position posComp in GameObject.FindObjectsOfType<Position>())
         {

@@ -33,10 +33,11 @@
   <Entity Name="CreatureBase" Inherits="PhysicsObject">
     <Visual
       DisplayName="[CreatureBase]"
-      Description="[a creature]"
-      Sprite="frog" />
+      Description="[a creature]" 
+    />
     <Inventory />
     <EnergyHaver />
+    <Living />
   </Entity>
   <Entity Name="Human" Inherits="CreatureBase">
     <Visual
@@ -45,5 +46,8 @@
       Sprite="human1" />
     <Inventory />
     <EnergyHaver />
+    <PhysicalAttributes
+      Weight="160"
+    />
   </Entity>
 </Entitites>

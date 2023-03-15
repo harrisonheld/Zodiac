@@ -10,8 +10,8 @@
       <Property PropertyName="HealthCurrent" PropertyValue="10" />
     </Component>
     <Component Type="Position">
-      <Property PropertyName="X" PropertyValue="15" />
-      <Property PropertyName="Y" PropertyValue="5" />
+      <Property PropertyName="X" PropertyValue="16" />
+      <Property PropertyName="Y" PropertyValue="3" />
     </Component>
     <Component Type="EnergyHaver">
       <Property PropertyName="Quickness" PropertyValue="200" />
@@ -65,8 +65,8 @@
 			<Property PropertyName="HealthCurrent" PropertyValue="500" />
 		</Component>
 		<Component Type="Position">
-			<Property PropertyName="X" PropertyValue="0" />
-			<Property PropertyName="Y" PropertyValue="10" />
+			<Property PropertyName="X" PropertyValue="3" />
+			<Property PropertyName="Y" PropertyValue="16" />
 		</Component>
 		<Component Type="EnergyHaver">
 			<Property PropertyName="Quickness" PropertyValue="1000" />
@@ -117,8 +117,8 @@
 			<Property PropertyName="HealthCurrent" PropertyValue="5" />
 		</Component>
 		<Component Type="Position">
-			<Property PropertyName="X" PropertyValue="5" />
-			<Property PropertyName="Y" PropertyValue="6" />
+			<Property PropertyName="X" PropertyValue="10" />
+			<Property PropertyName="Y" PropertyValue="5" />
 		</Component>
 		<Component Type="EnergyHaver">
 			<Property PropertyName="Quickness" PropertyValue="700" />

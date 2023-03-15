@@ -8,15 +8,17 @@ using UnityEngine;
 
 public static class Constants
 {
+    // gameboard size
+    public const int GAMEAREA_WIDTH = 28;
+    public const int GAMEAREA_HEIGHT = 21;
+    
     // some far away point to put stuff
-    public static readonly Vector2Int OFFSCREEN = new Vector2Int(-100, -100);
+    public static readonly Vector2Int OFFSCREEN = new Vector2Int(-1, -1);
 
     // how much energy it takes for various actions
     public const int COST_MOVE = 1000;
-
     // how much energy to pickup an item
     public const int COST_PICKUP = 1000;
-
     // max amount of energy an entity can have
     public const int ENERGY_CAP = 1000;
 }
