@@ -11,7 +11,7 @@
     </Component>
     <Component Type="Position">
       <Property PropertyName="X" PropertyValue="16" />
-      <Property PropertyName="Y" PropertyValue="3" />
+      <Property PropertyName="Y" PropertyValue="4" />
     </Component>
     <Component Type="EnergyHaver">
       <Property PropertyName="Quickness" PropertyValue="200" />
@@ -175,7 +175,7 @@
     </Component>
     <Component Type="Position">
       <Property PropertyName="X" PropertyValue="15" />
-      <Property PropertyName="Y" PropertyValue="15" />
+      <Property PropertyName="Y" PropertyValue="8" />
     </Component>
     <Component Type="EnergyHaver">
       <Property PropertyName="Quickness" PropertyValue="300" />
@@ -192,5 +192,7 @@
       <Property PropertyName="Weight" PropertyValue="1" />
     </Component>
     <Component Type="Item" />
+    <Component Type="TheBeacon" />
+    <Component Type="Living" />
   </Entity>
 </Entities>

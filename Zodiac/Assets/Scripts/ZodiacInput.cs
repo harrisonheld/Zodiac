@@ -17,6 +17,7 @@ public static class ZodiacInput
     {
         FreeRoam,
         Look,
+        Interact,
         Menu,
     }
     private static InputMode inputMode = InputMode.FreeRoam;
@@ -55,6 +56,10 @@ public static class ZodiacInput
                 DoLookInput();
                 break;
 
+            case InputMode.Interact:
+                DoInteractInput();
+                break;
+
             default:
                 break;
         }
@@ -71,6 +76,13 @@ public static class ZodiacInput
         if(inputMap.FreeRoam.GoToLookMode.triggered)
         {
             LookMode();
+            return;
+        }
+
+        // interact mode
+        if(inputMap.FreeRoam.GoToInteractMode.triggered)
+        {
+            InteractMode();
             return;
         }
 
@@ -189,6 +201,38 @@ public static class ZodiacInput
             LookMenu.Instance.SetSubject(atPos[lookIdx]);
         }
     }
+    private static void DoInteractInput()
+    {
+        // back to free roam mode
+        if (inputMap.Interact.Cancel.triggered)
+        {
+            FreeRoamMode();
+            return;
+
+        }
+        Vector2Int dir = Vector2Int.RoundToInt(inputMap.Interact.PickDir.ReadValue<Vector2>());
+        if (dir != Vector2Int.zero)
+        {
+            inputMap.Interact.PickDir.Reset();
+
+            Vector2Int selectedPos = GameManager.Instance.ThePlayer.GetComponent<Position>().Pos + dir;
+            GameObject selected = GameManager.Instance.EntityAt(selectedPos);
+            if(selected == null)
+            {
+                StatusMenu.Instance.Log("There is nothing to interact with there.");
+                return;
+            }
+
+            List<IInteraction> interactions = selected.GetInteractions();
+            if(interactions.Count == 0)
+            {
+                StatusMenu.Instance.Log("There is no way to interact with that.");
+                return;
+            }
+
+            interactions[0].Perform();
+        }
+    }
 
     public static void FreeRoamMode()
     {
@@ -199,10 +243,6 @@ public static class ZodiacInput
             MenuManager.Instance.Close(LookMenu.Instance);
 
         inputMode = InputMode.FreeRoam;
-    }
-    public static void MenuMode()
-    {
-        inputMode = InputMode.Menu;
     }
     public static void LookMode()
     {
@@ -220,5 +260,13 @@ public static class ZodiacInput
         LookMenu.Instance.SetSide(isLeft);
 
         inputMode = InputMode.Look;
+    }
+    public static void InteractMode()
+    {
+        inputMode = InputMode.Interact;
+    }
+    public static void MenuMode()
+    {
+        inputMode = InputMode.Menu;
     }
 }

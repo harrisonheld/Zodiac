@@ -7,6 +7,6 @@ public class Edible : ZodiacComponent
 {
     public override List<IInteraction> GetInteractions()
     {
-        return new List<IInteraction> { new SerializeInteraction() };
+        return new List<IInteraction> { new InteractionEat() };
     }
 }

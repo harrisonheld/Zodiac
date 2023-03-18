@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-class SerializeInteraction : IInteraction
+class InteractionSerialize : IInteraction
 {
     public string Name => "Serialize Scene";
     public void Perform()

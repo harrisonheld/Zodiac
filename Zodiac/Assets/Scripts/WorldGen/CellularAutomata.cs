@@ -43,10 +43,10 @@ namespace WorldGen
 					newCell.x = x;
 					newCell.y = y;
 
-					if (x != 0 && y != 0 && x != width - 1 && y != height - 1)
-						newCell.type = layoutRand.NextDouble() > fillPercent ? CellType.Floor : CellType.Wall;
-					else
+					if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
 						newCell.type = CellType.Wall;
+					else
+						newCell.type = layoutRand.NextDouble() > fillPercent ? CellType.Floor : CellType.Wall;
 
 					cells[x, y] = newCell;
 				}
@@ -258,20 +258,11 @@ namespace WorldGen
 			//if this point is reached, could not find path
 			return null;
 		}
-
 		private int CostHueristic(int x1, int y1, int x2, int y2)
 		{
 			int cost = Math.Abs(x2 - x1) + Math.Abs(y2 - y1);
 			return cost;
 		}
-
-		private int DistBetween(int x1, int y1, int x2, int y2)
-		{
-			// taxicab distance
-			int dist = Math.Abs(x2 - x1) + Math.Abs(y2 - y1);
-			return dist;
-		}
-
 		private List<Cell> ReconstructPath(Dictionary<Cell, Cell> cameFrom, Cell current)
 		{
 			List<Cell> totalPath = new List<Cell>() { current };

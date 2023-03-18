@@ -73,6 +73,15 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""GoToInteractMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""371af3a2-b630-4871-82d7-01cc5902c924"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""OpenAbilities"",
                     ""type"": ""Button"",
                     ""id"": ""850ca53b-0376-468b-a720-ce919169031b"",
@@ -333,6 +342,17 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""OpenAbilities"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b9089b9e-fc35-426a-b25c-45cea6ce9903"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GoToInteractMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1119,6 +1139,230 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Interact"",
+            ""id"": ""443c8499-de26-4121-a846-b9b6a508b5ad"",
+            ""actions"": [
+                {
+                    ""name"": ""PickDir"",
+                    ""type"": ""Value"",
+                    ""id"": ""f6660249-39a7-411f-9ff0-f902a571e3b6"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""7191972b-6d7d-489d-bd75-6941b6418e34"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""Directions"",
+                    ""id"": ""f33303dd-1dc7-4c3d-85e4-6140dcfda1fb"",
+                    ""path"": ""Dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PickDir"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""101e03a1-849d-48d0-a42b-12cabdcf4157"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PickDir"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""4c5c6be4-5678-4e1d-be97-23e279ad29eb"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PickDir"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""c66275c4-430c-4e69-87d3-c4330fd749fe"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PickDir"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""777061b6-5991-4927-9653-e632771fe422"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PickDir"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""e9ddf5c8-074b-4285-b2e6-ce91d6b774df"",
+                    ""path"": ""<Keyboard>/numpad8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PickDir"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""75ee3664-3b16-4e98-a432-14f606604a20"",
+                    ""path"": ""<Keyboard>/numpad2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PickDir"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""a9db7e7f-0bac-4ec9-99ff-7c963cb89b2a"",
+                    ""path"": ""<Keyboard>/numpad4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PickDir"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""b928d573-908a-4087-997d-1da47c5e6aa4"",
+                    ""path"": ""<Keyboard>/numpad6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PickDir"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""c0a3100c-5ddc-4de2-ba32-4fb77a83e6b5"",
+                    ""path"": ""<Keyboard>/numpad9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PickDir"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""92047848-02f5-4536-b1ab-32377ce85ad0"",
+                    ""path"": ""<Keyboard>/numpad9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PickDir"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""a2072c91-ae12-4e7d-a885-1abc731d6902"",
+                    ""path"": ""<Keyboard>/numpad7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PickDir"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""8a8dc76c-286c-4d03-80c5-07305063b679"",
+                    ""path"": ""<Keyboard>/numpad7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PickDir"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""a5ccdac8-e277-43f9-8a00-556fe40ea363"",
+                    ""path"": ""<Keyboard>/numpad3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PickDir"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""f7cf231a-484a-49a5-bf2d-448a5ac6bcb3"",
+                    ""path"": ""<Keyboard>/numpad3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PickDir"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""f3aea002-6e04-4cc4-8df3-67d8ef9160f5"",
+                    ""path"": ""<Keyboard>/numpad1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PickDir"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""0b8854f0-2694-4e49-ba0d-c3b3a8b3d0bf"",
+                    ""path"": ""<Keyboard>/numpad1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PickDir"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8fe0ec4a-fd09-4c06-854c-1ae1c887f550"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1191,6 +1435,7 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         m_FreeRoam_Pickup = m_FreeRoam.FindAction("Pickup", throwIfNotFound: true);
         m_FreeRoam_OpenInventory = m_FreeRoam.FindAction("OpenInventory", throwIfNotFound: true);
         m_FreeRoam_GoToLookMode = m_FreeRoam.FindAction("GoToLookMode", throwIfNotFound: true);
+        m_FreeRoam_GoToInteractMode = m_FreeRoam.FindAction("GoToInteractMode", throwIfNotFound: true);
         m_FreeRoam_OpenAbilities = m_FreeRoam.FindAction("OpenAbilities", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -1209,6 +1454,10 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         m_Look_Move = m_Look.FindAction("Move", throwIfNotFound: true);
         m_Look_Cycle = m_Look.FindAction("Cycle", throwIfNotFound: true);
         m_Look_Cancel = m_Look.FindAction("Cancel", throwIfNotFound: true);
+        // Interact
+        m_Interact = asset.FindActionMap("Interact", throwIfNotFound: true);
+        m_Interact_PickDir = m_Interact.FindAction("PickDir", throwIfNotFound: true);
+        m_Interact_Cancel = m_Interact.FindAction("Cancel", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1273,6 +1522,7 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_FreeRoam_Pickup;
     private readonly InputAction m_FreeRoam_OpenInventory;
     private readonly InputAction m_FreeRoam_GoToLookMode;
+    private readonly InputAction m_FreeRoam_GoToInteractMode;
     private readonly InputAction m_FreeRoam_OpenAbilities;
     public struct FreeRoamActions
     {
@@ -1283,6 +1533,7 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         public InputAction @Pickup => m_Wrapper.m_FreeRoam_Pickup;
         public InputAction @OpenInventory => m_Wrapper.m_FreeRoam_OpenInventory;
         public InputAction @GoToLookMode => m_Wrapper.m_FreeRoam_GoToLookMode;
+        public InputAction @GoToInteractMode => m_Wrapper.m_FreeRoam_GoToInteractMode;
         public InputAction @OpenAbilities => m_Wrapper.m_FreeRoam_OpenAbilities;
         public InputActionMap Get() { return m_Wrapper.m_FreeRoam; }
         public void Enable() { Get().Enable(); }
@@ -1308,6 +1559,9 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                 @GoToLookMode.started -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnGoToLookMode;
                 @GoToLookMode.performed -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnGoToLookMode;
                 @GoToLookMode.canceled -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnGoToLookMode;
+                @GoToInteractMode.started -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnGoToInteractMode;
+                @GoToInteractMode.performed -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnGoToInteractMode;
+                @GoToInteractMode.canceled -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnGoToInteractMode;
                 @OpenAbilities.started -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOpenAbilities;
                 @OpenAbilities.performed -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOpenAbilities;
                 @OpenAbilities.canceled -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOpenAbilities;
@@ -1330,6 +1584,9 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                 @GoToLookMode.started += instance.OnGoToLookMode;
                 @GoToLookMode.performed += instance.OnGoToLookMode;
                 @GoToLookMode.canceled += instance.OnGoToLookMode;
+                @GoToInteractMode.started += instance.OnGoToInteractMode;
+                @GoToInteractMode.performed += instance.OnGoToInteractMode;
+                @GoToInteractMode.canceled += instance.OnGoToInteractMode;
                 @OpenAbilities.started += instance.OnOpenAbilities;
                 @OpenAbilities.performed += instance.OnOpenAbilities;
                 @OpenAbilities.canceled += instance.OnOpenAbilities;
@@ -1491,6 +1748,47 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         }
     }
     public LookActions @Look => new LookActions(this);
+
+    // Interact
+    private readonly InputActionMap m_Interact;
+    private IInteractActions m_InteractActionsCallbackInterface;
+    private readonly InputAction m_Interact_PickDir;
+    private readonly InputAction m_Interact_Cancel;
+    public struct InteractActions
+    {
+        private @ZodiacInputMap m_Wrapper;
+        public InteractActions(@ZodiacInputMap wrapper) { m_Wrapper = wrapper; }
+        public InputAction @PickDir => m_Wrapper.m_Interact_PickDir;
+        public InputAction @Cancel => m_Wrapper.m_Interact_Cancel;
+        public InputActionMap Get() { return m_Wrapper.m_Interact; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InteractActions set) { return set.Get(); }
+        public void SetCallbacks(IInteractActions instance)
+        {
+            if (m_Wrapper.m_InteractActionsCallbackInterface != null)
+            {
+                @PickDir.started -= m_Wrapper.m_InteractActionsCallbackInterface.OnPickDir;
+                @PickDir.performed -= m_Wrapper.m_InteractActionsCallbackInterface.OnPickDir;
+                @PickDir.canceled -= m_Wrapper.m_InteractActionsCallbackInterface.OnPickDir;
+                @Cancel.started -= m_Wrapper.m_InteractActionsCallbackInterface.OnCancel;
+                @Cancel.performed -= m_Wrapper.m_InteractActionsCallbackInterface.OnCancel;
+                @Cancel.canceled -= m_Wrapper.m_InteractActionsCallbackInterface.OnCancel;
+            }
+            m_Wrapper.m_InteractActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @PickDir.started += instance.OnPickDir;
+                @PickDir.performed += instance.OnPickDir;
+                @PickDir.canceled += instance.OnPickDir;
+                @Cancel.started += instance.OnCancel;
+                @Cancel.performed += instance.OnCancel;
+                @Cancel.canceled += instance.OnCancel;
+            }
+        }
+    }
+    public InteractActions @Interact => new InteractActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -1543,6 +1841,7 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         void OnPickup(InputAction.CallbackContext context);
         void OnOpenInventory(InputAction.CallbackContext context);
         void OnGoToLookMode(InputAction.CallbackContext context);
+        void OnGoToInteractMode(InputAction.CallbackContext context);
         void OnOpenAbilities(InputAction.CallbackContext context);
     }
     public interface IUIActions
@@ -1562,6 +1861,11 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnCycle(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
+    }
+    public interface IInteractActions
+    {
+        void OnPickDir(InputAction.CallbackContext context);
         void OnCancel(InputAction.CallbackContext context);
     }
 }

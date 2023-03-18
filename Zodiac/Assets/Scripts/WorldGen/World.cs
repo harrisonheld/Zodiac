@@ -17,13 +17,19 @@ namespace WorldGen
         // not very clever but works well enough - much like myself
         private static int StableHash(params int[] ints)
         {
-            int hc = 17;
+            /*
+             * I am not good at this kind of math and cannot gaurantee this hash is any good
+             * No I have not tested it
+             */
+            
+            // djb2 algorithm
+            int hash = 5381;
             for(int i = 0; i < ints.Length; i++)
             {
-                hc = unchecked(hc * 19 + ints[i]);
+                hash = unchecked(hash * 33 + ints[i]);
             }
 
-            return hc;
+            return hash;
         }
         public static List<GameObject> GenerateScreen(int x, int y)
         {
