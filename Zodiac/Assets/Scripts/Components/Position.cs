@@ -7,6 +7,8 @@ public class Position : ZodiacComponent
 {
     [SerializeField] private Vector2Int pos;
 
+    private Coroutine visualLerpCoroutine;
+
     [ZodiacNoSerialize]
     public Vector2Int Pos
     {
@@ -16,6 +18,9 @@ public class Position : ZodiacComponent
             pos = value;
             // update transform position
             gameObject.transform.position = (Vector2)value;
+            // cancel lerp if its happening
+            if(visualLerpCoroutine != null)
+                StopCoroutine(visualLerpCoroutine);
         }
     }
     public int X
@@ -38,7 +43,9 @@ public class Position : ZodiacComponent
     public void SmoothMove(Vector2Int newPos)
     {
         pos = newPos;
-        StartCoroutine(LerpTo(newPos));
+        if (visualLerpCoroutine != null)
+            StopCoroutine(visualLerpCoroutine);
+        visualLerpCoroutine = StartCoroutine(LerpTo(newPos));
     }
 
     private IEnumerator LerpTo(Vector2Int destination)
