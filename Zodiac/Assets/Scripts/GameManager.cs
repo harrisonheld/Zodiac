@@ -34,7 +34,8 @@ public class GameManager : MonoBehaviour
         ThePlayer = deserialized[2];
 
         // generate caverns
-        Entities.AddRange(WorldGen.World.GenerateScreen(0, 0));
+        WorldGen.World.SetWorldSeed(69);
+        Entities.AddRange(WorldGen.World.GenerateScreen(15, 15));
 
         // get all entities
         foreach (Position posComp in GameObject.FindObjectsOfType<Position>())
@@ -59,7 +60,44 @@ public class GameManager : MonoBehaviour
 
         bool inputDone = ZodiacInput.DoPlayerInput();
         if (inputDone)
+        {
             DoTurn();
+
+            Position playerPos = ThePlayer.GetComponent<Position>();
+            Vector2Int relScreen = new(0, 0);
+            if (playerPos.Y >= WorldGen.World.SCREEN_HEIGHT)
+            {
+                playerPos.Y %= WorldGen.World.SCREEN_HEIGHT;
+                relScreen.y = 1;
+            }
+            else if(playerPos.Y < 0)
+            {
+                playerPos.Y += WorldGen.World.SCREEN_HEIGHT;
+                relScreen.y = -1;
+            }
+            if (playerPos.X >= WorldGen.World.SCREEN_WIDTH)
+            {
+                playerPos.X %= WorldGen.World.SCREEN_WIDTH;
+                relScreen.x = 1;
+            }
+            else if (playerPos.X < 0)
+            {
+                playerPos.X += WorldGen.World.SCREEN_WIDTH;
+                relScreen.x = -1;
+            }
+
+            if (relScreen != Vector2Int.zero)
+            {
+                foreach(GameObject entity in Entities)
+                {
+                    if (entity != ThePlayer)
+                        DestroyImmediate(entity);
+                }
+                Entities.Clear();
+                Entities.Add(ThePlayer);
+                Entities.AddRange(WorldGen.World.GenerateScreen(WorldGen.World.LoadedScreenX + relScreen.x, WorldGen.World.LoadedScreenY + relScreen.y));
+            }
+        }
     }
     private void DoTurn()
     {
