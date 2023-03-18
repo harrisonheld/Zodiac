@@ -21,7 +21,7 @@ namespace WorldGen
 		private List<Cell> cavernCells = new List<Cell>();
 		private int caverns = int.MaxValue;
 
-		private System.Random layoutRand = new();
+		private System.Random layoutRand = null;
 
 		public CellularAutomata(int _width, int _height, int _iterations = 4, double _fillPercent = 0.50)
 		{
@@ -32,7 +32,7 @@ namespace WorldGen
 
 			cells = new Cell[width, height];
 		}
-		public void Generate()
+		public void Generate(Gaps gaps)
 		{
 			//create random cells
 			for (int y = 0; y < height; y++)
@@ -43,7 +43,14 @@ namespace WorldGen
 					newCell.x = x;
 					newCell.y = y;
 
-					if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
+                    // gaps
+                    if (y == height - 1 && gaps.north.Contains(x) ||
+							x == width - 1 && gaps.east.Contains(y) ||
+							y == 0 && gaps.south.Contains(x) ||
+							x == 0 && gaps.west.Contains(y))
+                        newCell.type = CellType.Floor;
+                    // walls on edges
+                    else if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
 						newCell.type = CellType.Wall;
 					else
 						newCell.type = layoutRand.NextDouble() > fillPercent ? CellType.Floor : CellType.Wall;
@@ -105,10 +112,10 @@ namespace WorldGen
 				}
 			}
 		}
-		public void Generate(System.Random rand)
+		public void Generate(System.Random rand, Gaps gaps)
 		{
             layoutRand = rand;
-			Generate();
+			Generate(gaps);
 		}
 
 		public IEnumerable<Vector2Int> WallCoordinates()
@@ -122,8 +129,12 @@ namespace WorldGen
 				}
 			}
 		}
+        private bool InBounds(int x, int y)
+        {
+            return x >= 0 && x < width && y >= 0 && y < height;
+        }
 
-		private void FindCaverns()
+        private void FindCaverns()
 		{
 			cavernCells = new List<Cell>();
 			caverns = 0;
@@ -156,8 +167,12 @@ namespace WorldGen
 							for (int i = 0; i < DIRECTIONS.Length; i++)
 							{
 								int[] locCoord = DIRECTIONS[i];
+								int neighborX = cell.x + locCoord[0];
+								int neighborY = cell.y + locCoord[1];
+								if (!InBounds(neighborX, neighborY))
+									continue;
 
-								Cell neighbor = cells[cell.x + locCoord[0], cell.y + locCoord[1]];
+								Cell neighbor = cells[neighborX, neighborY];
 
 								if ((neighbor.type == CellType.Floor || neighbor.type == CellType.Path) && !neighbor.marked)
 								{

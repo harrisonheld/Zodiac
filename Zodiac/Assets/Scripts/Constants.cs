@@ -8,10 +8,6 @@ using UnityEngine;
 
 public static class Constants
 {
-    // gameboard size
-    public const int GAMEAREA_WIDTH = 28;
-    public const int GAMEAREA_HEIGHT = 21;
-    
     // some far away point to put stuff
     public static readonly Vector2Int OFFSCREEN = new Vector2Int(-1, -1);
 

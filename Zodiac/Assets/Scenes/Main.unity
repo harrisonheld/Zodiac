@@ -484,9 +484,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Vigor:   -1
 
-    Crunk: -1
+    Crunk:   -1
 
-    Junk:   -1
+    Junk:    -1
 
     Piss:    -1'
   m_isRightToLeft: 0
@@ -2613,7 +2613,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.5, y: 2005200}
+  m_AnchoredPosition: {x: 0.5, y: 2008500}
   m_SizeDelta: {x: 584, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &1874675975

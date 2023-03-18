@@ -1,0 +1,2 @@
+C:\Users\johnd\Unity Projects\ZodiacRepo\ZodiacUnitTests\obj\Debug\ZodiacUnitTests.csproj.AssemblyReference.cache
+C:\Users\johnd\Unity Projects\ZodiacRepo\ZodiacUnitTests\obj\Debug\ZodiacUnitTests.csproj.CoreCompileInputs.cache
