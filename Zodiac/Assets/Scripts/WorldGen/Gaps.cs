@@ -18,20 +18,4 @@ namespace WorldGen
         public InclusiveIntRange south;
         public InclusiveIntRange west;
     }
-
-    struct InclusiveIntRange
-    {
-        public int start;
-        public int end;
-        public InclusiveIntRange(int _start, int _end)
-        {
-            start = _start;
-            end = _end;
-        }
-        
-        public bool Contains(int x)
-        {
-            return start <= x && x <= end;
-        }
-    }
 }

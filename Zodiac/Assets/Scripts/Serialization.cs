@@ -44,7 +44,9 @@ public class EntitySerializer
                                         .Distinct()
                                         .ToList();
 
-        writer = XmlWriter.Create(path, writerSettings);
+        // will overwrite the file if it already exists
+        using FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write);
+        writer = XmlWriter.Create(fileStream, writerSettings);
         writer.WriteStartElement(ENTITIES);
         writer.WriteAttributeString(ENTITY_COUNT, toSerialize.Count.ToString());
 
@@ -57,7 +59,7 @@ public class EntitySerializer
         writer.Close();
         writer.Dispose();
     }
-    public GameObject[] DeserializeScene(string path)
+    public List<GameObject> DeserializeScene(string path)
     {
         Clear();
         
@@ -108,7 +110,8 @@ public class EntitySerializer
             }
         }
 
-        return entities;
+        reader.Dispose();
+        return entities.Where(e => e.GetComponent<Position>() != null).ToList();
     }
     private void AssignPropertyFromNode(ZodiacComponent component, GameObject[] entities)
     {

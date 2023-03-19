@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 public class GameManager : MonoBehaviour
 {
     [Header("Info")]
-    [SerializeField] int turn = 0;
+    [SerializeField] private int turn = 0;
+    [SerializeField] private int screenX = 2;
+    [SerializeField] private int screenY = 15;
+
+    private GameSave gameSave;
 
     [SerializeField] public List<GameObject> Entities = new List<GameObject>();
     [SerializeField] public GameObject ThePlayer;
@@ -27,21 +31,17 @@ public class GameManager : MonoBehaviour
     }
 
     public void Start()
-    {        
+    {
+        CreateNewGameSave();
+        
         string testpath = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\moonshinercave.xml";
         EntitySerializer serializer = new();
-        GameObject[] deserialized = serializer.DeserializeScene(testpath);
-        ThePlayer = deserialized[2];
-
-        // generate caverns
-        WorldGen.World.SetWorldSeed(69);
-        Entities.AddRange(WorldGen.World.GenerateScreen(15, 15));
-
-        // get all entities
-        foreach (Position posComp in GameObject.FindObjectsOfType<Position>())
-        {
-            Entities.Add(posComp.gameObject);
-        }
+        List<GameObject> deserialized = serializer.DeserializeScene(testpath);
+        ThePlayer = deserialized[1];
+        
+        WorldGen.World.SetWorldSeed(gameSave.WorldSeed);
+        Entities.AddRange(deserialized.Where(e => e.GetComponents<Position>() != null));
+        Entities.AddRange(WorldGen.World.GenerateScreen(screenX, screenY));
     }
 
     public void Update()
@@ -64,38 +64,51 @@ public class GameManager : MonoBehaviour
             DoTurn();
 
             Position playerPos = ThePlayer.GetComponent<Position>();
-            Vector2Int relScreen = new(0, 0);
+            bool leftScreen = false;
             if (playerPos.Y >= WorldGen.World.SCREEN_HEIGHT)
             {
                 playerPos.Y %= WorldGen.World.SCREEN_HEIGHT;
-                relScreen.y = 1;
+                gameSave.SaveScreen(screenX, screenY);
+                screenY++;
+                leftScreen = true;
             }
             else if(playerPos.Y < 0)
             {
                 playerPos.Y += WorldGen.World.SCREEN_HEIGHT;
-                relScreen.y = -1;
+                gameSave.SaveScreen(screenX, screenY);
+                screenY--;
+                leftScreen = true;
             }
             if (playerPos.X >= WorldGen.World.SCREEN_WIDTH)
             {
                 playerPos.X %= WorldGen.World.SCREEN_WIDTH;
-                relScreen.x = 1;
+                gameSave.SaveScreen(screenX, screenY);
+                screenX++;
+                leftScreen = true;
             }
             else if (playerPos.X < 0)
             {
                 playerPos.X += WorldGen.World.SCREEN_WIDTH;
-                relScreen.x = -1;
+                gameSave.SaveScreen(screenX, screenY);
+                screenX--;
+                leftScreen = true;
             }
 
-            if (relScreen != Vector2Int.zero)
+            if (leftScreen)
             {
                 foreach(GameObject entity in Entities)
                 {
                     if (entity != ThePlayer)
                         DestroyImmediate(entity);
                 }
+                
                 Entities.Clear();
                 Entities.Add(ThePlayer);
-                Entities.AddRange(WorldGen.World.GenerateScreen(WorldGen.World.LoadedScreenX + relScreen.x, WorldGen.World.LoadedScreenY + relScreen.y));
+                
+                if(gameSave.ScreenSaved(screenX, screenY))
+                    Entities.AddRange(gameSave.LoadScreen(screenX, screenY));
+                else
+                    Entities.AddRange(WorldGen.World.GenerateScreen(screenX, screenY));
             }
         }
     }
@@ -120,6 +133,8 @@ public class GameManager : MonoBehaviour
     {
         foreach(GameObject entity in Entities)
         {
+            if(entity == null)
+                continue;
             if (entity.GetComponent<Position>().Pos == pos)
                 return entity;
         }
@@ -132,6 +147,8 @@ public class GameManager : MonoBehaviour
 
         foreach (GameObject entity in Entities)
         {
+            if (entity == null)
+                continue;
             if (entity.GetComponent<Position>().Pos == pos)
                 result.Add(entity);
         }
@@ -366,5 +383,12 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
+    }
+
+
+
+    private void CreateNewGameSave()
+    {
+        gameSave = new GameSave();
     }
 }

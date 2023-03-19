@@ -13,9 +13,6 @@ namespace WorldGen
         public const int SCREEN_WIDTH = 28;
         public const int SCREEN_HEIGHT = 21;
         
-        public static int LoadedScreenX { get; private set; }
-        public static int LoadedScreenY { get; private set; }
-        
         private static int worldSeed = 0;
         public static void SetWorldSeed(int newSeed)
         {
@@ -69,9 +66,6 @@ namespace WorldGen
         }
         public static List<GameObject> GenerateScreen(int x, int y)
         {
-            LoadedScreenX = x;
-            LoadedScreenY = y;
-            
             Gaps gaps = new()
             {
                 north = GenerateEdge(x, y, Direction.North),
