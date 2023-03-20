@@ -140,6 +140,12 @@ public class EntitySerializer
             int id = int.Parse(propValString);
             propInfo.SetValue(component, entities[id]);
         }
+        else if(propType == typeof(Color))
+        {
+            // seperate string into rgb components (these are [0.0, 1.0], not [0,255])
+            float[] rgb = propValString.Split(',').Select(component => float.Parse(component)).ToArray();
+            propInfo.SetValue(component, new Color(rgb[0], rgb[1], rgb[2]));
+        }
         else
         {
             object propVal = System.Convert.ChangeType(propValString, propType);
@@ -177,6 +183,10 @@ public class EntitySerializer
         if (value is GameObject entity)
         {
             value = GetId(entity);
+        }
+        else if (value is Color color)
+        {
+            value = $"{color.r},{color.g},{color.b}";
         }
 
         // if the property is a collection, write all the elements in it

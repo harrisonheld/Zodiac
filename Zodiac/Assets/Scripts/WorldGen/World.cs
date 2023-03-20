@@ -92,8 +92,8 @@ namespace WorldGen
                 var vis = wall.GetComponent<Visual>();
                 bool flip = random.NextDouble() <= 0.7;
                 vis.Sprite = flip ? "dots3x3" : "dots2x2";
-                vis.SetColorPrimary(flip ? new Color(1f, 1f, .89f) : new Color(.99f, .99f, .92f));
-                vis.SetColorSecondary(flip ? new Color(.76f, .76f, .63f) : new Color(.76f, .76f, .69f));
+                vis.ColorPrimary = (flip ? new Color(1f, 1f, .89f) : new Color(.99f, .99f, .92f));
+                vis.ColorSecondary = (flip ? new Color(.76f, .76f, .63f) : new Color(.76f, .76f, .69f));
                 vis.DisplayName = flip ? "oolitic limestone wall" : "sun-bleached oolitic limestone wall";
                 vis.Description = "a sedimentary material. the oolites, which are small spherical grains of rock, appear to move and shift like a school of fish";
                 if (!flip)

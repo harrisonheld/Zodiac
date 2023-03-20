@@ -25,6 +25,32 @@ public class Visual : ZodiacComponent
     private Color colorPrimary = Color.white;
     private Color colorSecondary = Color.gray;
     private Color colorTertiary = Color.black;
+    public Color ColorPrimary {
+        get => colorPrimary;
+        set
+        {
+            colorPrimary = value;
+            GetComponent<Renderer>().material.SetColor("_Out1", colorPrimary);
+        }
+    }
+    public Color ColorSecondary
+    {
+        get => colorSecondary;
+        set
+        {
+            colorSecondary = value;
+            GetComponent<Renderer>().material.SetColor("_Out2", colorSecondary);
+        }
+    }
+    public Color ColorTertiary
+    {
+        get => colorTertiary;
+        set
+        {
+            colorTertiary = value;
+            GetComponent<Renderer>().material.SetColor("_Out3", colorTertiary);
+        }
+    }
 
     /// <summary>
     /// The sprite as a string.
@@ -67,20 +93,5 @@ public class Visual : ZodiacComponent
 
         // assign the material to the renderer
         GetComponent<SpriteRenderer>().material = material;
-    }
-
-    public void SetColorPrimary(Color newCol) {
-        colorPrimary = newCol;
-        GetComponent<Renderer>().material.SetColor("_Out1", colorPrimary);
-    }
-    public void SetColorSecondary(Color newCol)
-    {
-        colorSecondary = newCol;
-        GetComponent<Renderer>().material.SetColor("_Out2", colorSecondary);
-    }
-    public void SetColorTertiary(Color newCol)
-    {
-        colorTertiary = newCol;
-        GetComponent<Renderer>().material.SetColor("_Out3", colorTertiary);
     }
 }
