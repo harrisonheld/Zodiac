@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ public class Position : ZodiacComponent
         get => pos;
         set
         {
+            // invoke event
+            PositionChanged?.Invoke(this, new PositionChangedArgs(X, Y, value.x, value.y));
             pos = value;
             // update transform position
             gameObject.transform.position = (Vector2)value;
@@ -40,8 +43,27 @@ public class Position : ZodiacComponent
         }
     }
 
+    public event EventHandler<PositionChangedArgs> PositionChanged;
+    public class PositionChangedArgs : EventArgs
+    {
+        public readonly int OldX;
+        public readonly int OldY;
+        public readonly int NewX;
+        public readonly int NewY;
+        
+        public PositionChangedArgs(int _oldX, int _oldY, int _newX, int _newY)
+        {
+            OldX = _oldX;
+            OldY = _oldY;
+            NewX = _newX;
+            NewY = _newY;
+        }
+    }
+
     public void SmoothMove(Vector2Int newPos)
     {
+        PositionChanged?.Invoke(this, new PositionChangedArgs(X, Y, newPos.x, newPos.y));
+
         pos = newPos;
         if (visualLerpCoroutine != null)
             StopCoroutine(visualLerpCoroutine);

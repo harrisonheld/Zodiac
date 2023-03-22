@@ -11,7 +11,10 @@ public class GameManager : MonoBehaviour
 
     private GameSave gameSave;
 
-    [SerializeField] public List<GameObject> Entities = new List<GameObject>();
+    // a list of Entities that have Position components
+    public List<GameObject> Entities = new List<GameObject>();
+    public List<GameObject>[,] EntitiesByPosition = new List<GameObject>[WorldGen.World.SCREEN_WIDTH, WorldGen.World.SCREEN_HEIGHT];
+
     [SerializeField] public GameObject ThePlayer;
 
     // a reference to the one game manager in the scene
@@ -33,11 +36,19 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         CreateNewGameSave();
-        
+
+
+        // initialize EntitiesByPosition
+        for (int x = 0; x < WorldGen.World.SCREEN_WIDTH; x++)
+            for (int y = 0; y < WorldGen.World.SCREEN_HEIGHT; y++)
+                EntitiesByPosition[x, y] = new List<GameObject>();
+
+
         string testpath = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\moonshinercave.xml";
         EntitySerializer serializer = new();
-        List<GameObject> deserialized = serializer.DeserializeScene(testpath);
+        List < GameObject> deserialized = serializer.DeserializeScene(testpath);
         ThePlayer = deserialized[1];
+
         
         WorldGen.World.SetWorldSeed(gameSave.WorldSeed);
         Entities.AddRange(deserialized.Where(e => e.GetComponents<Position>() != null));
@@ -384,7 +395,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
 
 
     private void CreateNewGameSave()

@@ -83,6 +83,7 @@ namespace WorldGen
             List<GameObject> walls = new();
             foreach (Vector2Int wallPos in ca.WallCoordinates())
             {
+                /*
                 GameObject wall = new GameObject();
                 
                 wall.AddComponent<Position>();
@@ -103,6 +104,11 @@ namespace WorldGen
 
                 wall.AddComponent<PhysicalAttributes>();
 
+                walls.Add(wall);
+                */
+                
+                string blueprint = random.NextDouble() <= 0.7 ? "LimestoneWall" : "LimestoneWallAlt";
+                GameObject wall = EntitySerializer.EntityFromBlueprint(blueprint, wallPos);
                 walls.Add(wall);
             }
 
