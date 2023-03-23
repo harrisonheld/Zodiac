@@ -20,27 +20,50 @@
   <Entity Id="PhysicalObject">
     <Component Type="Visual">
       <Property PropertyName="DisplayName" PropertyValue="[PhysicalObject]" />
-      <Property PropertyName="Sprite" PropertyValue="error" />
+      <Property PropertyName="Sprite" PropertyValue="Misc/error" />
       <Property PropertyName="Description" PropertyValue="[represents a physical object]" />
     </Component>
     <Component Type="PhysicalAttributes">
       <Property PropertyName="Solid" PropertyValue="True" />
       <Property PropertyName="OccludesVison" PropertyValue ="True" />
+      <Property PropertyName="Weight" PropertyValue="1" />
     </Component>
     <Component Type="Health" />
+  </Entity>
+
+  <Entity Id="DecorationObject">
+    <Component Type="Visual">
+      <Property PropertyName="DisplayName" PropertyValue="[DecorationObject]" />
+      <Property PropertyName="Description" PropertyValue="[represents a decoration]" />
+    </Component>
+    <Component Type="PhysicalAttributes">
+      <Property PropertyName="Solid" PropertyValue="False" />
+      <Property PropertyName="OccludesVison" PropertyValue ="False" />
+    </Component>
+  </Entity>
+
+  <Entity Id="Path" Inherits="DecorationObject">
+    <Component Type="Visual">
+      <Property PropertyName="DisplayName" PropertyValue="path" />
+      <Property PropertyName="Description" PropertyValue="good for walking on" />
+      <Property PropertyName="Sprite" PropertyValue="frog_critter" />
+    </Component>
   </Entity>
 
   <Entity Id="Wall" Inherits="PhysicalObject">
     <Component Type="Visual">
       <Property PropertyName="DisplayName" PropertyValue="[Wall]" />
-      <Property PropertyName="Sprite" PropertyValue="dots2x2" />
       <Property PropertyName="Description" PropertyValue="[a wall]" />
     </Component>
-
     <Component Type="Health">
       <Property PropertyName="HealthMax" PropertyValue="100" />
       <Property PropertyName="HealthCurrent" PropertyValue="100" />
       <Property PropertyName="Defense" PropertyValue="1" />
+    </Component>
+    <Component Type="PhysicalAttributes">
+      <Property PropertyName="Solid" PropertyValue="True" />
+      <Property PropertyName="OccludesVison" PropertyValue ="True" />
+      <Property PropertyName="Weight" PropertyValue="1000" />
     </Component>
   </Entity>
 
@@ -63,6 +86,23 @@
       <Property PropertyName="ColorSecondary" PropertyValue="0.76,0.76,0.69" />
       <Property PropertyName="ColorTertiary" PropertyValue="0,0,0" />
       <Property PropertyName="Sprite" PropertyValue="dots2x2" />
+    </Component>
+  </Entity>
+
+  <Entity Id="Creature" Inherits="PhysicalObject">
+    <Component Type="Visual">
+      <Property PropertyName="DisplayName" PropertyValue="[Creature]" />
+      <Property PropertyName="Description" PropertyValue="[represents a creature]" />
+    </Component>
+    <Component Type="Living" />
+    <Component Type="EnergyHaver" />
+    <Component Type="Brain">
+      <Property PropertyName="Ai" PropertyValue="Wanderer" />
+    </Component>
+    <Component Type="PhysicalAttributes">
+      <Property PropertyName="Solid" PropertyValue="True" />
+      <Property PropertyName="OccludesVison" PropertyValue ="False" />
+      <Property PropertyName="Weight" PropertyValue="150" />
     </Component>
   </Entity>
   

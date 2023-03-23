@@ -47,7 +47,10 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
         body.text = vis.Description;
 
         Health health = subject.GetComponent<Health>();
-        healthText.text = health.GetHealthString();
+        if (health != null)
+            healthText.text = health.GetHealthString();
+        else
+            healthText.text = "";
 
         // add flavor texts for components
         foreach (var comp in subject.GetComponents<ZodiacComponent>())

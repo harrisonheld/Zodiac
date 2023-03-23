@@ -129,7 +129,38 @@ namespace WorldGen
 				}
 			}
 		}
-        private bool InBounds(int x, int y)
+		public IEnumerable<Vector2Int> FloorCoordinates()
+		{
+			for (int y = 0; y < height; y++)
+			{
+				for (int x = 0; x < width; x++)
+				{
+					if (cells[x, y].type == CellType.Floor)
+						yield return new Vector2Int(x, y);
+				}
+			}
+		}
+		public IEnumerable<Vector2Int> PathCoordinates()
+		{
+			for (int y = 0; y < height; y++)
+			{
+				for (int x = 0; x < width; x++)
+				{
+					if (cells[x, y].type == CellType.Path)
+						yield return new Vector2Int(x, y);
+				}
+			}
+		}
+		// coordintes that are not walls
+		public IEnumerable<Vector2Int> OpenCoordinates()
+        {
+            // yield the results of FloorCoordinates() and PathCoordinates()
+            foreach (var coord in FloorCoordinates())
+                yield return coord;
+            foreach (var coord in PathCoordinates())
+                yield return coord;
+        }
+		private bool InBounds(int x, int y)
         {
             return x >= 0 && x < width && y >= 0 && y < height;
         }

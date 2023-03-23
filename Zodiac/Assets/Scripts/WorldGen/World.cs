@@ -80,39 +80,20 @@ namespace WorldGen
             CellularAutomata ca = new(SCREEN_WIDTH, SCREEN_HEIGHT);
             ca.Generate(random, gaps);
 
-            List<GameObject> walls = new();
+            List<GameObject> entities = new();
             foreach (Vector2Int wallPos in ca.WallCoordinates())
             {
-                /*
-                GameObject wall = new GameObject();
-                
-                wall.AddComponent<Position>();
-                wall.GetComponent<Position>().Pos = wallPos;
-
-                wall.AddComponent<Visual>();
-                var vis = wall.GetComponent<Visual>();
-                bool flip = random.NextDouble() <= 0.7;
-                vis.Sprite = flip ? "dots3x3" : "dots2x2";
-                vis.ColorPrimary = (flip ? new Color(1f, 1f, .89f) : new Color(.99f, .99f, .92f));
-                vis.ColorSecondary = (flip ? new Color(.76f, .76f, .63f) : new Color(.76f, .76f, .69f));
-                vis.DisplayName = flip ? "oolitic limestone wall" : "sun-bleached oolitic limestone wall";
-                vis.Description = "a sedimentary material. the oolites, which are small spherical grains of rock, appear to move and shift like a school of fish";
-                if (!flip)
-                    vis.Description += ". It has weathered many years of direct exposure to the sun";
-
-                wall.AddComponent<Health>();
-
-                wall.AddComponent<PhysicalAttributes>();
-
-                walls.Add(wall);
-                */
-                
                 string blueprint = random.NextDouble() <= 0.7 ? "LimestoneWall" : "LimestoneWallAlt";
                 GameObject wall = EntitySerializer.EntityFromBlueprint(blueprint, wallPos);
-                walls.Add(wall);
+                entities.Add(wall);
+            }
+            foreach (Vector2Int pathPos in ca.PathCoordinates())
+            {
+                GameObject path = EntitySerializer.EntityFromBlueprint("Path", pathPos);
+                entities.Add(path);
             }
 
-            return walls;
+            return entities;
         }
         private enum Direction
         {

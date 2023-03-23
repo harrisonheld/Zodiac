@@ -89,22 +89,6 @@ public static class ZodiacInput
         // get item
         if (inputMap.FreeRoam.Pickup.triggered)
         {
-            /*
-            var items = new List<Item>();
-            var pickupCandidates = GameManager.EntitiesAt(playerPos);
-            foreach (GameObject candidate in pickupCandidates)
-            {
-                Item item = candidate.GetComponent<Item>();
-                if (item != null)
-                    items.Add(item);
-            }
-
-            foreach (Item item in items)
-                GameManager.Pickup(player, item);
-
-            return;
-            */
-            
             // find all entities with item component
             var items = new List<GameObject>();
             foreach (GameObject obj in GameManager.Instance.EntitiesAt(playerPos))
@@ -113,11 +97,12 @@ public static class ZodiacInput
                     items.Add(obj);
             }
 
-            if (items.Count == 1)
+            if(items.Count == 0)
+                StatusMenu.Instance.Log("There's nothing here to pick up.");
+            else if (items.Count == 1)
                 GameManager.Instance.Pickup(GameManager.Instance.ThePlayer, items[0]);
             else if (items.Count > 1)
                 PickMenu.Instance.PickMultiple(items, (GameObject item) => GameManager.Instance.Pickup(GameManager.Instance.ThePlayer, item));
-            // else if (items.Count == 0), do nothing cuz theres nothing here
 
             return;
         }

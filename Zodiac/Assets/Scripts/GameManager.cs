@@ -259,20 +259,12 @@ public class GameManager : MonoBehaviour
     {
         Entities.Remove(item);
 
-        // destroy pos, if it has one
-        Position posComp = item.GetComponent<Position>();
         // Destroy() is not instant, it actually occurs at the end of the Update() frame.
         // therefore, i use DestroyImmediate().
-        DestroyImmediate(posComp);
+        DestroyImmediate(item.GetComponent<Position>());
         
         pickerUpper.GetComponent<Inventory>().AddItem(item);
         pickerUpper.GetComponent<EnergyHaver>().Energy -= Constants.COST_PICKUP;
-
-        var @event = new PickedUpEvent()
-        {
-            pickerUpper = pickerUpper
-        };
-        item.FireEvent(@event);
 
         if (pickerUpper == ThePlayer)
         {
@@ -282,6 +274,13 @@ public class GameManager : MonoBehaviour
         {
             StatusMenu.Instance.Log($"The {pickerUpper.GetComponent<Visual>().DisplayName} picks up the {item.GetComponent<Visual>().DisplayName}");
         }
+
+        // fire an event
+        var @event = new PickedUpEvent()
+        {
+            pickerUpper = pickerUpper
+        };
+        item.FireEvent(@event);
     }
     public void Drop(GameObject dropper, GameObject toDrop)
     {
