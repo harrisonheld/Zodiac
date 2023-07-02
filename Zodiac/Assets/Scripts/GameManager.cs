@@ -11,13 +11,14 @@ public class GameManager : MonoBehaviour
 
     private GameSave gameSave;
 
-    // a list of Entities that have Position components
+    // a list of Entities that have Position components - IE, ones that exist on the map - not in inventories or things like that
     public List<GameObject> Entities = new List<GameObject>();
     public List<GameObject>[,] EntitiesByPosition = new List<GameObject>[WorldGen.World.SCREEN_WIDTH, WorldGen.World.SCREEN_HEIGHT];
-
     [SerializeField] public GameObject ThePlayer;
 
-    // a reference to the one game manager in the scene
+    private List<ISystem> Systems = new List<ISystem>();
+
+    // singleton pattern
     public static GameManager Instance { get; private set; }
 
     public void Awake()
@@ -42,6 +43,9 @@ public class GameManager : MonoBehaviour
         for (int x = 0; x < WorldGen.World.SCREEN_WIDTH; x++)
             for (int y = 0; y < WorldGen.World.SCREEN_HEIGHT; y++)
                 EntitiesByPosition[x, y] = new List<GameObject>();
+
+        RegisterSystem<EnergySystem>();
+        RegisterSystem<BrainSystem>();
 
 
         string testpath = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\moonshinercave.xml";
@@ -72,7 +76,11 @@ public class GameManager : MonoBehaviour
         bool inputDone = ZodiacInput.DoPlayerInput();
         if (inputDone)
         {
-            DoTurn();
+            foreach (ISystem system in Systems) {
+                system.Tick();
+            }
+
+            turn++;
 
             Position playerPos = ThePlayer.GetComponent<Position>();
             bool leftScreen = false;
@@ -123,16 +131,15 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    private void DoTurn()
-    {
-        EnergySystem();
-        BrainSystem();
-
-        turn++;
-    }
     public int GetTurn()
     {
         return turn;
+    }
+
+
+    private void RegisterSystem<T>() where T : ISystem, new() {
+        ISystem system = new T();
+        Systems.Add(system);
     }
 
 
@@ -293,106 +300,16 @@ public class GameManager : MonoBehaviour
         Entities.Add(toDrop.gameObject);
     }
 
-    public static int Distance(Vector2Int a, Vector2Int b)
+    public static int ChebyshevDistance(Vector2Int a, Vector2Int b)
     {
-        /* 
+		/*
          * d = Max( |delta X|, |delta Y| )
-         * This makes all 8 adjacent tiles equadistant.
+         * This makes all 8 adjacent tiles equadistant - an interesting property!
         */
-        
-        int changeInX = a.x - b.x;
+
+		int changeInX = a.x - b.x;
         int changeInY = a.y - b.y;
         return Mathf.Max(Mathf.Abs(changeInX), Mathf.Abs(changeInY));
-    }
-
-
-    private void EnergySystem()
-    {
-        foreach (EnergyHaver energyHaver in GameObject.FindObjectsOfType<EnergyHaver>())
-        {
-            energyHaver.Energy += energyHaver.Quickness;
-            energyHaver.Energy = Mathf.Min(energyHaver.Energy, energyHaver.Quickness); // cap energy at Quickness
-        }
-    }
-    private void BrainSystem()
-    {
-        foreach (Brain brain in Object.FindObjectsOfType<Brain>()) 
-        {
-            // check if null in case another AI's action caused this object to be destroyed
-            if (brain == null)
-                continue;
-            if (brain.gameObject == null)
-                continue;
-            // check if this entity is on the map
-            if (!Entities.Contains(brain.gameObject))
-                continue;
-            // if player controlled, dont do its AI
-            if (brain.gameObject == ThePlayer)
-                continue;
-
-            Position myPosComp = brain.gameObject.GetComponent<Position>();
-            EnergyHaver energyHaver = brain.gameObject.GetComponent<EnergyHaver>();
-
-            Vector2Int myPos = myPosComp.Pos;
-
-            switch (brain.Ai) 
-            {
-                case AiType.Seeker:
-                    {
-                        if (energyHaver.Energy <= 0)
-                            break;
-                        if (brain.Target == null)
-                            break;
-
-                        Vector2Int targetPos = brain.Target.GetComponent<Position>().Pos;
-                        Vector2Int towards = targetPos - myPos;
-                        Vector2Int delta = towards;
-                        delta.Clamp(new Vector2Int(-1, -1), new Vector2Int(1, 1));
-
-                        // if we are next to the target, attack
-                        if(towards == delta)
-                        {
-                            BumpAttack(brain.gameObject, brain.Target);
-
-                            // if target was killed
-                            if (brain.Target == null)
-                                brain.Ai = AiType.Wanderer;
-                        }
-                        else
-                        {
-                            Vector2Int moveIntention = myPos + delta;
-                            AttemptMove(brain.gameObject, moveIntention);
-                        }
-                    }
-                    break;
-
-                case AiType.Wanderer:
-                    {
-                        if (energyHaver.Energy <= 0)
-                            break;
-
-                        // [-1, 2) implies [-1, 1]
-                        int moveX = Random.Range(-1, 2);
-                        int moveY = Random.Range(-1, 2);
-                        Vector2Int randomMove = new Vector2Int(moveX, moveY);
-                        Vector2Int moveIntention = myPos + randomMove;
-                        AttemptMove(brain.gameObject, moveIntention);
-                    }
-                    break;
-
-                case AiType.Projectile:
-                    {
-                        if (energyHaver.Energy <= 0)
-                            break;
-                    }
-                    break;
-
-
-                case AiType.Inert:
-                default:
-                    break;
-            }
-        }
     }
 
 

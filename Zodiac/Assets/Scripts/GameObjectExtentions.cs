@@ -19,9 +19,4 @@ public static class GameObjectExtentions {
             .SelectMany(comp => comp.GetInteractions())
             .ToList();
     }
-
-    public static int GetGUID(this GameObject go)
-    {
-        return 1;
-    }
 }
