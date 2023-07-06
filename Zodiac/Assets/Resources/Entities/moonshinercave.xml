@@ -105,6 +105,7 @@
 			<Property PropertyName="StatType" PropertyValue="Arcane" />
 			<Property PropertyName="BaseValue" PropertyValue="40" />
 		</Component>
+    <Component Type="Annihilate"></Component>
 	</Entity>
 	<Entity ID="3">
 		<Component Type="Brain">

@@ -19,6 +19,7 @@ public static class ZodiacInput
         Look,
         Interact,
         Menu,
+        AbilityTargetSelection,
     }
     private static InputMode inputMode = InputMode.FreeRoam;
 

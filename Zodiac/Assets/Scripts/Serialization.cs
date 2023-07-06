@@ -186,6 +186,7 @@ public class EntitySerializer
                 // if the type is a kind of list
                 if (typeof(IList).IsAssignableFrom(propType))
                 {
+                    // TODO
                 }
                 else if (propType.IsEnum)
                 {

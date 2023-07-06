@@ -12,3 +12,11 @@ public class Stat : ZodiacComponent
         return BaseValue;
     }
 }
+
+public enum StatType
+{
+    Vigor,
+    Prowess,
+    Arcane,
+    Dexterity,
+}

@@ -20,8 +20,8 @@
   <Entity Id="PhysicalObject">
     <Component Type="Visual">
       <Property PropertyName="DisplayName" PropertyValue="[PhysicalObject]" />
+      <Property PropertyName="Description" PropertyValue="[physical object base]" />
       <Property PropertyName="Sprite" PropertyValue="Misc/error" />
-      <Property PropertyName="Description" PropertyValue="[represents a physical object]" />
     </Component>
     <Component Type="PhysicalAttributes">
       <Property PropertyName="Solid" PropertyValue="True" />
@@ -34,7 +34,8 @@
   <Entity Id="DecorationObject">
     <Component Type="Visual">
       <Property PropertyName="DisplayName" PropertyValue="[DecorationObject]" />
-      <Property PropertyName="Description" PropertyValue="[represents a decoration]" />
+      <Property PropertyName="Description" PropertyValue="[decoration base]" />
+      <Property PropertyName="Sprite" PropertyValue="Misc/error" />
     </Component>
     <Component Type="PhysicalAttributes">
       <Property PropertyName="Solid" PropertyValue="False" />
@@ -53,7 +54,8 @@
   <Entity Id="Wall" Inherits="PhysicalObject">
     <Component Type="Visual">
       <Property PropertyName="DisplayName" PropertyValue="[Wall]" />
-      <Property PropertyName="Description" PropertyValue="[a wall]" />
+      <Property PropertyName="Description" PropertyValue="[wall base]" />
+      <Property PropertyName="Sprite" PropertyValue="dots3x3" />
     </Component>
     <Component Type="Health">
       <Property PropertyName="HealthMax" PropertyValue="100" />
@@ -74,11 +76,10 @@
       <Property PropertyName="ColorPrimary" PropertyValue="1,1,0.89" />
       <Property PropertyName="ColorSecondary" PropertyValue="0.76,0.76,0.63" />
       <Property PropertyName="ColorTertiary" PropertyValue="0,0,0" />
-      <Property PropertyName="Sprite" PropertyValue="dots3x3" />
     </Component>
   </Entity>
   
-  <Entity Id="LimestoneWallAlt" Inherits="Wall">
+  <Entity Id="LimestoneWallAlt" Inherits="LimestoneWall">
     <Component Type="Visual">
       <Property PropertyName="DisplayName" PropertyValue="sun-bleached oolitic limestone wall" />
       <Property PropertyName="Description" PropertyValue="a sedimentary material. the oolites, which are small spherical grains of rock, appear to move and shift like a school of fish. It has weathered many years of direct exposure to the sun" />
@@ -100,7 +101,6 @@
       <Property PropertyName="Ai" PropertyValue="Wanderer" />
     </Component>
     <Component Type="PhysicalAttributes">
-      <Property PropertyName="Solid" PropertyValue="True" />
       <Property PropertyName="OccludesVison" PropertyValue ="False" />
       <Property PropertyName="Weight" PropertyValue="150" />
     </Component>
