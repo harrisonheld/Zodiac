@@ -14,7 +14,7 @@ public static class GameObjectExtentions {
 
     public static List<IInteraction> GetInteractions(this GameObject go)
     {
-        // using linq, get all the interactions in all the components of this gameobject
+        // get all the interactions in all the components of this gameobject
         return go.GetComponents<ZodiacComponent>()
             .SelectMany(comp => comp.GetInteractions())
             .ToList();

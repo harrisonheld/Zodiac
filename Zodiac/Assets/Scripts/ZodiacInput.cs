@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Linq;
+using System;
 
 public static class ZodiacInput
 {
     private static ZodiacInputMap inputMap;
     public static ZodiacInputMap InputMap { get => inputMap; }
 
-    private static GameObject cursor;
-    private static int lookIdx; // which entity to look at, if there are multiple
-    private static Vector2Int lookCursorPos;
+    private static AbilityBase abilityToUse; // what ability the player is going to use
 
     private enum InputMode
     {
@@ -28,15 +27,12 @@ public static class ZodiacInput
         // initialize
         inputMap = new ZodiacInputMap();
         inputMap.Enable();
-
-        cursor = GameObject.Find("Cursor");
     }
 
     /// <summary>
     /// Returns true when the player has finished their turn.
     /// False if they have not.
     /// </summary>
-    /// <param name="_player">The GameObject which is the player.</param>
     /// <returns></returns>
     public static bool DoPlayerInput()
     {
@@ -59,6 +55,10 @@ public static class ZodiacInput
 
             case InputMode.Interact:
                 DoInteractInput();
+                break;
+
+            case InputMode.AbilityTargetSelection:
+                DoAbilityTargetSelectionInput();
                 break;
 
             default:
@@ -118,6 +118,17 @@ public static class ZodiacInput
             return;
         }
 
+        // open abilities menu
+        if (inputMap.FreeRoam.OpenAbilities.triggered)
+        {
+            // var abilities = GameManager.Instance.ThePlayer.GetComponents<AbilityBase>();
+
+            AbilityBase ability = GameManager.Instance.ThePlayer.GetComponent<Suicide>();
+            AbilityTargetSelectionMode(ability);
+
+            return;
+        }
+
         // movement
         Vector2Int move = Vector2Int.RoundToInt(inputMap.FreeRoam.Move.ReadValue<Vector2>());
         if (move != Vector2Int.zero)
@@ -151,41 +162,14 @@ public static class ZodiacInput
             return;
         }
 
-        // move cursor
+        // look menu input
         Vector2Int move = Vector2Int.RoundToInt(inputMap.Look.Move.ReadValue<Vector2>());
         int cycle = (int)InputMap.Look.Cycle.ReadValue<float>();
-        if (move != Vector2Int.zero)
-        {
-            inputMap.Look.Move.Reset();
-            
-            lookIdx = 0;
+        LookMenu.Instance.HandleInput(move, cycle);
 
-            lookCursorPos += move;
-            cursor.transform.position = (Vector2)lookCursorPos;
-
-            // no need to check if null, lookmenu will handle that
-            GameObject lookingAt = GameManager.Instance.EntitiesAt(lookCursorPos).FirstOrDefault();
-            LookMenu.Instance.SetSubject(lookingAt);
-
-            bool isLeft = lookCursorPos.x > (WorldGen.World.SCREEN_WIDTH / 2);
-            LookMenu.Instance.SetSide(isLeft);
-
-            return;
-        }
-        else if(cycle != 0)
-        {
-            List<GameObject> atPos = GameManager.Instance.EntitiesAt(lookCursorPos);
-            if (atPos.Count == 0)
-                return;
-            
-            lookIdx += cycle;
-            if (lookIdx < 0)
-                lookIdx = atPos.Count - 1;
-            else if (lookIdx >= atPos.Count)
-                lookIdx = 0;
-
-            LookMenu.Instance.SetSubject(atPos[lookIdx]);
-        }
+        // these prevent you from holding down the button to move the cursor
+        inputMap.Look.Move.Reset();
+        inputMap.Look.Cycle.Reset();
     }
     private static void DoInteractInput()
     {
@@ -219,11 +203,29 @@ public static class ZodiacInput
             interactions[0].Perform();
         }
     }
+    private static void DoAbilityTargetSelectionInput()
+    {
+        // cancel
+        if(inputMap.UI.Cancel.triggered)
+        {
+            FreeRoamMode();
+            return;
+        }
+
+        // target picking
+        bool selectionDone = abilityToUse.TargetingMechanism.HandleInput(inputMap);
+
+        // ability activation
+        if (selectionDone)
+        {
+            abilityToUse.Activate();
+            FreeRoamMode();
+            return;
+        }
+    }
 
     public static void FreeRoamMode()
     {
-        // hide cursor
-        cursor.SetActive(false);
         // hide look menu
         if(MenuManager.Instance.isOpen(LookMenu.Instance))
             MenuManager.Instance.Close(LookMenu.Instance);
@@ -232,19 +234,7 @@ public static class ZodiacInput
     }
     public static void LookMode()
     {
-        // setup cursor
-        lookCursorPos = GameManager.Instance.ThePlayer.GetComponent<Position>().Pos;
-        cursor.transform.transform.position = (Vector2)lookCursorPos;
-        cursor.SetActive(true);
-
-        // show look menu
-        LookMenu.Instance.SetSubject(GameManager.Instance.ThePlayer);
-        MenuManager.Instance.Open(LookMenu.Instance);
-
-        // put it on correct side
-        bool isLeft = lookCursorPos.x > (WorldGen.World.SCREEN_WIDTH / 2);
-        LookMenu.Instance.SetSide(isLeft);
-
+        LookMenu.Instance.Show(GameManager.Instance.ThePlayer.GetComponent<Position>().Pos);
         inputMode = InputMode.Look;
     }
     public static void InteractMode()
@@ -254,5 +244,10 @@ public static class ZodiacInput
     public static void MenuMode()
     {
         inputMode = InputMode.Menu;
+    }
+    public static void AbilityTargetSelectionMode(AbilityBase ability)
+    {
+        abilityToUse = ability;
+        inputMode = InputMode.AbilityTargetSelection;
     }
 }

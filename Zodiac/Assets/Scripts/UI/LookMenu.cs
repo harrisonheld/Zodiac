@@ -10,6 +10,10 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
     public Canvas Canvas { get => GetComponent<Canvas>(); }
     public CanvasGroup CanvasGroup { get => GetComponent<CanvasGroup>(); }
 
+    private static GameObject cursor;
+    private static int lookIdx; // which entity to look at, if there are multiple
+    private static Vector2Int _lookCursorPos;
+
     [SerializeField] private RectTransform panelRectTransform;
 
     public static LookMenu Instance { get; private set; }
@@ -19,6 +23,8 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
         {
             DontDestroyOnLoad(this.gameObject); // Keep the GameObject, this component is attached to, across different scenes
             Instance = this;
+
+            cursor = GameObject.Find("Cursor");
         }
         else if (Instance != this)
         {
@@ -39,6 +45,7 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
             title.text = "";
             body.text = "";
             healthText.text = "";
+
             return;
         }
 
@@ -101,4 +108,68 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
             panelRectTransform.anchoredPosition = new Vector2(-offset, 0);
         }
     }
+
+    public void ShowCursor(Vector2Int pos)
+    {
+        cursor.transform.position = (Vector2)pos;
+        cursor.SetActive(true);
+    }
+    public void HideCursor()
+    {
+        cursor.SetActive(false);
+    }
+
+    /// <summary>
+    /// a
+    /// </summary>
+    /// <param name="move">In which direction to move the cursor.</param>
+    /// <param name="cycle">When scrolling through a list of entities, -1 to scroll back, +1 to scroll up. 0 to do nothing.</param>
+    public void HandleInput(Vector2Int move, int cycle)
+    {
+        if(move != Vector2Int.zero)
+        {
+            lookIdx = 0;
+            _lookCursorPos += move;
+
+            cursor.transform.position = (Vector2)_lookCursorPos;
+
+            GameObject lookingAt = GameManager.Instance.EntitiesAt(_lookCursorPos).FirstOrDefault();
+            SetSubject(lookingAt);
+
+            bool isLeft = _lookCursorPos.x > (WorldGen.World.SCREEN_WIDTH / 2);
+            SetSide(isLeft);
+        }
+        else if (cycle != 0)
+        {
+            List<GameObject> atPos = GameManager.Instance.EntitiesAt(_lookCursorPos);
+            if (atPos.Count == 0)
+                return;
+
+            lookIdx += cycle;
+            if (lookIdx < 0)
+                lookIdx = atPos.Count - 1;
+            else if (lookIdx >= atPos.Count)
+                lookIdx = 0;
+
+            SetSubject(atPos[lookIdx]);
+        }
+    }
+    public void Show(Vector2Int lookCursorPos)
+    {
+        _lookCursorPos = lookCursorPos;
+
+        cursor.SetActive(true);
+        cursor.transform.position = (Vector2)lookCursorPos;
+        bool isLeft = lookCursorPos.x > (WorldGen.World.SCREEN_WIDTH / 2);
+
+        SetSide(isLeft);
+        SetSubject(GameManager.Instance.EntityAt(lookCursorPos));
+
+        MenuManager.Instance.Open(this);
+    }
+    public void HideLookMenu()
+    {
+        MenuManager.Instance.Close(this);
+    }
+
 }

@@ -10,7 +10,7 @@ public class TargetEntity : ITargetingMechanism
         _entity = null;
     }
 
-    public bool HandleInput()
+    public bool HandleInput(ZodiacInputMap inputMap)
     {
         return false;
     }

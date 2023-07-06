@@ -4,5 +4,5 @@ using UnityEngine;
 public interface ITargetingMechanism
 {
     // return true when the target selection is done
-    public bool HandleInput();
+    public bool HandleInput(ZodiacInputMap inputMap);
 }
