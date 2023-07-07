@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Threading.Tasks;
+using System.Linq;
+
 public class PickMenu : MonoBehaviour, IZodiacMenu
 {
     public Canvas Canvas { get => GetComponent<Canvas>(); }
@@ -12,9 +15,12 @@ public class PickMenu : MonoBehaviour, IZodiacMenu
     [SerializeField] GameObject optionsContainer;
     [SerializeField] GameObject buttonPrefab;
 
-    private List<GameObject> options; // the things to be picked from
-    private Action<GameObject> action; // what to do with the thing when it is picked
+    private IList _options;
+    private Action<object> _action;
+    private Func<object, string> _getName;
 
+    private string _prompt = "Pick";
+    private bool _closeOnPick = true;
     public static PickMenu Instance { get; private set; }
     public void Awake()
     {
@@ -33,22 +39,27 @@ public class PickMenu : MonoBehaviour, IZodiacMenu
     {
         Clear();
 
-        for (int i = 0; i < options.Count; i++)
+        for (int i = 0; i < _options.Count; i++)
         {
             GameObject optionButton = Instantiate(buttonPrefab);
             TextMeshProUGUI label = optionButton.GetComponentInChildren<TextMeshProUGUI>();
-            label.text = options[i].GetComponent<Visual>().DisplayName;
+            label.text = _getName(_options[i]);
             optionButton.transform.SetParent(optionsContainer.transform, false);
 
-            GameObject option = options[i];
+            var option = _options[i];
             int optionIdx = i;
             
             optionButton.GetComponent<Button>().onClick.AddListener(() =>
             {
-                options.Remove(option);
-                action(option); // perform the action on the option
+                _options.Remove(option);
+                _action(option);
 
-                if (options.Count == 0)
+                if(_closeOnPick)
+                {
+                    MenuManager.Instance.Close(this);
+                    return;
+                }
+                if (_options.Count == 0)
                 {
                     MenuManager.Instance.Close(this);
                     return;
@@ -58,7 +69,7 @@ public class PickMenu : MonoBehaviour, IZodiacMenu
 
                 // select next option after removal
                 int nextOptionIdx = optionIdx;
-                if (nextOptionIdx == options.Count)
+                if (nextOptionIdx == _options.Count)
                     nextOptionIdx--;
                 optionsContainer.transform.GetChild(nextOptionIdx).GetComponent<Selectable>().Select();
             });
@@ -82,12 +93,23 @@ public class PickMenu : MonoBehaviour, IZodiacMenu
         optionsContainer.transform.DetachChildren();
     }
 
-
-
-    public void PickMultiple(List<GameObject> _options, Action<GameObject> _action)
+    /// <summary>
+    /// Bring up the UI to pick a single item from a list.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="options">A list of items to choose from.</param>
+    /// <param name="callback">An action to be done to the item once chosen.</param>
+    /// <returns></returns>
+    public void PickOne<T>(IList<T> options, Func<T, string> getName, Action<T> action, string prompt = "Pick", bool closeOnPick = true)
     {
-        options = _options;
-        action = _action;
+        // convert to more generic types
+        _options = options.Cast<object>().ToList();
+        _action = pickable => action((T)pickable);
+        _getName = obj => getName((T)obj);
+
+        _prompt = prompt;
+        _closeOnPick = closeOnPick;
+
         RefreshUI();
         MenuManager.Instance.Open(this);
     }

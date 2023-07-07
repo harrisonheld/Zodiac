@@ -169,7 +169,9 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
     }
     public void HideLookMenu()
     {
-        MenuManager.Instance.Close(this);
+        cursor.SetActive(false);
+        if(MenuManager.Instance.isOpen(this))
+            MenuManager.Instance.Close(this);
     }
 
 }

@@ -57,6 +57,10 @@ public static class ZodiacInput
                 DoInteractInput();
                 break;
 
+            case InputMode.Menu:
+                DoMenuInput();
+                break;
+
             case InputMode.AbilityTargetSelection:
                 DoAbilityTargetSelectionInput();
                 break;
@@ -98,13 +102,25 @@ public static class ZodiacInput
                     items.Add(obj);
             }
 
-            if(items.Count == 0)
+            if (items.Count == 0)
+            {
                 StatusMenu.Instance.Log("There's nothing here to pick up.");
+            }
             else if (items.Count == 1)
+            {
                 GameManager.Instance.Pickup(GameManager.Instance.ThePlayer, items[0]);
+            }
             else if (items.Count > 1)
-                PickMenu.Instance.PickMultiple(items, (GameObject item) => GameManager.Instance.Pickup(GameManager.Instance.ThePlayer, item));
+            {
+                PickMenu.Instance.PickOne(
+                    options: items,
+                    getName: item => item.GetComponent<Visual>().DisplayName, 
+                    action: item => GameManager.Instance.Pickup(GameManager.Instance.ThePlayer, item),
+                    prompt: "Pick up what?", 
+                    closeOnPick: false 
+                );
 
+            }
             return;
         }
 
@@ -121,11 +137,14 @@ public static class ZodiacInput
         // open abilities menu
         if (inputMap.FreeRoam.OpenAbilities.triggered)
         {
-            // var abilities = GameManager.Instance.ThePlayer.GetComponents<AbilityBase>();
+            var abilities = GameManager.Instance.ThePlayer.GetComponents<AbilityBase>();
 
-            AbilityBase ability = GameManager.Instance.ThePlayer.GetComponent<Suicide>();
-            AbilityTargetSelectionMode(ability);
-
+            PickMenu.Instance.PickOne(
+                abilities, 
+                ability => ability.GetShortName(),
+                ability => AbilityTargetSelectionMode(ability),
+                prompt: "Use which ability?"
+            );
             return;
         }
 
@@ -178,7 +197,6 @@ public static class ZodiacInput
         {
             FreeRoamMode();
             return;
-
         }
         Vector2Int dir = Vector2Int.RoundToInt(inputMap.Interact.PickDir.ReadValue<Vector2>());
         if (dir != Vector2Int.zero)
@@ -201,6 +219,13 @@ public static class ZodiacInput
             }
 
             interactions[0].Perform();
+        }
+    }
+    private static void DoMenuInput()
+    {
+        if(!MenuManager.Instance.AnyMenusOpen())
+        {
+            inputMode = InputMode.FreeRoam;
         }
     }
     private static void DoAbilityTargetSelectionInput()
@@ -227,8 +252,7 @@ public static class ZodiacInput
     public static void FreeRoamMode()
     {
         // hide look menu
-        if(MenuManager.Instance.isOpen(LookMenu.Instance))
-            MenuManager.Instance.Close(LookMenu.Instance);
+        LookMenu.Instance.HideLookMenu();
 
         inputMode = InputMode.FreeRoam;
     }

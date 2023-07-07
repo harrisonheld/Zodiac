@@ -19,4 +19,9 @@ public static class GameObjectExtentions {
             .SelectMany(comp => comp.GetInteractions())
             .ToList();
     }
+
+    public static string GetPickName(this GameObject obj)
+    {
+        return obj.name;
+    }
 }

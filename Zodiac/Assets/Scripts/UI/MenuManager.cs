@@ -25,11 +25,11 @@ public class MenuManager : MonoBehaviour {
 
     // list of menus, in order of precedence. The menu at the end is the topmost menu.
     // i would use a stack but sometimes you want to close a menu that isnt the top most.
-    private static List<IZodiacMenu> menus = new List<IZodiacMenu> ();
+    private static List<IZodiacMenu> menus = new List<IZodiacMenu>();
 
     public void Update()
     {
-        if (menus.Count == 0)
+        if (!AnyMenusOpen())
             return;
 
         // closing of menus
@@ -53,9 +53,9 @@ public class MenuManager : MonoBehaviour {
 
     public void Open(IZodiacMenu menu)
     {
-        if(menus.Count == 0)
+        if(!AnyMenusOpen())
             ZodiacInput.MenuMode();
-        else // menus.Count > 0 
+        else
         {
             // disable interatcion on previous menu
             TopMenu().CanvasGroup.interactable = false;
@@ -75,9 +75,7 @@ public class MenuManager : MonoBehaviour {
         toClose.Canvas.enabled = false;
         toClose.CanvasGroup.interactable = false;
 
-        if (menus.Count == 0)
-            ZodiacInput.FreeRoamMode();
-        else // next menu gains focus
+        if (AnyMenusOpen())
         {
             TopMenu().CanvasGroup.interactable = true;
             TopMenu().GainFocus();
@@ -87,5 +85,9 @@ public class MenuManager : MonoBehaviour {
     public bool isOpen(IZodiacMenu toCheck)
     {
         return toCheck.Canvas.enabled;
+    }
+    public bool AnyMenusOpen()
+    {
+        return menus.Count > 0;
     }
 }

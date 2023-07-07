@@ -13,4 +13,9 @@ public class Suicide : AbilityBase
     {
         gameObject.GetComponent<Health>().HealthCurrent = 0;
     }
+
+    public override string GetShortName()
+    {
+        return "fucking kill yourself lol";
+    }
 }
