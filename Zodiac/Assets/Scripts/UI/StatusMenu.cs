@@ -39,18 +39,18 @@ public class StatusMenu : MonoBehaviour, IZodiacMenu
             return;
         }
         
-        int padding = 11    ;
+        int padding = 11;
         
         Health health = player.GetComponent<Health>();
         healthText.text = "HP: " + health.GetHealthString() + "\n" +
-            "DP: " + health.Defense;
+            "AC: " + health.Defense;
 
         string stats = "";
         foreach (Stat stat in player.GetComponents<Stat>())
         {
             stats += stat.StatType.ToString().PadRight(padding, '.') + stat.EffectiveValue() + "\n";
         }
-        statsText.text = stats + "\n" + ZodiacInput.GetInputMode();
+        statsText.text = stats + ZodiacInput.GetInputMode();
     }
     public void SetSize(Vector2 size)
     {

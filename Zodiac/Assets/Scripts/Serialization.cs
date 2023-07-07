@@ -124,6 +124,7 @@ public class EntitySerializer
         GameObject result = EntityFromBlueprint(blueprintId);
         result.AddComponent<Position>();
         result.GetComponent<Position>().Pos = pos;
+        GameManager.Instance.Entities.Add(result);
         return result;
     }
     public static GameObject EntityFromBlueprint(string blueprintId)

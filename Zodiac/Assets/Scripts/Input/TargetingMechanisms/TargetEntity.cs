@@ -24,6 +24,13 @@ public class TargetEntity : ITargetingMechanism
         if(inputMap.UI.Submit.triggered)
         {
             _targeted = LookMenu.Instance.GetSubject();
+
+            if(_targeted == null)
+            {
+                StatusMenu.Instance.Log("There is nothing to target there.");
+                return false;
+            }
+
             return true;
         }
 

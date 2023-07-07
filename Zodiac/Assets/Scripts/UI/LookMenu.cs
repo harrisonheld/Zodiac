@@ -122,6 +122,10 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
     {
         _cursor.SetActive(false);
     }
+    public Vector2Int GetCursorPos()
+    {
+        return _lookCursorPos;
+    }
 
 
     public void HandleInput(ZodiacInputMap inputMap)

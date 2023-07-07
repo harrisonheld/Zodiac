@@ -15,6 +15,7 @@ public class KillFuck : AbilityBase
 
     public override void Activate()
     {
+        StatusMenu.Instance.Log("You cast KILL FUCK.");
         GameManager.Instance.BreakEntity(targetEntity.GetTargettedEntity());
     }
 

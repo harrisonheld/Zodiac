@@ -107,6 +107,7 @@
 		</Component>
     <Component Type="Suicide"></Component>
     <Component Type="KillFuck"></Component>
+    <Component Type="LifeFuck"></Component>
   </Entity>
 	<Entity ID="3">
 		<Component Type="Brain">
@@ -128,7 +129,7 @@
 		</Component>
 		<Component Type="Visual">
 			<Property PropertyName="DisplayName" PropertyValue="enthralled alchemist" />
-			<Property PropertyName="Description" PropertyValue="the fledgling aclhemist toils with eyes that gleam like gold and hands that are never still. Consumed now, but 'twas true without lying, certain and most true" />
+			<Property PropertyName="Description" PropertyValue="the fledgling aclhemist toils with eyes that gleam like gold and hands that are never still. Consumed now, but once 'twas true. Without lying, certain and most true" />
 			<Property PropertyName="Sprite" PropertyValue="human3" />
 		</Component>
 		<Component Type="Inventory">
