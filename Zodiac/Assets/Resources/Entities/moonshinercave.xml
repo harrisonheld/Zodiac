@@ -106,7 +106,8 @@
 			<Property PropertyName="BaseValue" PropertyValue="40" />
 		</Component>
     <Component Type="Suicide"></Component>
-	</Entity>
+    <Component Type="KillFuck"></Component>
+  </Entity>
 	<Entity ID="3">
 		<Component Type="Brain">
 			<Property PropertyName="Ai" PropertyValue="Seeker" />

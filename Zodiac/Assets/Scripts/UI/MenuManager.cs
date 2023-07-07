@@ -53,11 +53,9 @@ public class MenuManager : MonoBehaviour {
 
     public void Open(IZodiacMenu menu)
     {
-        if(!AnyMenusOpen())
-            ZodiacInput.MenuMode();
-        else
+        if (AnyMenusOpen())
         {
-            // disable interatcion on previous menu
+            // disable interaction on previous menu
             TopMenu().CanvasGroup.interactable = false;
         }
 

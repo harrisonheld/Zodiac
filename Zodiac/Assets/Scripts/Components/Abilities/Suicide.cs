@@ -16,6 +16,6 @@ public class Suicide : AbilityBase
 
     public override string GetShortName()
     {
-        return "fucking kill yourself lol";
+        return "Die Instantaneously";
     }
 }

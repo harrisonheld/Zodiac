@@ -10,8 +10,8 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
     public Canvas Canvas { get => GetComponent<Canvas>(); }
     public CanvasGroup CanvasGroup { get => GetComponent<CanvasGroup>(); }
 
-    private static GameObject cursor;
-    private static int lookIdx; // which entity to look at, if there are multiple
+    private static GameObject _cursor;
+    private static int _lookIdx; // which entity to look at, if there are multiple
     private static Vector2Int _lookCursorPos;
 
     [SerializeField] private RectTransform panelRectTransform;
@@ -24,7 +24,7 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
             DontDestroyOnLoad(this.gameObject); // Keep the GameObject, this component is attached to, across different scenes
             Instance = this;
 
-            cursor = GameObject.Find("Cursor");
+            _cursor = GameObject.Find("Cursor");
         }
         else if (Instance != this)
         {
@@ -90,6 +90,10 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
 
         newSubject.FireEvent(new LookedAtEvent());
     }
+    public GameObject GetSubject()
+    {         
+        return subject;
+    }
     public void SetSide(bool isLeft)
     {
         if (isLeft)
@@ -111,27 +115,38 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
 
     public void ShowCursor(Vector2Int pos)
     {
-        cursor.transform.position = (Vector2)pos;
-        cursor.SetActive(true);
+        _cursor.transform.position = (Vector2)pos;
+        _cursor.SetActive(true);
     }
     public void HideCursor()
     {
-        cursor.SetActive(false);
+        _cursor.SetActive(false);
     }
 
+
+    public void HandleInput(ZodiacInputMap inputMap)
+    {
+        Vector2Int move = Vector2Int.RoundToInt(inputMap.Look.Move.ReadValue<Vector2>());
+        int cycle = (int)inputMap.Look.Cycle.ReadValue<float>();
+        // these prevent you from holding down the button to move the cursor
+        inputMap.Look.Move.Reset();
+        inputMap.Look.Cycle.Reset();
+
+        HandleInputInternal(move, cycle);
+    }
     /// <summary>
-    /// a
+    /// 
     /// </summary>
     /// <param name="move">In which direction to move the cursor.</param>
     /// <param name="cycle">When scrolling through a list of entities, -1 to scroll back, +1 to scroll up. 0 to do nothing.</param>
-    public void HandleInput(Vector2Int move, int cycle)
+    private void HandleInputInternal(Vector2Int move, int cycle)
     {
         if(move != Vector2Int.zero)
         {
-            lookIdx = 0;
+            _lookIdx = 0;
             _lookCursorPos += move;
 
-            cursor.transform.position = (Vector2)_lookCursorPos;
+            _cursor.transform.position = (Vector2)_lookCursorPos;
 
             GameObject lookingAt = GameManager.Instance.EntitiesAt(_lookCursorPos).FirstOrDefault();
             SetSubject(lookingAt);
@@ -145,21 +160,21 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
             if (atPos.Count == 0)
                 return;
 
-            lookIdx += cycle;
-            if (lookIdx < 0)
-                lookIdx = atPos.Count - 1;
-            else if (lookIdx >= atPos.Count)
-                lookIdx = 0;
+            _lookIdx += cycle;
+            if (_lookIdx < 0)
+                _lookIdx = atPos.Count - 1;
+            else if (_lookIdx >= atPos.Count)
+                _lookIdx = 0;
 
-            SetSubject(atPos[lookIdx]);
+            SetSubject(atPos[_lookIdx]);
         }
     }
     public void Show(Vector2Int lookCursorPos)
     {
         _lookCursorPos = lookCursorPos;
 
-        cursor.SetActive(true);
-        cursor.transform.position = (Vector2)lookCursorPos;
+        _cursor.SetActive(true);
+        _cursor.transform.position = (Vector2)lookCursorPos;
         bool isLeft = lookCursorPos.x > (WorldGen.World.SCREEN_WIDTH / 2);
 
         SetSide(isLeft);
@@ -169,7 +184,7 @@ public class LookMenu : MonoBehaviour, IZodiacMenu
     }
     public void HideLookMenu()
     {
-        cursor.SetActive(false);
+        _cursor.SetActive(false);
         if(MenuManager.Instance.isOpen(this))
             MenuManager.Instance.Close(this);
     }

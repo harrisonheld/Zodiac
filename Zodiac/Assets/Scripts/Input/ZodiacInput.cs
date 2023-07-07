@@ -17,7 +17,6 @@ public static class ZodiacInput
         FreeRoam,
         Look,
         Interact,
-        Menu,
         AbilityTargetSelection,
     }
     private static InputMode inputMode = InputMode.FreeRoam;
@@ -27,6 +26,11 @@ public static class ZodiacInput
         // initialize
         inputMap = new ZodiacInputMap();
         inputMap.Enable();
+    }
+
+    public static string GetInputMode()
+    {
+        return inputMode.ToString();
     }
 
     /// <summary>
@@ -57,10 +61,6 @@ public static class ZodiacInput
                 DoInteractInput();
                 break;
 
-            case InputMode.Menu:
-                DoMenuInput();
-                break;
-
             case InputMode.AbilityTargetSelection:
                 DoAbilityTargetSelectionInput();
                 break;
@@ -74,6 +74,10 @@ public static class ZodiacInput
 
     private static void DoFreeRoamInput()
     {
+        // prevent free roaming when a menu is open
+        if (MenuManager.Instance.AnyMenusOpen())
+            return;
+
         // useful stuff
         Vector2Int playerPos = GameManager.Instance.ThePlayer.GetComponent<Position>().Pos;
 
@@ -181,14 +185,7 @@ public static class ZodiacInput
             return;
         }
 
-        // look menu input
-        Vector2Int move = Vector2Int.RoundToInt(inputMap.Look.Move.ReadValue<Vector2>());
-        int cycle = (int)InputMap.Look.Cycle.ReadValue<float>();
-        LookMenu.Instance.HandleInput(move, cycle);
-
-        // these prevent you from holding down the button to move the cursor
-        inputMap.Look.Move.Reset();
-        inputMap.Look.Cycle.Reset();
+        LookMenu.Instance.HandleInput(inputMap);
     }
     private static void DoInteractInput()
     {
@@ -219,13 +216,6 @@ public static class ZodiacInput
             }
 
             interactions[0].Perform();
-        }
-    }
-    private static void DoMenuInput()
-    {
-        if(!MenuManager.Instance.AnyMenusOpen())
-        {
-            inputMode = InputMode.FreeRoam;
         }
     }
     private static void DoAbilityTargetSelectionInput()
@@ -265,12 +255,9 @@ public static class ZodiacInput
     {
         inputMode = InputMode.Interact;
     }
-    public static void MenuMode()
-    {
-        inputMode = InputMode.Menu;
-    }
     public static void AbilityTargetSelectionMode(AbilityBase ability)
     {
+        InputMap.UI.Submit.Reset(); // prevent the enter that opened the menu from activating the ability
         abilityToUse = ability;
         inputMode = InputMode.AbilityTargetSelection;
     }
