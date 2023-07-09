@@ -40,7 +40,7 @@ public static class ZodiacInput
     /// <returns></returns>
     public static bool DoPlayerInput()
     {
-        // out of energy, turn is over
+        // out of energy, don't do input
         if (GameManager.Instance.ThePlayer.GetComponent<EnergyHaver>().Energy <= 0)
             return true;
 
@@ -116,10 +116,10 @@ public static class ZodiacInput
             }
             else if (items.Count > 1)
             {
-                PickMenu.Instance.PickOne(
+                PickMenu.Instance.Pick(
                     options: items,
-                    getName: item => item.GetComponent<Visual>().DisplayName, 
                     action: item => GameManager.Instance.Pickup(GameManager.Instance.ThePlayer, item),
+                    getName: item => item.GetComponent<Visual>().DisplayName, 
                     prompt: "Pick up what?", 
                     closeOnPick: false 
                 );
@@ -143,12 +143,14 @@ public static class ZodiacInput
         {
             var abilities = GameManager.Instance.ThePlayer.GetComponents<AbilityBase>();
 
-            PickMenu.Instance.PickOne(
-                abilities, 
-                ability => ability.GetShortName(),
-                ability => AbilityTargetSelectionMode(ability),
+            PickMenu.Instance.Pick(
+                options: abilities,
+                action: ability => AbilityTargetSelectionMode(ability),
+                getName: ability => ability.GetAbilityNameWithCooldown(),
+                criterion: ability => ability.Cooldown == 0,
                 prompt: "Use which ability?"
             );
+
             return;
         }
 

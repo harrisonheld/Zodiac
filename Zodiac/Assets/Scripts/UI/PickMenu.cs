@@ -18,6 +18,7 @@ public class PickMenu : MonoBehaviour, IZodiacMenu
     private IList _options;
     private Action<object> _action;
     private Func<object, string> _getName;
+    private Func<object, bool> _criterion; // objects not meeting the criterion will be greyed out
 
     private string _prompt = "Pick";
     private bool _closeOnPick = true;
@@ -48,7 +49,12 @@ public class PickMenu : MonoBehaviour, IZodiacMenu
 
             var option = _options[i];
             int optionIdx = i;
-            
+
+            if (!_criterion(option))
+            {
+                optionButton.GetComponent<Button>().interactable = false;
+            }
+
             optionButton.GetComponent<Button>().onClick.AddListener(() =>
             {
                 _options.Remove(option);
@@ -94,18 +100,34 @@ public class PickMenu : MonoBehaviour, IZodiacMenu
     }
 
     /// <summary>
-    /// Bring up the UI to pick a single item from a list.
+    /// Bring up the UI to pick an item from a list.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="options">A list of items to choose from.</param>
-    /// <param name="callback">An action to be done to the item once chosen.</param>
+    /// <param name="action">What to be done with the item once chosen.</param>
+    /// <param name="getName">A method to get a name for the obeject. If this is left null, the option's .ToString() method will be used.</param>
+    /// <param name="criterion">Options failing the criterion will be greyed out and unselectable. If this is left null, all objects will pass.</param>
+    /// <param name="prompt">The title of the menu.</param>
+    /// <param name="closeOnPick">If the menu should close once an option is chosen.</param>
     /// <returns></returns>
-    public void PickOne<T>(IList<T> options, Func<T, string> getName, Action<T> action, string prompt = "Pick", bool closeOnPick = true)
+    public void Pick<T>(IList<T> options,
+                           Action<T> action,
+                           Func<T, string> getName = null,
+                           Func<T, bool> criterion = null,
+                           string prompt = "Pick",
+                           bool closeOnPick = true)
     {
+        // fill in optional parameters
+        if (getName == null)
+            getName = obj => obj.ToString();
+        if (criterion == null)
+            criterion = obj => true;
+
         // convert to more generic types
         _options = options.Cast<object>().ToList();
         _action = pickable => action((T)pickable);
         _getName = obj => getName((T)obj);
+        _criterion = obj => criterion((T)obj);
 
         _prompt = prompt;
         _closeOnPick = closeOnPick;

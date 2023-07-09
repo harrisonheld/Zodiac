@@ -38,7 +38,6 @@ public class GameManager : MonoBehaviour
     {
         CreateNewGameSave();
 
-
         // initialize EntitiesByPosition
         for (int x = 0; x < WorldGen.World.SCREEN_WIDTH; x++)
             for (int y = 0; y < WorldGen.World.SCREEN_HEIGHT; y++)
@@ -46,17 +45,16 @@ public class GameManager : MonoBehaviour
 
         RegisterSystem<EnergySystem>();
         RegisterSystem<BrainSystem>();
-
+        RegisterSystem<CooldownSystem>();
 
         string testpath = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\moonshinercave.xml";
         EntitySerializer serializer = new();
-        List < GameObject> deserialized = serializer.DeserializeScene(testpath);
+        List <GameObject> deserialized = serializer.DeserializeScene(testpath);
         ThePlayer = deserialized[1];
 
-        
         WorldGen.World.SetWorldSeed(gameSave.WorldSeed);
+        WorldGen.World.GenerateScreen(screenX, screenY);
         Entities.AddRange(deserialized.Where(e => e.GetComponents<Position>() != null));
-        Entities.AddRange(WorldGen.World.GenerateScreen(screenX, screenY));
     }
 
     public void Update()
@@ -142,8 +140,6 @@ public class GameManager : MonoBehaviour
         Systems.Add(system);
     }
 
-
-
     /// <summary>
     /// Get the entity at the specified position.
     /// </summary>
@@ -151,8 +147,6 @@ public class GameManager : MonoBehaviour
     {
         foreach(GameObject entity in Entities)
         {
-            if(entity == null)
-                continue;
             if (entity.GetComponent<Position>().Pos == pos)
                 return entity;
         }
@@ -165,8 +159,6 @@ public class GameManager : MonoBehaviour
 
         foreach (GameObject entity in Entities)
         {
-            if (entity == null)
-                continue;
             if (entity.GetComponent<Position>().Pos == pos)
                 result.Add(entity);
         }

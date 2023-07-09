@@ -1,13 +1,11 @@
 using UnityEngine;
 
-public class LifeFuck : AbilityBase
+public class SproutFlower : AbilityBase
 {
     private TargetPosition targetPos;
     public override ITargetingMechanism TargetingMechanism => targetPos;
+    public override string AbilityName => "Sprout Flower";
 
-    public LifeFuck()
-    {
-    }
     public void Awake()
     {
         targetPos = new TargetPosition(gameObject);
@@ -15,13 +13,9 @@ public class LifeFuck : AbilityBase
 
     public override void Activate()
     {
-        StatusMenu.Instance.Log("You cast LIFE FUCK.");
         EntitySerializer.EntityFromBlueprint("Flower", targetPos.GetTargettedPosition());
         StatusMenu.Instance.Log("A flower blooms.");
-    }
 
-    public override string GetShortName()
-    {
-        return "LIFE FUCK";
+        base.Activate();
     }
 }

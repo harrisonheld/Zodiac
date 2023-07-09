@@ -105,9 +105,9 @@
 			<Property PropertyName="StatType" PropertyValue="Arcane" />
 			<Property PropertyName="BaseValue" PropertyValue="40" />
 		</Component>
-    <Component Type="Suicide"></Component>
-    <Component Type="KillFuck"></Component>
-    <Component Type="LifeFuck"></Component>
+    <Component Type="QuickHeal"></Component>
+    <Component Type="SproutFlower"></Component>
+    <Component Type="Obliterate"></Component>
   </Entity>
 	<Entity ID="3">
 		<Component Type="Brain">

@@ -4,8 +4,28 @@ public abstract class AbilityBase : ZodiacComponent
 {
     [ZodiacNoSerialize]
     public abstract ITargetingMechanism TargetingMechanism { get; }
-    public virtual bool isReady { get; } = true;
-    public abstract void Activate();
+    [ZodiacNoSerialize]
 
-    public abstract string GetShortName();
+    public virtual int RechargeTime => 10;
+    [ZodiacNoSerialize]
+    public virtual int EnergyCost => 1000;
+    [ZodiacNoSerialize]
+    public virtual string AbilityName => "[AbilityBase]";
+
+    public int Cooldown { get; set; } = 0;
+    public virtual void Activate()
+    {
+        StatusMenu.Instance.Log($"{AbilityName} was cast by {gameObject.GetComponent<Visual>().DisplayName}.");
+        // deduct energy from user
+        gameObject.GetComponent<EnergyHaver>().Energy -= EnergyCost;
+        // put ability on cooldown
+        Cooldown = RechargeTime;
+    }
+    public string GetAbilityNameWithCooldown()
+    {
+        if(Cooldown > 0) {
+            return $"{AbilityName} [{Cooldown}]";
+        }
+        return AbilityName;
+    }
 }
