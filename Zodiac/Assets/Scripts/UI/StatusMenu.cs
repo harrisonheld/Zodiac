@@ -50,7 +50,7 @@ public class StatusMenu : MonoBehaviour, IZodiacMenu
         {
             stats += stat.StatType.ToString().PadRight(padding, '.') + stat.EffectiveValue() + "\n";
         }
-        statsText.text = stats + ZodiacInput.GetInputMode();
+        statsText.text = stats + "Turn " + GameManager.Instance.GetTurn();
     }
     public void SetSize(Vector2 size)
     {

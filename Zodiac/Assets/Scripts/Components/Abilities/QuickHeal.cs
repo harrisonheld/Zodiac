@@ -11,5 +11,6 @@ public class QuickHeal : AbilityBase
         if (h.HealthCurrent > h.HealthMax)
             h.HealthCurrent = h.HealthMax;
 
+        base.Activate();
     }
 }
