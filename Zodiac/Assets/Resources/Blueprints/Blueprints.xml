@@ -48,6 +48,10 @@
     </Component>
   </Entity>
 
+  <Entity Id="Item" Inherits="DecorationObject">
+    <Component Type="Item" />
+  </Entity>
+
   <Entity Id="Path" Inherits="DecorationObject">
     <Component Type="Visual">
       <Property PropertyName="DisplayName" PropertyValue="path" />
@@ -56,7 +60,7 @@
     </Component>
   </Entity>
 
-  <Entity Id="Flower" Inherits="DecorationObject">
+  <Entity Id="Flower" Inherits="Item">
     <Component Type="Visual">
       <Property PropertyName="DisplayName" PropertyValue="flower" />
       <Property PropertyName="Description" PropertyValue="a single stitch in nature's tapesty, the delightful flower blooms forth from the earth with a joyous flourish" />
@@ -65,7 +69,24 @@
       <Property PropertyName="ColorSecondary" PropertyValue="0.66,0.82,0.25" />
       <Property PropertyName="ColorTertiary" PropertyValue="0,0.67,0.31" />
     </Component>
-    <Component Type="Item" />
+  </Entity>
+
+  <Entity Id="MithrilDagger" Inherits="Item">
+    <Component Type="Visual">
+      <Property PropertyName="DisplayName" PropertyValue="mithril dagger" />
+      <Property PropertyName="Description" PropertyValue="it has a slender and agile design, featuring a sharp, finely crafted blade and a hilt adorned with intricate engravings. Its overall weight is surprisingly light, allowing for swift and precise movements during combat" />
+      <Property PropertyName="Sprite" PropertyValue="dagger2" />
+      <Property PropertyName="ColorPrimary" PropertyValue="0.53,0.27,0.53" />
+      <Property PropertyName="ColorSecondary" PropertyValue="0.66,0.82,0.25" />
+      <Property PropertyName="ColorTertiary" PropertyValue="0,0.67,0.31" />
+    </Component>
+    <Component Type="Equippable">
+      <Property PropertyName="SlotType" PropertyValue="Hand" />
+    </Component>
+    <Component Type="MeleeWeapon">
+      <Property PropertyName="Damage" PropertyValue="2" />
+      <Property PropertyName="AttackCost" PropertyValue="500" />
+    </Component>
   </Entity>
 
   <Entity Id="Wall" Inherits="PhysicalObject">
@@ -149,6 +170,5 @@
     <Component Type="Slot">
       <Property PropertyName="SlotType" PropertyValue="Legs" />
     </Component>
-  </Entity>
-  
+  </Entity>  
 </Entities>

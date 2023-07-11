@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
         Entities.AddRange(deserialized.Where(e => e.GetComponents<Position>() != null));
 
         EntitySerializer.EntityFromBlueprint("Humanoid", new Vector2Int(3,3));
+        EntitySerializer.EntityFromBlueprint("MithrilDagger", new Vector2Int(3,4));
     }
 
     public void Update()
