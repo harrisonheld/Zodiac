@@ -85,9 +85,26 @@
 			<Property PropertyName="OccludesVison" PropertyValue="False" />
 			<Property PropertyName="Weight" PropertyValue="200" />
 		</Component>
-		<Component Type="Slot">
-			<Property PropertyName="SlotType" PropertyValue="Hand" />
-		</Component>
+    <Component Type="Slot">
+      <Property PropertyName="SlotType" PropertyValue="Hand" />
+      <Property PropertyName="SpecialName" PropertyValue="Right Hand" />
+    </Component>
+    <Component Type="Slot">
+      <Property PropertyName="SlotType" PropertyValue="Hand" />
+      <Property PropertyName="SpecialName" PropertyValue="Left Hand" />
+    </Component>
+    <Component Type="Slot">
+      <Property PropertyName="SlotType" PropertyValue="Missile" />
+    </Component>
+    <Component Type="Slot">
+      <Property PropertyName="SlotType" PropertyValue="Head" />
+    </Component>
+    <Component Type="Slot">
+      <Property PropertyName="SlotType" PropertyValue="Body" />
+    </Component>
+    <Component Type="Slot">
+      <Property PropertyName="SlotType" PropertyValue="Legs" />
+    </Component>
 		<Component Type="Living" />
 		<Component Type="Stat">
 			<Property PropertyName="StatType" PropertyValue="Vigor" />
@@ -108,6 +125,7 @@
     <Component Type="QuickHeal"></Component>
     <Component Type="SproutFlower"></Component>
     <Component Type="Obliterate"></Component>
+    <Component Type="Dominate"></Component>
   </Entity>
 	<Entity ID="3">
 		<Component Type="Brain">
@@ -143,8 +161,25 @@
 		<Component Type="Living" />
 		<Component Type="Slot">
 			<Property PropertyName="SlotType" PropertyValue="Hand" />
+      <Property PropertyName="SpecialName" PropertyValue="Right Hand" />
 			<Property PropertyName="Contained" PropertyValue="1" />
 		</Component>
+    <Component Type="Slot">
+      <Property PropertyName="SlotType" PropertyValue="Hand" />
+      <Property PropertyName="SpecialName" PropertyValue="Left Hand" />
+    </Component>
+    <Component Type="Slot">
+      <Property PropertyName="SlotType" PropertyValue="Missile" />
+    </Component>
+    <Component Type="Slot">
+      <Property PropertyName="SlotType" PropertyValue="Head" />
+    </Component>
+    <Component Type="Slot">
+      <Property PropertyName="SlotType" PropertyValue="Body" />
+    </Component>
+    <Component Type="Slot">
+      <Property PropertyName="SlotType" PropertyValue="Legs" />
+    </Component>
 	</Entity>
   <Entity ID="4">
     <Component Type="Brain">

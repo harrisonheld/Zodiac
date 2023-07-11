@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour
         WorldGen.World.SetWorldSeed(gameSave.WorldSeed);
         WorldGen.World.GenerateScreen(screenX, screenY);
         Entities.AddRange(deserialized.Where(e => e.GetComponents<Position>() != null));
+
+        EntitySerializer.EntityFromBlueprint("Humanoid", new Vector2Int(3,3));
     }
 
     public void Update()

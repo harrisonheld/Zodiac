@@ -114,12 +114,40 @@
     </Component>
     <Component Type="Living" />
     <Component Type="EnergyHaver" />
+    <Component Type="Inventory" />
     <Component Type="Brain">
       <Property PropertyName="Ai" PropertyValue="Wanderer" />
     </Component>
     <Component Type="PhysicalAttributes">
       <Property PropertyName="OccludesVison" PropertyValue ="False" />
       <Property PropertyName="Weight" PropertyValue="150" />
+    </Component>
+  </Entity>
+
+  <Entity Id="Humanoid" Inherits="Creature">
+    <Component Type="Visual">
+      <Property PropertyName="DisplayName" PropertyValue="[Humanoid]" />
+      <Property PropertyName="Description" PropertyValue="[represents a human]" />
+    </Component>
+    <Component Type="Slot">
+      <Property PropertyName="SlotType" PropertyValue="Hand" />
+      <Property PropertyName="SpecialName" PropertyValue="Right Hand" />
+    </Component>
+    <Component Type="Slot">
+      <Property PropertyName="SlotType" PropertyValue="Hand" />
+      <Property PropertyName="SpecialName" PropertyValue="Left Hand" />
+    </Component>
+    <Component Type="Slot">
+      <Property PropertyName="SlotType" PropertyValue="Missile" />
+    </Component>
+    <Component Type="Slot">
+      <Property PropertyName="SlotType" PropertyValue="Head" />
+    </Component>
+    <Component Type="Slot">
+      <Property PropertyName="SlotType" PropertyValue="Body" />
+    </Component>
+    <Component Type="Slot">
+      <Property PropertyName="SlotType" PropertyValue="Legs" />
     </Component>
   </Entity>
   

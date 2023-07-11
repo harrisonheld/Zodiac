@@ -128,12 +128,24 @@ public static class ZodiacInput
             return;
         }
 
-        // open inventory
+        // open inventory menu
         if (inputMap.FreeRoam.OpenInventory.triggered)
         {
             var inv = GameManager.Instance.ThePlayer.GetComponent<Inventory>();
             InventoryMenu.Instance.SetInventory(inv);
             MenuManager.Instance.Open(InventoryMenu.Instance);
+
+            return;
+        }
+
+        // open equipment menu
+        if(inputMap.FreeRoam.OpenEquipment.triggered)
+        {
+            PickMenu.Instance.Pick(
+                options: GameManager.Instance.ThePlayer.GetComponents<Slot>(),
+                action: item => { return; },
+                getName: item => item.GetNameWithItem()
+            );
 
             return;
         }

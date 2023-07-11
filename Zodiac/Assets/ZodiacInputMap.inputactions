@@ -42,6 +42,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "OpenEquipment",
+                    "type": "Button",
+                    "id": "c945a5bd-7e72-49d3-9047-675122a1f22d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "GoToLookMode",
                     "type": "Button",
                     "id": "3c75bacd-66d0-4bf6-8855-c5c464b52638",
@@ -331,6 +340,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "GoToInteractMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "672b4fc0-83c5-4abf-a756-f52f687b1e31",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenEquipment",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
