@@ -75,7 +75,7 @@
     <Component Type="Visual">
       <Property PropertyName="DisplayName" PropertyValue="mithril dagger" />
       <Property PropertyName="Description" PropertyValue="it has a slender and agile design, featuring a sharp, finely crafted blade and a hilt adorned with intricate engravings. Its overall weight is surprisingly light, allowing for swift and precise movements during combat" />
-      <Property PropertyName="Sprite" PropertyValue="dagger2" />
+      <Property PropertyName="Sprite" PropertyValue="dagger" />
       <Property PropertyName="ColorPrimary" PropertyValue="0.53,0.27,0.53" />
       <Property PropertyName="ColorSecondary" PropertyValue="0.66,0.82,0.25" />
       <Property PropertyName="ColorTertiary" PropertyValue="0,0.67,0.31" />

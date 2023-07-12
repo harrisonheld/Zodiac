@@ -3,33 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class ItemSlot : MonoBehaviour
+using UI;
+using static UnityEditor.Progress;
+
+namespace UI
 {
-    [SerializeField] Image icon;
-    [SerializeField] TextMeshProUGUI text;
-
-    private GameObject item;
-    
-    public void SetItem(GameObject _item)
+    class ItemSlot : MonoBehaviour
     {
-        item = _item;
+        [SerializeField] Image icon;
+        [SerializeField] TextMeshProUGUI text;
 
-        Visual vis = item.gameObject.GetComponent<Visual>();
-        if (vis == null)
-            return;
+        private GameObject _item;
 
-        // set name
-        text.text = vis.DisplayName;
-        if (item.GetComponent<Item>().Count > 1)
-            text.text += " x" + item.GetComponent<Item>().Count;
+        public void SetItem(GameObject item)
+        {
+            _item = item;
 
-        // set icon
-        icon.sprite = vis.GetUnitySprite();
-    }
+            Visual vis = _item.gameObject.GetComponent<Visual>();
+            if (vis == null)
+                return;
 
-    public void ItemSelected()
-    {
-        ItemSubMenu.Instance.SetItem(item);
-        MenuManager.Instance.Open(ItemSubMenu.Instance);
+            // set name
+            text.text = vis.DisplayName;
+            if (_item.GetComponent<Item>().Count > 1)
+                text.text += " x" + _item.GetComponent<Item>().Count;
+
+            // set icon
+            icon.sprite = vis.GetUnitySprite();
+        }
+
+        public void ItemSelected()
+        {
+            MenuManager.Instance.ShowItemSubMenu(_item);
+        }
     }
 }

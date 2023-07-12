@@ -1,3 +1,4 @@
+using UI;
 using UnityEngine;
 
 public class SproutFlower : AbilityBase
@@ -15,7 +16,7 @@ public class SproutFlower : AbilityBase
     public override void Activate()
     {
         EntitySerializer.EntityFromBlueprint("Flower", targetPos.GetTargettedPosition());
-        StatusMenu.Instance.Log("A flower blooms.");
+        MenuManager.Instance.Log("A flower blooms.");
 
         base.Activate();
     }

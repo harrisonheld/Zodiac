@@ -11,7 +11,7 @@ namespace WorldGen
     /// <summary>
     /// This struct represents gaps in the sides of screens that are used to connect screens together / make them walkable.
     /// </summary>
-    struct Gaps
+    internal struct Gaps
     {
         public InclusiveIntRange north;
         public InclusiveIntRange east;

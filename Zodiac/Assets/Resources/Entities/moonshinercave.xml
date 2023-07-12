@@ -55,7 +55,7 @@
 		<Component Type="Visual">
 			<Property PropertyName="DisplayName" PropertyValue="copper shortsword" />
 			<Property PropertyName="Description" PropertyValue="though not as durable as other metals, the copper sword has a certain elegance that makes it a prized possession among those who favor speed and finesse over brute strength" />
-			<Property PropertyName="Sprite" PropertyValue="dagger" />
+			<Property PropertyName="Sprite" PropertyValue="sword" />
 		</Component>
 	</Entity>
 	<Entity ID="2">

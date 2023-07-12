@@ -1,3 +1,4 @@
+using UI;
 using UnityEngine;
 
 public abstract class AbilityBase : ZodiacComponent
@@ -15,7 +16,7 @@ public abstract class AbilityBase : ZodiacComponent
     public int Cooldown { get; set; } = 0;
     public virtual void Activate()
     {
-        StatusMenu.Instance.Log($"{AbilityName} was cast by {gameObject.GetComponent<Visual>().DisplayName}.");
+        MenuManager.Instance.Log($"{AbilityName} was cast by {gameObject.GetComponent<Visual>().DisplayName}.");
         // deduct energy from user
         gameObject.GetComponent<EnergyHaver>().Energy -= EnergyCost;
         // put ability on cooldown

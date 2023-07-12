@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using WorldGen;
 
 namespace WorldGen
 {
-	internal class CellularAutomata
+	internal class CellularAutomata : ITerrainGenerator
 	{
 		private readonly int[][] DIRECTIONS = new int[][] {
 			new int[] {1, 0},
@@ -13,93 +14,93 @@ namespace WorldGen
 			new int[] {0, -1}
 		};
 
-		private int iterations;
-		private double fillPercent;
-		private int width, height;
-		private Cell[,] cells;
+		private int _iterations;
+		private double _fillPercent;
+		private int _width, _height;
+		private Cell[,] _cells;
 
-		private List<Cell> cavernCells = new List<Cell>();
-		private int caverns = int.MaxValue;
+		private List<Cell> _cavernCells = new List<Cell>();
+		private int _cavernCount = int.MaxValue;
 
-		private System.Random layoutRand = null;
+		private System.Random _rand = null;
 
 		public CellularAutomata(int _width, int _height, int _iterations = 4, double _fillPercent = 0.50)
 		{
-			width = _width;
-			height = _height;
-			iterations = _iterations;
-			fillPercent = _fillPercent;
+			this._width = _width;
+			this._height = _height;
+			this._iterations = _iterations;
+			this._fillPercent = _fillPercent;
 
-			cells = new Cell[width, height];
+            _cells = new Cell[this._width, this._height];
 		}
 		public void Generate(Gaps gaps)
 		{
 			//create random cells
-			for (int y = 0; y < height; y++)
+			for (int y = 0; y < _height; y++)
 			{
-				for (int x = 0; x < width; x++)
+				for (int x = 0; x < _width; x++)
 				{
 					Cell newCell = new Cell();
 					newCell.x = x;
 					newCell.y = y;
 
                     // gaps
-                    if (y == height - 1 && gaps.north.Contains(x) ||
-							x == width - 1 && gaps.east.Contains(y) ||
+                    if (y == _height - 1 && gaps.north.Contains(x) ||
+							x == _width - 1 && gaps.east.Contains(y) ||
 							y == 0 && gaps.south.Contains(x) ||
 							x == 0 && gaps.west.Contains(y))
                         newCell.type = CellType.Floor;
                     // walls on edges
-                    else if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
+                    else if (x == 0 || y == 0 || x == _width - 1 || y == _height - 1)
 						newCell.type = CellType.Wall;
 					else
-						newCell.type = layoutRand.NextDouble() > fillPercent ? CellType.Floor : CellType.Wall;
+						newCell.type = _rand.NextDouble() > _fillPercent ? CellType.Floor : CellType.Wall;
 
-					cells[x, y] = newCell;
+					_cells[x, y] = newCell;
 				}
 			}
 
 			//smoothing
-			for (int i = 0; i < iterations; i++)
+			for (int i = 0; i < _iterations; i++)
 			{
-				for (int y = 1; y < height - 1; y++)
+				for (int y = 1; y < _height - 1; y++)
 				{
-					for (int x = 1; x < width - 1; x++)
+					for (int x = 1; x < _width - 1; x++)
 					{
-						cells[x, y].neighbors = 0;
+						_cells[x, y].neighbors = 0;
 
 						for (int x1 = x - 1; x1 < x + 2; x1++)
 						{
 							for (int y1 = y - 1; y1 < y + 2; y1++)
 							{
-								if (!(x1 == x && y1 == y) && cells[x1, y1].type == CellType.Floor)
+								if (!(x1 == x && y1 == y) && _cells[x1, y1].type == CellType.Floor)
 								{
-									cells[x, y].neighbors++;
+									_cells[x, y].neighbors++;
 								}
 							}
 						}
 					}
 				}
 
-				for (int y = 1; y < height - 1; y++)
+				for (int y = 1; y < _height - 1; y++)
 				{
-					for (int x = 1; x < width - 1; x++)
+					for (int x = 1; x < _width - 1; x++)
 					{
-						if (cells[x, y].neighbors > 4)
-							cells[x, y].type = CellType.Floor;
-						else if (cells[x, y].neighbors < 4)
-							cells[x, y].type = CellType.Wall;
+						if (_cells[x, y].neighbors > 4)
+							_cells[x, y].type = CellType.Floor;
+						else if (_cells[x, y].neighbors < 4)
+							_cells[x, y].type = CellType.Wall;
 					}
 				}
 			}
 
 			//connect caverns
-			while (caverns > 1)
+			while (_cavernCount > 1)
 			{
 				FindCaverns();
 
-				Cell cell1 = cavernCells[0];
-				Cell cell2 = cavernCells[cavernCells.Count - 1];
+				Cell cell1 = _cavernCells[0];
+				Cell cell2 = _cavernCells[_cavernCells.Count - 1];
 
 				List<Cell> path = FindPath(cell1.x, cell1.y, cell2.x, cell2.y);
 
@@ -114,39 +115,39 @@ namespace WorldGen
 		}
 		public void Generate(System.Random rand, Gaps gaps)
 		{
-            layoutRand = rand;
+            _rand = rand;
 			Generate(gaps);
 		}
 
 		public IEnumerable<Vector2Int> WallCoordinates()
 		{
-			for (int y = 0; y < height; y++)
+			for (int y = 0; y < _height; y++)
 			{
-				for (int x = 0; x < width; x++)
+				for (int x = 0; x < _width; x++)
 				{
-					if (cells[x, y].type == CellType.Wall)
+					if (_cells[x, y].type == CellType.Wall)
 						yield return new Vector2Int(x, y);
 				}
 			}
 		}
 		public IEnumerable<Vector2Int> FloorCoordinates()
 		{
-			for (int y = 0; y < height; y++)
+			for (int y = 0; y < _height; y++)
 			{
-				for (int x = 0; x < width; x++)
+				for (int x = 0; x < _width; x++)
 				{
-					if (cells[x, y].type == CellType.Floor)
+					if (_cells[x, y].type == CellType.Floor)
 						yield return new Vector2Int(x, y);
 				}
 			}
 		}
 		public IEnumerable<Vector2Int> PathCoordinates()
 		{
-			for (int y = 0; y < height; y++)
+			for (int y = 0; y < _height; y++)
 			{
-				for (int x = 0; x < width; x++)
+				for (int x = 0; x < _width; x++)
 				{
-					if (cells[x, y].type == CellType.Path)
+					if (_cells[x, y].type == CellType.Path)
 						yield return new Vector2Int(x, y);
 				}
 			}
@@ -162,38 +163,38 @@ namespace WorldGen
         }
 		private bool InBounds(int x, int y)
         {
-            return x >= 0 && x < width && y >= 0 && y < height;
+            return x >= 0 && x < _width && y >= 0 && y < _height;
         }
 
         private void FindCaverns()
 		{
-			cavernCells = new List<Cell>();
-			caverns = 0;
+			_cavernCells = new List<Cell>();
+			_cavernCount = 0;
 
-			for (int y = 1; y < height - 1; y++)
+			for (int y = 1; y < _height - 1; y++)
 			{
-				for (int x = 1; x < width - 1; x++)
+				for (int x = 1; x < _width - 1; x++)
 				{
-					cells[x, y].marked = false;
+					_cells[x, y].marked = false;
 				}
 			}
 
-			for (int y = 1; y < height - 1; y++)
+			for (int y = 1; y < _height - 1; y++)
 			{
-				for (int x = 1; x < width - 1; x++)
+				for (int x = 1; x < _width - 1; x++)
 				{
-					if ((cells[x, y].type == CellType.Floor || cells[x, y].type == CellType.Path) && !cells[x, y].marked)
+					if ((_cells[x, y].type == CellType.Floor || _cells[x, y].type == CellType.Path) && !_cells[x, y].marked)
 					{
-						caverns++;
-						cavernCells.Add(cells[x, y]);
+						_cavernCount++;
+						_cavernCells.Add(_cells[x, y]);
 
 						Queue<Cell> queue = new Queue<Cell>();
-						queue.Enqueue(cells[x, y]);
+						queue.Enqueue(_cells[x, y]);
 
 						while (queue.Count > 0)
 						{
 							Cell cell = queue.Dequeue();
-							cell.cavernIndex = caverns - 1;
+							cell.cavernIndex = _cavernCount - 1;
 
 							for (int i = 0; i < DIRECTIONS.Length; i++)
 							{
@@ -203,7 +204,7 @@ namespace WorldGen
 								if (!InBounds(neighborX, neighborY))
 									continue;
 
-								Cell neighbor = cells[neighborX, neighborY];
+								Cell neighbor = _cells[neighborX, neighborY];
 
 								if ((neighbor.type == CellType.Floor || neighbor.type == CellType.Path) && !neighbor.marked)
 								{
@@ -219,16 +220,16 @@ namespace WorldGen
 		private List<Cell> FindPath(int x1, int y1, int x2, int y2)
 		{
 			List<Cell> closedSet = new List<Cell>();
-			List<Cell> openSet = new List<Cell>() { cells[x1, y1] };
+			List<Cell> openSet = new List<Cell>() { _cells[x1, y1] };
 
 			Dictionary<Cell, Cell> cameFrom = new Dictionary<Cell, Cell>();
 
-			int[,] gScore = new int[width, height]; //cost from start to this node
-			int[,] fScore = new int[width, height]; //cost from this node to goal
+			int[,] gScore = new int[_width, _height]; //cost from start to this node
+			int[,] fScore = new int[_width, _height]; //cost from this node to goal
 
-			for (int y = 0; y < height; y++)
+			for (int y = 0; y < _height; y++)
 			{
-				for (int x = 0; x < width; x++)
+				for (int x = 0; x < _width; x++)
 				{
 					gScore[x, y] = int.MaxValue;
 					fScore[x, y] = int.MaxValue;
@@ -264,9 +265,9 @@ namespace WorldGen
 				{
 					int[] locCoord = DIRECTIONS[i];
 
-					Cell neighbor = cells[current.x + locCoord[0], current.y + locCoord[1]];
+					Cell neighbor = _cells[current.x + locCoord[0], current.y + locCoord[1]];
 
-					if (neighbor.x < 1 || neighbor.y < 1 || neighbor.x >= width - 1 || neighbor.y >= height - 1) //this cell is on an edge
+					if (neighbor.x < 1 || neighbor.y < 1 || neighbor.x >= _width - 1 || neighbor.y >= _height - 1) //this cell is on an edge
 						continue;
 
 					if (closedSet.Contains(neighbor))
@@ -321,7 +322,8 @@ namespace WorldGen
 
 			return totalPath;
 		}
-		class Cell
+		
+		private class Cell
 		{
 			public int x, y;
 			public int neighbors;
@@ -330,7 +332,7 @@ namespace WorldGen
 
 			public CellType type;
 		}
-		enum CellType
+		private enum CellType
 		{
 			Floor,
 			Wall,

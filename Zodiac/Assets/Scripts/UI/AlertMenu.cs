@@ -3,35 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class AlertMenu : MonoBehaviour, IZodiacMenu
+using UI;
+
+namespace UI
 {
-    [SerializeField] TextMeshProUGUI textmesh;
-    [SerializeField] RectTransform contextBox;
-    public Canvas Canvas { get => GetComponent<Canvas>(); }
-    public CanvasGroup CanvasGroup { get => GetComponent<CanvasGroup>(); }
-
-
-    public static AlertMenu Instance { get; private set; }
-    public void Awake()
+    class AlertMenu : MonoBehaviour, IZodiacMenu
     {
-        if (Instance == null) // If there is no instance already
-        {
-            DontDestroyOnLoad(this.gameObject); // Keep the GameObject, this component is attached to, across different scenes
-            Instance = this;
-        }
-        else if (Instance != this)
-        {
-            Destroy(gameObject); // Destroy the GameObject, this component is attached to
-        }
-    }
+        [SerializeField] TextMeshProUGUI textmesh;
+        [SerializeField] RectTransform contextBox;
+        public Canvas Canvas { get => GetComponent<Canvas>(); }
+        public CanvasGroup CanvasGroup { get => GetComponent<CanvasGroup>(); }
+        public GameObject GameObject { get => gameObject; }
 
-    public void RefreshUI() { }
-    public void GainFocus() { }
 
-    public void ShowText(string _text)
-    {
-        textmesh.text = _text;
-        contextBox.sizeDelta = new(contextBox.sizeDelta.x, textmesh.preferredHeight);
-        MenuManager.Instance.Open(this);
+
+        public static AlertMenu Instance { get; private set; }
+        public void Awake()
+        {
+            if (Instance == null) // If there is no instance already
+            {
+                DontDestroyOnLoad(this.gameObject); // Keep the GameObject, this component is attached to, across different scenes
+                Instance = this;
+            }
+            else if (Instance != this)
+            {
+                Destroy(gameObject); // Destroy the GameObject, this component is attached to
+            }
+        }
+
+        public void RefreshUI() { }
+        public void GainFocus() { }
+
+        public void SetText(string _text)
+        {
+            textmesh.text = _text;
+            contextBox.sizeDelta = new(contextBox.sizeDelta.x, textmesh.preferredHeight);
+        }
     }
 }

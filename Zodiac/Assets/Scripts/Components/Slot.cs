@@ -8,10 +8,7 @@ public class Slot : ZodiacComponent
     [field: SerializeField] public GameObject Contained { get; set; } // what Equippable is in this slot
     [field: SerializeField] public string SpecialName { get; set; } = ""; // special name: ie, "left hand" or "right hand" or "forelimb" instead of "arm" for nonhuman creatures
 
-    public bool IsEmpty()
-    {
-        return Contained == null;
-    }
+    public bool Empty => Contained == null;
     public string GetName()
     {
         if(SpecialName == "")

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UI;
 using UnityEngine;
 
 public class TargetPosition : ITargetingMechanism
@@ -17,9 +18,9 @@ public class TargetPosition : ITargetingMechanism
 
     public bool HandleInput(ZodiacInputMap inputMap)
     {
-        if(!MenuManager.Instance.isOpen(LookMenu.Instance))
+        if(!LookMenu.Instance.isOpen)
         {
-            LookMenu.Instance.Show(_targeter.GetComponent<Position>().Pos);
+            LookMenu.Instance.Show(GameManager.Instance.ThePlayer);
         }
 
         LookMenu.Instance.HandleInput(inputMap);
@@ -37,7 +38,7 @@ public class TargetPosition : ITargetingMechanism
 
                 if(!posEmpty)
                 {
-                    StatusMenu.Instance.Log("There is something in the way.");
+                    MenuManager.Instance.Log("There is something in the way.");
                 }
 
                 return posEmpty;

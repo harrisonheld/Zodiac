@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Linq;
 using System;
+using UI;
 
 public static class ZodiacInput
 {
@@ -108,7 +109,7 @@ public static class ZodiacInput
 
             if (items.Count == 0)
             {
-                StatusMenu.Instance.Log("There's nothing here to pick up.");
+                MenuManager.Instance.Log("There's nothing here to pick up.");
             }
             else if (items.Count == 1)
             {
@@ -116,7 +117,7 @@ public static class ZodiacInput
             }
             else if (items.Count > 1)
             {
-                PickMenu.Instance.Pick(
+                MenuManager.Instance.ShowPickMenu(
                     options: items,
                     action: item => GameManager.Instance.Pickup(GameManager.Instance.ThePlayer, item),
                     getName: item => item.GetComponent<Visual>().DisplayName, 
@@ -132,8 +133,7 @@ public static class ZodiacInput
         if (inputMap.FreeRoam.OpenInventory.triggered)
         {
             var inv = GameManager.Instance.ThePlayer.GetComponent<Inventory>();
-            InventoryMenu.Instance.SetInventory(inv);
-            MenuManager.Instance.Open(InventoryMenu.Instance);
+            MenuManager.Instance.ShowInventory(inv);
 
             return;
         }
@@ -141,12 +141,6 @@ public static class ZodiacInput
         // open equipment menu
         if(inputMap.FreeRoam.OpenEquipment.triggered)
         {
-            PickMenu.Instance.Pick(
-                options: GameManager.Instance.ThePlayer.GetComponents<Slot>(),
-                action: item => { return; },
-                getName: item => item.GetNameWithItem()
-            );
-
             return;
         }
 
@@ -155,7 +149,7 @@ public static class ZodiacInput
         {
             var abilities = GameManager.Instance.ThePlayer.GetComponents<AbilityBase>();
 
-            PickMenu.Instance.Pick(
+            MenuManager.Instance.ShowPickMenu(
                 options: abilities,
                 action: ability => AbilityTargetSelectionMode(ability),
                 getName: ability => ability.GetAbilityNameWithCooldown(),
@@ -256,7 +250,7 @@ public static class ZodiacInput
     public static void FreeRoamMode()
     {
         // hide look menu
-        LookMenu.Instance.HideLookMenu();
+        LookMenu.Instance.Hide();
 
         inputMode = InputMode.FreeRoam;
     }

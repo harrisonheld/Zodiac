@@ -7,6 +7,7 @@ public interface IZodiacMenu
     public static IZodiacMenu Instance { get; private set; }
     public Canvas Canvas { get; }
     public CanvasGroup CanvasGroup { get; }
+    public GameObject GameObject { get; }
     public void RefreshUI();
     public void GainFocus();
 }

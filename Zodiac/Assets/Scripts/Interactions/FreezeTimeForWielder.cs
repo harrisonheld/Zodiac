@@ -1,4 +1,5 @@
 ﻿using System;
+using UI;
 using UnityEngine;
 
 class FreezeTimeForWielder : IInteraction
@@ -8,6 +9,6 @@ class FreezeTimeForWielder : IInteraction
     {
         // add ten thousand energy
         GameManager.Instance.ThePlayer.GetComponent<EnergyHaver>().Energy += 10000;
-        StatusMenu.Instance.Log("The flow of time is clotted as ten seconds coagulate.");
+        MenuManager.Instance.Log("The flow of time is clotted as ten seconds coagulate.");
     }
 }

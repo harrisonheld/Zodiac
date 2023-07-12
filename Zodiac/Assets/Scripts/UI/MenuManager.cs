@@ -4,88 +4,138 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class MenuManager : MonoBehaviour {
-
-    // singleton
-    public static MenuManager Instance { get; private set; }
-    public void Awake()
+namespace UI
+{
+    public class MenuManager : MonoBehaviour
     {
-        if (Instance == null) // If there is no instance already
+        [SerializeField] private GameObject _pickMenuPrefab;
+        [SerializeField] private GameObject _alertMenuPrefab;
+        [SerializeField] private GameObject _itemSubMenuPrefab;
+        [SerializeField] private GameObject _inventoryPrefab;
+
+        // singleton
+        public static MenuManager Instance { get; private set; }
+        public void Awake()
         {
-            DontDestroyOnLoad(this.gameObject); // Keep the GameObject, this component is attached to, across different scenes
-            Instance = this;
+            if (Instance == null) // If there is no instance already
+            {
+                DontDestroyOnLoad(this.gameObject); // Keep the GameObject, this component is attached to, across different scenes
+                Instance = this;
+            }
+            else if (Instance != this)
+            {
+                Destroy(gameObject); // Destroy the GameObject, this component is attached to
+            }
         }
-        else if (Instance != this)
+
+        // list of menus, in order of precedence. The menu at the end is the topmost menu.
+        // i would use a stack but sometimes you want to close a menu that isnt the top most.
+        private static List<IZodiacMenu> _menus = new List<IZodiacMenu>();
+
+        public void Update()
         {
-            Destroy(gameObject); // Destroy the GameObject, this component is attached to
+            if (!AnyMenusOpen())
+                return;
+
+            // closing of menus
+            if (ZodiacInput.InputMap.UI.Cancel.triggered)
+                CloseTopMenu();
         }
-    }
 
-    // list of menus, in order of precedence. The menu at the end is the topmost menu.
-    // i would use a stack but sometimes you want to close a menu that isnt the top most.
-    private static List<IZodiacMenu> menus = new List<IZodiacMenu>();
-
-    public void Update()
-    {
-        if (!AnyMenusOpen())
-            return;
-
-        // closing of menus
-        if(ZodiacInput.InputMap.UI.Cancel.triggered)
-            CloseTopMenu();
-    }
-
-    public IZodiacMenu TopMenu()
-    {
-        return menus.Last();
-    }
-    public void CloseTopMenu()
-    {
-        Close(TopMenu());
-    }
-    public void CloseAll()
-    {
-        while (menus.Count > 0)
+        public IZodiacMenu TopMenu()
+        {
+            return _menus.Last();
+        }
+        public void CloseTopMenu()
+        {
             Close(TopMenu());
-    }
-
-    public void Open(IZodiacMenu menu)
-    {
-        if (AnyMenusOpen())
+        }
+        public void CloseAll()
         {
-            // disable interaction on previous menu
-            TopMenu().CanvasGroup.interactable = false;
+            while (_menus.Count > 0)
+                Close(TopMenu());
+        }
+        public void RefreshUIs()
+        {
+            foreach (IZodiacMenu menu in _menus)
+                menu.RefreshUI();
         }
 
-        menu.Canvas.enabled = true;
-        menu.CanvasGroup.interactable = true;
-
-        menu.RefreshUI();
-        menu.GainFocus();
-
-        menus.Add(menu);
-    }
-    public void Close(IZodiacMenu toClose)
-    {
-        menus.Remove(toClose);
-        toClose.Canvas.enabled = false;
-        toClose.CanvasGroup.interactable = false;
-
-        if (AnyMenusOpen())
+        public void Open(IZodiacMenu menu)
         {
-            TopMenu().CanvasGroup.interactable = true;
-            TopMenu().GainFocus();
-        }
-    }
+            if (AnyMenusOpen())
+            {
+                // disable interaction on previous menu
+                TopMenu().CanvasGroup.interactable = false;
+            }
 
-    public bool isOpen(IZodiacMenu toCheck)
-    {
-        return toCheck.Canvas.enabled;
-    }
-    public bool AnyMenusOpen()
-    {
-        return menus.Count > 0;
+            menu.RefreshUI();
+            menu.GainFocus();
+            _menus.Add(menu);
+        }
+        public void Close(IZodiacMenu toClose)
+        {
+            _menus.Remove(toClose);
+            Destroy(toClose.GameObject);
+
+            if (AnyMenusOpen())
+            {
+                TopMenu().CanvasGroup.interactable = true;
+                TopMenu().GainFocus();
+            }
+        }
+
+        public bool isOpen(IZodiacMenu toCheck)
+        {
+            return toCheck.Canvas.enabled;
+        }
+        public bool AnyMenusOpen()
+        {
+            return _menus.Count > 0;
+        }
+
+        public void SetStatusMenuSize(Vector2 size)
+        {
+            StatusMenu.Instance.SetSize(size);
+        }
+        public void Log(string info)
+        {
+            StatusMenu.Instance.Log(info);
+        }
+        public void ShowPickMenu<T>(IList<T> options,
+                               Action<T> action,
+                               Func<T, string> getName = null,
+                               Func<T, bool> criterion = null,
+                               string prompt = "Pick",
+                               bool closeOnPick = true,
+                               bool removeOnPick = true)
+        {
+            PickMenu menu = Instantiate(_pickMenuPrefab).GetComponent<PickMenu>();
+            menu.Pick(options, action, getName, criterion, prompt, closeOnPick, removeOnPick);
+            Open(menu);
+        }
+
+        public void ShowAlert(string text)
+        {
+            AlertMenu menu = Instantiate(_alertMenuPrefab).GetComponent<AlertMenu>();
+            menu.SetText(text);
+            Open(menu);
+        }
+        public void ShowItemSubMenu(GameObject item)
+        {
+            ItemSubMenu menu = Instantiate(_itemSubMenuPrefab).GetComponent<ItemSubMenu>();
+            menu.SetItem(item);
+            Open(menu);
+        }
+
+        public void ShowInventory(Inventory inv)
+        {
+            InventoryMenu menu = Instantiate(_inventoryPrefab).GetComponent<InventoryMenu>();
+            menu.SetInventory(inv);
+            Open(menu);
+        }
     }
 }

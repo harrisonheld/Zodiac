@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UI;
+
 public class GameManager : MonoBehaviour
 {
     [Header("Info")]
@@ -69,7 +71,7 @@ public class GameManager : MonoBehaviour
             if (!MenuManager.Instance.isOpen(AlertMenu.Instance))
             {
                 MenuManager.Instance.CloseAll();
-                AlertMenu.Instance.ShowText("Unfortunately, you have died or otherwise ceased to exist.");
+                MenuManager.Instance.ShowAlert("Unfortunately, you have died or otherwise ceased to exist.");
             }
             return;
         }
@@ -187,7 +189,7 @@ public class GameManager : MonoBehaviour
         string deathMessage = $"The {toDestroy.GetComponent<Visual>().DisplayName} is destroyed.";
         if (toDestroy.GetComponent<Living>() != null)
             deathMessage = $"The {toDestroy.GetComponent<Visual>().DisplayName} dies.";
-        StatusMenu.Instance.Log(deathMessage);
+        MenuManager.Instance.Log(deathMessage);
 
         // bye bye!
         Entities.Remove(toDestroy);

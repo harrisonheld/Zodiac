@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class InventoryMenu : MonoBehaviour, IZodiacMenu
+using UI;
+class InventoryMenu : MonoBehaviour, IZodiacMenu
 {
     [SerializeField] GameObject itemsContainer;
     [SerializeField] GameObject itemSlotPrefab;
@@ -11,19 +12,7 @@ public class InventoryMenu : MonoBehaviour, IZodiacMenu
     private Inventory inventory;
     public Canvas Canvas { get => GetComponent<Canvas>(); }
     public CanvasGroup CanvasGroup { get => GetComponent<CanvasGroup>(); }
-    public static InventoryMenu Instance { get; private set; }
-    public void Awake()
-    {
-        if (Instance == null) // If there is no instance already
-        {
-            DontDestroyOnLoad(this.gameObject); // Keep the GameObject, this component is attached to, across different scenes
-            Instance = this;
-        }
-        else if (Instance != this)
-        {
-            Destroy(gameObject); // Destroy the GameObject, this component is attached to
-        }
-    }
+    public GameObject GameObject { get => gameObject; }
 
     public void RefreshUI()
     {

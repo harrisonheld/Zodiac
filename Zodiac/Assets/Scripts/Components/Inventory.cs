@@ -73,7 +73,7 @@ public class Inventory : ZodiacComponent
     public Slot GetOpenSlot(SlotType type)
     {
         foreach (Slot slot in gameObject.GetComponents<Slot>())
-            if (slot.SlotType == type && slot.IsEmpty())
+            if (slot.SlotType == type && slot.Empty)
                 return slot;
 
         return null;

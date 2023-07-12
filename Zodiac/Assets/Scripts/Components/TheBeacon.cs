@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
 
 public class TheBeacon : ZodiacComponent
@@ -12,7 +13,7 @@ public class TheBeacon : ZodiacComponent
     {
         if(e.pickerUpper == GameManager.Instance.ThePlayer)
         {
-            StatusMenu.Instance.Log($"A NEW HAND TOUCHES THE {GetComponent<Visual>().DisplayName.ToUpper()}.");
+            MenuManager.Instance.Log($"A NEW HAND TOUCHES THE {GetComponent<Visual>().DisplayName.ToUpper()}.");
         }
         return true;
     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -10,7 +11,7 @@ public class LookingHurts : ZodiacComponent
     public override bool HandleEvent(LookedAtEvent e) 
     {
         GameManager.Instance.ThePlayer.GetComponent<Health>().HealthCurrent -= DamageInflictedUponLook;
-        StatusMenu.Instance.Log($"You take {DamageInflictedUponLook} damage from looking at the {gameObject.GetComponent<Visual>().DisplayName}.");
+        MenuManager.Instance.Log($"You take {DamageInflictedUponLook} damage from looking at the {gameObject.GetComponent<Visual>().DisplayName}.");
         return true; 
     }
 

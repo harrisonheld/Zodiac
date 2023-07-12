@@ -19,23 +19,58 @@ namespace WorldGen
             worldSeed = newSeed;
         }
 
-        // hash that will persist across application restarts
-        // not very clever but works well enough - much like myself
-        private static int StableHash(params int[] toHash)
+        public static List<GameObject> GenerateScreen(int x, int y)
         {
-            /*
-             * I am not good at this kind of math and cannot gaurantee this hash is any good
-             * No I have not tested it
-             */
-            
-            // djb2 algorithm
-            int hash = 5381;
-            for(int i = 0; i < toHash.Length; i++)
+            Gaps gaps = new()
             {
-                hash = unchecked(hash * 33 + toHash[i]);
+                north = GenerateEdge(x, y, Direction.North),
+                east = GenerateEdge(x, y, Direction.East),
+                south = GenerateEdge(x, y, Direction.South),
+                west = GenerateEdge(x, y, Direction.West)
+            };
+
+            int screenSeed = StableHash(worldSeed, x, y);
+            System.Random random = new(screenSeed);
+
+            ITerrainGenerator generator = GetTerrainGenerator(x, y);
+            generator.Generate(random, gaps);
+
+            List<GameObject> entities = new();
+            foreach (Vector2Int wallPos in generator.WallCoordinates())
+            {
+                string blueprint = random.NextDouble() <= 0.7 ? "LimestoneWall" : "LimestoneWallAlt";
+                GameObject wall = EntitySerializer.EntityFromBlueprint(blueprint, wallPos);
+                entities.Add(wall);
+            }
+            foreach (Vector2Int pathPos in generator.PathCoordinates())
+            {
+                GameObject path = EntitySerializer.EntityFromBlueprint("Path", pathPos);
+                entities.Add(path);
             }
 
-            return hash;
+            return entities;
+        }
+        // pick a terrain generator based on the screen's position
+        private static ITerrainGenerator GetTerrainGenerator(int x, int y)
+        {
+            return new CellularAutomata(SCREEN_WIDTH, SCREEN_HEIGHT);
+        }
+
+        // hash that will persist across application restarts
+        // untested but appears to work well enough - much like myself
+        private static int StableHash(params int[] toHash)
+        {
+            // djb2 algorithm
+            unchecked
+            {
+                int hash = 5381;
+                for (int i = 0; i < toHash.Length; i++)
+                {
+                    hash = hash * 33 + toHash[i];
+                }
+
+                return hash;
+            }
         }
         private static InclusiveIntRange GenerateEdge(int x, int y, Direction dir)
         {
@@ -63,44 +98,6 @@ namespace WorldGen
             int gap1 = rand.Next(0, bound - gapWidth);
             int gap2 = gap1 + gapWidth;
             return new InclusiveIntRange(gap1, gap2);
-        }
-        public static List<GameObject> GenerateScreen(int x, int y)
-        {
-            Gaps gaps = new()
-            {
-                north = GenerateEdge(x, y, Direction.North),
-                east = GenerateEdge(x, y, Direction.East),
-                south = GenerateEdge(x, y, Direction.South),
-                west = GenerateEdge(x, y, Direction.West)
-            };
-            
-            int screenSeed = StableHash(worldSeed, x, y);
-            System.Random random = new(screenSeed);
-
-            CellularAutomata ca = new(SCREEN_WIDTH, SCREEN_HEIGHT);
-            ca.Generate(random, gaps);
-
-            List<GameObject> entities = new();
-            foreach (Vector2Int wallPos in ca.WallCoordinates())
-            {
-                string blueprint = random.NextDouble() <= 0.7 ? "LimestoneWall" : "LimestoneWallAlt";
-                GameObject wall = EntitySerializer.EntityFromBlueprint(blueprint, wallPos);
-                entities.Add(wall);
-            }
-            foreach (Vector2Int pathPos in ca.PathCoordinates())
-            {
-                GameObject path = EntitySerializer.EntityFromBlueprint("Path", pathPos);
-                entities.Add(path);
-            }
-
-            return entities;
-        }
-        private enum Direction
-        {
-            North = 0,
-            East = 1,
-            South = 2,
-            West = 3
         }
     }
 }

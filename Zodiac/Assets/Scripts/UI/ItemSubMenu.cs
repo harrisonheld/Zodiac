@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UI;
 
 public class ItemSubMenu : MonoBehaviour, IZodiacMenu
 {
@@ -13,6 +14,8 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
     private GameObject item;
     public Canvas Canvas { get => GetComponent<Canvas>(); }
     public CanvasGroup CanvasGroup { get => GetComponent<CanvasGroup>(); }
+    public GameObject GameObject { get => gameObject; }
+
 
     public static ItemSubMenu Instance { get; private set; }
     public void Awake()
@@ -56,7 +59,7 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
         AddButton("Drop", () =>
         {
             GameManager.Instance.Drop(GameManager.Instance.ThePlayer, item);
-            InventoryMenu.Instance.RefreshUI();
+            MenuManager.Instance.RefreshUIs();
         }, closeMenuOnUse: true);
         
         AddButton("Dev Inspect", () =>
@@ -74,7 +77,7 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
                 sb.AppendLine();
             }
 
-            AlertMenu.Instance.ShowText(sb.ToString());
+            MenuManager.Instance.ShowAlert(sb.ToString());
         }, closeMenuOnUse: false);
 
         if (item.GetComponent<Equippable>())
@@ -82,7 +85,7 @@ public class ItemSubMenu : MonoBehaviour, IZodiacMenu
             AddButton("Equip", () =>
             {
                 GameManager.Instance.ThePlayer.GetComponent<Inventory>().Equip(item);
-                InventoryMenu.Instance.RefreshUI();
+                MenuManager.Instance.RefreshUIs();
             }, refreshMenuOnUse: true);
         }
 

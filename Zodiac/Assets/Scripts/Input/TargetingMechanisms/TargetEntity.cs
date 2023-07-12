@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
 
 public class TargetEntity : ITargetingMechanism
@@ -14,9 +15,9 @@ public class TargetEntity : ITargetingMechanism
 
     public bool HandleInput(ZodiacInputMap inputMap)
     {
-        if(!MenuManager.Instance.isOpen(LookMenu.Instance))
+        if(!LookMenu.Instance.isOpen)
         {
-            LookMenu.Instance.Show(_targeter.GetComponent<Position>().Pos);
+            LookMenu.Instance.Show(GameManager.Instance.ThePlayer);
         }
 
         LookMenu.Instance.HandleInput(inputMap);
@@ -27,7 +28,7 @@ public class TargetEntity : ITargetingMechanism
 
             if(_targeted == null)
             {
-                StatusMenu.Instance.Log("There is nothing to target there.");
+                MenuManager.Instance.Log("There is nothing to target there.");
                 return false;
             }
 
