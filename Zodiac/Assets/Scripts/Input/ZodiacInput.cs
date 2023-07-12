@@ -141,6 +141,7 @@ public static class ZodiacInput
         // open equipment menu
         if(inputMap.FreeRoam.OpenEquipment.triggered)
         {
+            MenuManager.Instance.EquipmentMenu();
             return;
         }
 

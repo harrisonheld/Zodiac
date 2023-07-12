@@ -130,12 +130,45 @@ namespace UI
             menu.SetItem(item);
             Open(menu);
         }
-
         public void ShowInventory(Inventory inv)
         {
             InventoryMenu menu = Instantiate(_inventoryPrefab).GetComponent<InventoryMenu>();
             menu.SetInventory(inv);
             Open(menu);
+        }
+
+        public void EquipmentMenu()
+        {
+            ShowPickMenu(
+                options: GameManager.Instance.ThePlayer.GetComponents<Slot>(),
+                action: slot =>
+                {
+                    if(slot.Empty)
+                    {
+                        ShowPickMenu(
+                            GameManager.Instance.ThePlayer.GetComponent<Inventory>().Items,
+                            item =>
+                            {
+                                GameManager.Instance.ThePlayer.GetComponent<Inventory>().Equip(item, slot);
+                                RefreshUIs();
+                            },
+                            criterion: item => item.GetComponent<Equippable>() && item.GetComponent<Equippable>().SlotType == slot.SlotType,
+                            getName: item => item.GetComponent<Visual>().DisplayName,
+                            prompt: "Items",
+                            closeOnPick: true
+                        );
+                    }
+                    else
+                    {
+                        GameManager.Instance.ThePlayer.GetComponent<Inventory>().UnequipToItems(slot);
+                        RefreshUIs();
+                    }
+                },
+                getName: slot => slot.GetNameWithItem(),
+                prompt: "Equipment",
+                closeOnPick: false,
+                removeOnPick: false
+            );
         }
     }
 }

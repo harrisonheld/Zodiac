@@ -43,6 +43,10 @@ public class Inventory : ZodiacComponent
         if (slot == null)
             return false;
 
+        return Equip(equippable, slot);
+    }
+    public bool Equip(GameObject equippable, Slot slot)
+    {
         // remove it from inventory if possible
         RemoveItem(equippable);
 
