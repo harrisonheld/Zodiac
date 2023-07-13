@@ -10,7 +10,7 @@ using System.Xml.Linq;
 
 public class EntitySerializer
 {
-    private const string BLUEPRINTS_PATH = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Blueprints\Blueprints.xml";
+    private const string BLUEPRINTS_PATH = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Raws\Blueprints\blueprints.xml";
 
     private const string ENTITIES = "Entities"; // the start marker for all entities
     private const string ENTITY = "Entity"; // the start marker for an entity

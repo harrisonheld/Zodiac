@@ -31,6 +31,10 @@ namespace UI
         public void RefreshUI()
         {
             Clear();
+            if(_options.Count == 0)
+            {
+                return;
+            }
 
             for (int i = 0; i < _options.Count; i++)
             {
@@ -40,13 +44,14 @@ namespace UI
                 optionButton.transform.SetParent(optionsContainer.transform, false);
 
                 var option = _options[i];
-                int optionIdx = i;
 
                 optionButton.GetComponent<Button>().interactable = _criterion(option);
 
+                var optionIdx = i;
                 optionButton.GetComponent<Button>().onClick.AddListener(() =>
                 {
                     _action(option);
+                    _selectedIdx = optionIdx;
 
                     if (_closeOnPick)
                     {
@@ -56,9 +61,6 @@ namespace UI
                     if (_removeOnPick)
                     {
                         _options.Remove(option);
-                        // select next option after removal
-                        if (_selectedIdx == _options.Count)
-                            _selectedIdx--;
                     }
                     if(_options.Count == 0)
                     {
@@ -70,14 +72,12 @@ namespace UI
                 });
             }
 
+            if (_selectedIdx == _options.Count)
+                _selectedIdx--;
             optionsContainer.transform.GetChild(_selectedIdx).GetComponent<Selectable>().Select();
         }
         public void GainFocus()
         {
-            if (optionsContainer.transform.childCount > 0)
-            {
-                optionsContainer.transform.GetChild(0).GetComponent<Selectable>().Select();
-            }
         }
         private void Clear()
         {

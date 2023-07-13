@@ -89,6 +89,49 @@
     </Component>
   </Entity>
 
+  <Entity Id="CopperDagger" Inherits="Item">
+    <Component Type="Visual">
+      <Property PropertyName="DisplayName" PropertyValue="copper dagger" />
+      <Property PropertyName="Description" PropertyValue="dagger" />
+      <Property PropertyName="Sprite" PropertyValue="dagger" />
+    </Component>
+    <Component Type="Equippable">
+      <Property PropertyName="SlotType" PropertyValue="Hand" />
+    </Component>
+    <Component Type="MeleeWeapon">
+      <Property PropertyName="Damage" PropertyValue="2" />
+    </Component>
+  </Entity>
+
+  <Entity Id="CopperShortsword" Inherits="Item">
+    <Component Type="Visual">
+      <Property PropertyName="DisplayName" PropertyValue="copper shortsword" />
+      <Property PropertyName="Description" PropertyValue="sword" />
+      <Property PropertyName="Sprite" PropertyValue="sword" />
+    </Component>
+    <Component Type="Equippable">
+      <Property PropertyName="SlotType" PropertyValue="Hand" />
+    </Component>
+    <Component Type="MeleeWeapon">
+      <Property PropertyName="Damage" PropertyValue="3" />
+    </Component>
+  </Entity>
+
+  <Entity Id="HarrisonsFocus" Inherits="Item">
+    <Component Type="Visual">
+      <Property PropertyName="DisplayName" PropertyValue="Harrison's Focus" />
+      <Property PropertyName="Description" PropertyValue="a relic tied to a heroic figure named Harrison, who was known for his unmatched prowess, as well as his scholarly research into the school of magic known as 'gainz'. The focus is said to have been forged as a symbol of his unwavering dedication to training and his insatiable desire for strength" />
+      <Property PropertyName="Sprite" PropertyValue="marble" />
+    </Component>
+    <Component Type="Equippable">
+      <Property PropertyName="SlotType" PropertyValue="Hand" />
+    </Component>
+    <Component Type="StatBonus">
+      <Property PropertyName="StatType" PropertyValue="Prowess" />
+      <Property PropertyName="Bonus" PropertyValue="500" />
+    </Component>
+  </Entity>
+
   <Entity Id="Wall" Inherits="PhysicalObject">
     <Component Type="Visual">
       <Property PropertyName="DisplayName" PropertyValue="[Wall]" />

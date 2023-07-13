@@ -53,7 +53,7 @@ namespace WorldGen
         // pick a terrain generator based on the screen's position
         private static ITerrainGenerator GetTerrainGenerator(int x, int y)
         {
-            return new CellularAutomata(SCREEN_WIDTH, SCREEN_HEIGHT);
+            return new BSP(SCREEN_WIDTH, SCREEN_HEIGHT);
         }
 
         // hash that will persist across application restarts

@@ -1,0 +1,32 @@
+[
+  {
+    "tableName": "weapons1",
+    "entries": [
+      {
+        "item": "CopperDagger",
+        "quantity": 1,
+        "weight": 10
+      },
+      {
+        "item": "CopperShortsword",
+        "quantity": 1,
+        "weight": 10
+      },
+      {
+        "table": "weapons2",
+        "weight": 5
+      }
+    ]
+  },
+
+  {
+    "tableName": "weapons2",
+    "entries": [
+      {
+        "item": "MithrilDagger",
+        "quantity": 1,
+        "weight": 1
+      }
+    ]
+  }
+]

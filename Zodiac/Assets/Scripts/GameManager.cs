@@ -59,7 +59,11 @@ public class GameManager : MonoBehaviour
         Entities.AddRange(deserialized.Where(e => e.GetComponents<Position>() != null));
 
         EntitySerializer.EntityFromBlueprint("Humanoid", new Vector2Int(3,3));
-        EntitySerializer.EntityFromBlueprint("MithrilDagger", new Vector2Int(3,4));
+        EntitySerializer.EntityFromBlueprint("MithrilDagger", new Vector2Int(4, 16));
+        EntitySerializer.EntityFromBlueprint("HarrisonsFocus", new Vector2Int(4, 16));
+        for(int i = 0; i < 25; i++) {
+            EntitySerializer.EntityFromBlueprint(Loot.FromTable("weapons1"), new Vector2Int(3, 15));
+        }
     }
 
     public void Update()
