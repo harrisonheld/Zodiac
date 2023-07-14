@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine.Purchasing.MiniJSON;
 
-public static class Loot
+public static class Tables
 {
     private const string TABLES_DIR = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Raws\Tables\";
 
@@ -28,7 +28,7 @@ public static class Loot
 
             string json = File.ReadAllText(tablePath);
             JsonSerializerSettings settings = new JsonSerializerSettings();
-            settings.Converters.Add(new LootEntryConverter());
+            settings.Converters.Add(new TableEntryConverter());
             List<LootTable> tablesInFile = JsonConvert.DeserializeObject<List<LootTable>>(json, settings);
 
             foreach(LootTable table in tablesInFile)
@@ -38,6 +38,11 @@ public static class Loot
         }
     }
 
+    /// <summary>
+    /// Get a blueprint from a given table.
+    /// </summary>
+    /// <param name="tableName"></param>
+    /// <returns></returns>
     public static string FromTable(string tableName)
     {
         if (!_initialized)
@@ -55,11 +60,11 @@ public static class Loot
 
             if (randomNumber <= 0)
             {
-                if (entry is LootItem itemEntry)
+                if (entry is BlueprintEntry itemEntry)
                 {
-                    return itemEntry.Item;
+                    return itemEntry.Blueprint;
                 }
-                else if (entry is LootTableReference referenceEntry)
+                else if (entry is TableReference referenceEntry)
                 {
                     return FromTable(referenceEntry.TableName);
                 }
@@ -71,19 +76,17 @@ public static class Loot
         return "";
     }
 
-    private abstract class LootEntryBase
+    private abstract class EntryBase
     {
         [JsonProperty("weight")]
         public int Weight { get; set; }
     }
-    private class LootItem : LootEntryBase
+    private class BlueprintEntry : EntryBase
     {
-        [JsonProperty("item")]
-        public string Item { get; set; }
-        [JsonProperty("quantity")]
-        public int Quantity { get; set; }
+        [JsonProperty("blueprint")]
+        public string Blueprint { get; set; }
     }
-    private class LootTableReference : LootEntryBase
+    private class TableReference : EntryBase
     {
         [JsonProperty("table")]
         public string TableName { get; set; }
@@ -93,29 +96,29 @@ public static class Loot
         [JsonProperty("tableName")]
         public string TableName { get; set; }
         [JsonProperty("entries")]
-        public List<LootEntryBase> Entries { get; set; }
+        public List<EntryBase> Entries { get; set; }
     }
 
 
 
-    private class LootEntryConverter : JsonConverter
+    private class TableEntryConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(LootEntryBase);
+            return objectType == typeof(EntryBase);
         }
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             JObject jsonObject = JObject.Load(reader);
 
-            // Check if the loot entry is an item or a reference to another loot table
-            if (jsonObject.ContainsKey("item"))
+            // Check if the entry is a blueprint or a reference to another table
+            if (jsonObject.ContainsKey("blueprint"))
             {
-                return jsonObject.ToObject<LootItem>();
+                return jsonObject.ToObject<BlueprintEntry>();
             }
             else if (jsonObject.ContainsKey("table"))
             {
-                return jsonObject.ToObject<LootTableReference>();
+                return jsonObject.ToObject<TableReference>();
             }
 
             throw new JsonSerializationException("Invalid loot entry");

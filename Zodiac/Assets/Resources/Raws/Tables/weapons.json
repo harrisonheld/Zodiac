@@ -1,30 +1,27 @@
 [
   {
-    "tableName": "weapons1",
+    "tableName": "Weapons1",
     "entries": [
       {
-        "item": "CopperDagger",
-        "quantity": 1,
+        "blueprint": "CopperDagger",
         "weight": 10
       },
       {
-        "item": "CopperShortsword",
-        "quantity": 1,
+        "blueprint": "CopperShortsword",
         "weight": 10
       },
       {
-        "table": "weapons2",
+        "table": "Weapons2",
         "weight": 5
       }
     ]
   },
 
   {
-    "tableName": "weapons2",
+    "tableName": "Weapons2",
     "entries": [
       {
-        "item": "MithrilDagger",
-        "quantity": 1,
+        "blueprint": "MithrilDagger",
         "weight": 1
       }
     ]

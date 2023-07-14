@@ -1,0 +1,601 @@
+[
+  {
+    "Id": "PhysicalObject",
+    "Component": [
+      {
+        "Type": "Visual",
+        "Property": [
+          {
+            "PropertyName": "DisplayName",
+            "PropertyValue": "[PhysicalObject]"
+          },
+          {
+            "PropertyName": "Description",
+            "PropertyValue": "[physical object base]"
+          },
+          {
+            "PropertyName": "Sprite",
+            "PropertyValue": "Misc/error"
+          }
+        ]
+      },
+      {
+        "Type": "PhysicalAttributes",
+        "Property": [
+          {
+            "PropertyName": "Solid",
+            "PropertyValue": "True"
+          },
+          {
+            "PropertyName": "OccludesVison",
+            "PropertyValue": "True"
+          },
+          {
+            "PropertyName": "Weight",
+            "PropertyValue": "1"
+          }
+        ]
+      },
+      {
+        "Type": "Health"
+      }
+    ]
+  },
+  {
+    "Id": "DecorationObject",
+    "Component": [
+      {
+        "Type": "Visual",
+        "Property": [
+          {
+            "PropertyName": "DisplayName",
+            "PropertyValue": "[DecorationObject]"
+          },
+          {
+            "PropertyName": "Description",
+            "PropertyValue": "[decoration base]"
+          },
+          {
+            "PropertyName": "Sprite",
+            "PropertyValue": "Misc/error"
+          }
+        ]
+      },
+      {
+        "Type": "PhysicalAttributes",
+        "Property": [
+          {
+            "PropertyName": "Solid",
+            "PropertyValue": "False"
+          },
+          {
+            "PropertyName": "OccludesVison",
+            "PropertyValue": "False"
+          }
+        ]
+      },
+      {
+        "Type": "Health",
+        "Property": [
+          {
+            "PropertyName": "HealthMax",
+            "PropertyValue": "1"
+          },
+          {
+            "PropertyName": "HealthCurrent",
+            "PropertyValue": "1"
+          },
+          {
+            "PropertyName": "Defense",
+            "PropertyValue": "0"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": "Item",
+    "Inherits": "DecorationObject",
+    "Component": [
+      {
+        "Type": "Item"
+      }
+    ]
+  },
+  {
+    "Id": "Path",
+    "Inherits": "DecorationObject",
+    "Component": [
+      {
+        "Type": "Visual",
+        "Property": [
+          {
+            "PropertyName": "DisplayName",
+            "PropertyValue": "path"
+          },
+          {
+            "PropertyName": "Description",
+            "PropertyValue": "good for walking on"
+          },
+          {
+            "PropertyName": "Sprite",
+            "PropertyValue": "path"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": "Flower",
+    "Inherits": "Item",
+    "Component": [
+      {
+        "Type": "Visual",
+        "Property": [
+          {
+            "PropertyName": "DisplayName",
+            "PropertyValue": "flower"
+          },
+          {
+            "PropertyName": "Description",
+            "PropertyValue": "a single stitch in nature's tapesty, the delightful flower blooms forth from the earth with a joyous flourish"
+          },
+          {
+            "PropertyName": "Sprite",
+            "PropertyValue": "flower"
+          },
+          {
+            "PropertyName": "ColorPrimary",
+            "PropertyValue": "0.53,0.27,0.53"
+          },
+          {
+            "PropertyName": "ColorSecondary",
+            "PropertyValue": "0.66,0.82,0.25"
+          },
+          {
+            "PropertyName": "ColorTertiary",
+            "PropertyValue": "0,0.67,0.31"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": "MithrilDagger",
+    "Inherits": "Item",
+    "Component": [
+      {
+        "Type": "Visual",
+        "Property": [
+          {
+            "PropertyName": "DisplayName",
+            "PropertyValue": "mithril dagger"
+          },
+          {
+            "PropertyName": "Description",
+            "PropertyValue": "it has a slender and agile design, featuring a sharp, finely crafted blade and a hilt adorned with intricate engravings. Its overall weight is surprisingly light, allowing for swift and precise movements during combat"
+          },
+          {
+            "PropertyName": "Sprite",
+            "PropertyValue": "dagger"
+          },
+          {
+            "PropertyName": "ColorPrimary",
+            "PropertyValue": "0.53,0.27,0.53"
+          },
+          {
+            "PropertyName": "ColorSecondary",
+            "PropertyValue": "0.66,0.82,0.25"
+          },
+          {
+            "PropertyName": "ColorTertiary",
+            "PropertyValue": "0,0.67,0.31"
+          }
+        ]
+      },
+      {
+        "Type": "Equippable",
+        "Property": [
+          {
+            "PropertyName": "SlotType",
+            "PropertyValue": "Hand"
+          }
+        ]
+      },
+      {
+        "Type": "MeleeWeapon",
+        "Property": [
+          {
+            "PropertyName": "Damage",
+            "PropertyValue": "2"
+          },
+          {
+            "PropertyName": "AttackCost",
+            "PropertyValue": "500"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": "CopperDagger",
+    "Inherits": "Item",
+    "Component": [
+      {
+        "Type": "Visual",
+        "Property": [
+          {
+            "PropertyName": "DisplayName",
+            "PropertyValue": "copper dagger"
+          },
+          {
+            "PropertyName": "Description",
+            "PropertyValue": "dagger"
+          },
+          {
+            "PropertyName": "Sprite",
+            "PropertyValue": "dagger"
+          }
+        ]
+      },
+      {
+        "Type": "Equippable",
+        "Property": [
+          {
+            "PropertyName": "SlotType",
+            "PropertyValue": "Hand"
+          }
+        ]
+      },
+      {
+        "Type": "MeleeWeapon",
+        "Property": [
+          {
+            "PropertyName": "Damage",
+            "PropertyValue": "2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": "CopperShortsword",
+    "Inherits": "Item",
+    "Component": [
+      {
+        "Type": "Visual",
+        "Property": [
+          {
+            "PropertyName": "DisplayName",
+            "PropertyValue": "copper shortsword"
+          },
+          {
+            "PropertyName": "Description",
+            "PropertyValue": "sword"
+          },
+          {
+            "PropertyName": "Sprite",
+            "PropertyValue": "sword"
+          }
+        ]
+      },
+      {
+        "Type": "Equippable",
+        "Property": [
+          {
+            "PropertyName": "SlotType",
+            "PropertyValue": "Hand"
+          }
+        ]
+      },
+      {
+        "Type": "MeleeWeapon",
+        "Property": [
+          {
+            "PropertyName": "Damage",
+            "PropertyValue": "3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": "HarrisonsFocus",
+    "Inherits": "Item",
+    "Component": [
+      {
+        "Type": "Visual",
+        "Property": [
+          {
+            "PropertyName": "DisplayName",
+            "PropertyValue": "Harrison's Focus"
+          },
+          {
+            "PropertyName": "Description",
+            "PropertyValue": "a relic tied to a heroic figure named Harrison, who was known for his unmatched prowess, as well as his scholarly research into the school of magic known as 'gainz'. The focus is said to have been forged as a symbol of his unwavering dedication to training and his insatiable desire for strength"
+          },
+          {
+            "PropertyName": "Sprite",
+            "PropertyValue": "marble"
+          }
+        ]
+      },
+      {
+        "Type": "Equippable",
+        "Property": [
+          {
+            "PropertyName": "SlotType",
+            "PropertyValue": "Hand"
+          }
+        ]
+      },
+      {
+        "Type": "StatBonus",
+        "Property": [
+          {
+            "PropertyName": "StatType",
+            "PropertyValue": "Prowess"
+          },
+          {
+            "PropertyName": "Bonus",
+            "PropertyValue": "500"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": "Wall",
+    "Inherits": "PhysicalObject",
+    "Component": [
+      {
+        "Type": "Visual",
+        "Property": [
+          {
+            "PropertyName": "DisplayName",
+            "PropertyValue": "[Wall]"
+          },
+          {
+            "PropertyName": "Description",
+            "PropertyValue": "[wall base]"
+          },
+          {
+            "PropertyName": "Sprite",
+            "PropertyValue": "dots3x3"
+          }
+        ]
+      },
+      {
+        "Type": "Health",
+        "Property": [
+          {
+            "PropertyName": "HealthMax",
+            "PropertyValue": "100"
+          },
+          {
+            "PropertyName": "HealthCurrent",
+            "PropertyValue": "100"
+          },
+          {
+            "PropertyName": "Defense",
+            "PropertyValue": "1"
+          }
+        ]
+      },
+      {
+        "Type": "PhysicalAttributes",
+        "Property": [
+          {
+            "PropertyName": "Solid",
+            "PropertyValue": "True"
+          },
+          {
+            "PropertyName": "OccludesVison",
+            "PropertyValue": "True"
+          },
+          {
+            "PropertyName": "Weight",
+            "PropertyValue": "1000"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": "LimestoneWall",
+    "Inherits": "Wall",
+    "Component": [
+      {
+        "Type": "Visual",
+        "Property": [
+          {
+            "PropertyName": "DisplayName",
+            "PropertyValue": "oolitic limestone wall"
+          },
+          {
+            "PropertyName": "Description",
+            "PropertyValue": "a sedimentary material. the oolites, which are small spherical grains of rock, appear to move and shift like a school of fish"
+          },
+          {
+            "PropertyName": "ColorPrimary",
+            "PropertyValue": "1,1,0.89"
+          },
+          {
+            "PropertyName": "ColorSecondary",
+            "PropertyValue": "0.76,0.76,0.63"
+          },
+          {
+            "PropertyName": "ColorTertiary",
+            "PropertyValue": "0,0,0"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": "LimestoneWallAlt",
+    "Inherits": "LimestoneWall",
+    "Component": [
+      {
+        "Type": "Visual",
+        "Property": [
+          {
+            "PropertyName": "DisplayName",
+            "PropertyValue": "sun-bleached oolitic limestone wall"
+          },
+          {
+            "PropertyName": "Description",
+            "PropertyValue": "a sedimentary material. the oolites, which are small spherical grains of rock, appear to move and shift like a school of fish. It has weathered many years of direct exposure to the sun"
+          },
+          {
+            "PropertyName": "ColorPrimary",
+            "PropertyValue": "0.99,0.99,0.92"
+          },
+          {
+            "PropertyName": "ColorSecondary",
+            "PropertyValue": "0.76,0.76,0.69"
+          },
+          {
+            "PropertyName": "ColorTertiary",
+            "PropertyValue": "0,0,0"
+          },
+          {
+            "PropertyName": "Sprite",
+            "PropertyValue": "dots2x2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": "Creature",
+    "Inherits": "PhysicalObject",
+    "Component": [
+      {
+        "Type": "Visual",
+        "Property": [
+          {
+            "PropertyName": "DisplayName",
+            "PropertyValue": "[Creature]"
+          },
+          {
+            "PropertyName": "Description",
+            "PropertyValue": "[represents a creature]"
+          }
+        ]
+      },
+      {
+        "Type": "Living"
+      },
+      {
+        "Type": "EnergyHaver"
+      },
+      {
+        "Type": "Inventory"
+      },
+      {
+        "Type": "Brain",
+        "Property": [
+          {
+            "PropertyName": "Ai",
+            "PropertyValue": "Wanderer"
+          }
+        ]
+      },
+      {
+        "Type": "PhysicalAttributes",
+        "Property": [
+          {
+            "PropertyName": "OccludesVison",
+            "PropertyValue": "False"
+          },
+          {
+            "PropertyName": "Weight",
+            "PropertyValue": "150"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": "Humanoid",
+    "Inherits": "Creature",
+    "Component": [
+      {
+        "Type": "Visual",
+        "Property": [
+          {
+            "PropertyName": "DisplayName",
+            "PropertyValue": "[Humanoid]"
+          },
+          {
+            "PropertyName": "Description",
+            "PropertyValue": "[represents a human]"
+          }
+        ]
+      },
+      {
+        "Type": "Slot",
+        "Property": [
+          {
+            "PropertyName": "SlotType",
+            "PropertyValue": "Hand"
+          },
+          {
+            "PropertyName": "SpecialName",
+            "PropertyValue": "Right Hand"
+          }
+        ]
+      },
+      {
+        "Type": "Slot",
+        "Property": [
+          {
+            "PropertyName": "SlotType",
+            "PropertyValue": "Hand"
+          },
+          {
+            "PropertyName": "SpecialName",
+            "PropertyValue": "Left Hand"
+          }
+        ]
+      },
+      {
+        "Type": "Slot",
+        "Property": [
+          {
+            "PropertyName": "SlotType",
+            "PropertyValue": "Missile"
+          }
+        ]
+      },
+      {
+        "Type": "Slot",
+        "Property": [
+          {
+            "PropertyName": "SlotType",
+            "PropertyValue": "Head"
+          }
+        ]
+      },
+      {
+        "Type": "Slot",
+        "Property": [
+          {
+            "PropertyName": "SlotType",
+            "PropertyValue": "Body"
+          }
+        ]
+      },
+      {
+        "Type": "Slot",
+        "Property": [
+          {
+            "PropertyName": "SlotType",
+            "PropertyValue": "Legs"
+          }
+        ]
+      }
+    ]
+  }
+]

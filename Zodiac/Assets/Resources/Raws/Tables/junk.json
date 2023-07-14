@@ -1,0 +1,11 @@
+[
+  {
+    "tableName": "Junk",
+    "entries": [
+      {
+        "blueprint": "flower",
+        "weight": 1
+      }
+    ]
+  }
+]
