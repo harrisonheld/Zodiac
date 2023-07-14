@@ -39,12 +39,12 @@ namespace WorldGen
             foreach (Vector2Int wallPos in generator.WallCoordinates())
             {
                 string blueprint = random.NextDouble() <= 0.7 ? "LimestoneWall" : "LimestoneWallAlt";
-                GameObject wall = EntitySerializer.EntityFromBlueprint(blueprint, wallPos);
+                GameObject wall = Blueprints.FromBlueprint(blueprint, wallPos);
                 entities.Add(wall);
             }
             foreach (Vector2Int pathPos in generator.PathCoordinates())
             {
-                GameObject path = EntitySerializer.EntityFromBlueprint("Path", pathPos);
+                GameObject path = Blueprints.FromBlueprint("Path", pathPos);
                 entities.Add(path);
             }
 

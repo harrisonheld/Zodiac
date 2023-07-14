@@ -15,7 +15,7 @@ public class SproutFlower : AbilityBase
 
     public override void Activate()
     {
-        EntitySerializer.EntityFromBlueprint("Flower", targetPos.GetTargettedPosition());
+        Blueprints.FromBlueprint("Flower", targetPos.GetTargettedPosition());
         MenuManager.Instance.Log("A flower blooms.");
 
         base.Activate();

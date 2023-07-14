@@ -58,9 +58,9 @@ public class GameManager : MonoBehaviour
         WorldGen.World.GenerateScreen(screenX, screenY);
         Entities.AddRange(deserialized.Where(e => e.GetComponents<Position>() != null));
 
-        EntitySerializer.EntityFromBlueprint("Humanoid", new Vector2Int(3,3));
-        EntitySerializer.EntityFromBlueprint("MithrilDagger", new Vector2Int(4, 16));
-        EntitySerializer.EntityFromBlueprint("HarrisonsFocus", new Vector2Int(4, 16));
+        Blueprints.FromBlueprint("Humanoid", new Vector2Int(3, 3));
+        Blueprints.FromBlueprint("MithrilDagger", new Vector2Int(3, 15));
+        Blueprints.FromBlueprint("HarrisonsFocus", new Vector2Int(3, 15));
     }
 
     public void Update()
