@@ -348,5 +348,25 @@
         }
       }
     ]
+  },
+  {
+    "Id": "EnthralledAlchemist",
+    "Inherits": "Humanoid",
+    "Components": [
+      {
+        "Type": "Visual",
+        "Properties": {
+          "DisplayName": "enthralled alchemist",
+          "Description": "the fledgling aclhemist toils with eyes that gleam like gold and hands that are never still. Consumed now, but once 'twas true. Without lying, certain and most true",
+          "Sprite": "human3"
+        }
+      },
+      {
+        "Type": "EnergyHaver",
+        "Properties": {
+          "Quickness": 700
+        }
+      }
+    ]
   }
 ]

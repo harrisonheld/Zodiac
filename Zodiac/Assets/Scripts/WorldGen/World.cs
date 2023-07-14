@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Raws;
 
 namespace WorldGen
 {
@@ -46,6 +47,11 @@ namespace WorldGen
             {
                 GameObject path = Blueprints.FromBlueprint("Path", pathPos);
                 entities.Add(path);
+            }
+            foreach(Vector2Int enemyPos in generator.EnemyCoordinates())
+            {
+                GameObject enemy = Blueprints.FromBlueprint("EnthralledAlchemist", enemyPos);
+                entities.Add(enemy);
             }
 
             return entities;

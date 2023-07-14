@@ -33,7 +33,7 @@ namespace WorldGen
 
             _cells = new Cell[this._width, this._height];
 		}
-		public void Generate(Gaps gaps)
+		private void Generate(Gaps gaps)
 		{
 			//create random cells
 			for (int y = 0; y < _height; y++)
@@ -152,16 +152,12 @@ namespace WorldGen
 				}
 			}
 		}
-		// coordintes that are not walls
-		public IEnumerable<Vector2Int> OpenCoordinates()
-        {
-            // yield the results of FloorCoordinates() and PathCoordinates()
-            foreach (var coord in FloorCoordinates())
-                yield return coord;
-            foreach (var coord in PathCoordinates())
-                yield return coord;
-        }
-		private bool InBounds(int x, int y)
+		public IEnumerable<Vector2Int> EnemyCoordinates()
+		{
+			var up = new NotImplementedException("i don't feel so good...");
+			throw up;
+		}
+        private bool InBounds(int x, int y)
         {
             return x >= 0 && x < _width && y >= 0 && y < _height;
         }

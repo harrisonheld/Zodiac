@@ -10,5 +10,6 @@ namespace WorldGen
         public IEnumerable<Vector2Int> WallCoordinates();
         public IEnumerable<Vector2Int> FloorCoordinates();
         public IEnumerable<Vector2Int> PathCoordinates();
+        public IEnumerable<Vector2Int> EnemyCoordinates();
     }
 }

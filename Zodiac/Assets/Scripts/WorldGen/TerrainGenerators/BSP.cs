@@ -14,16 +14,21 @@ namespace WorldGen
         private int _height;
         private int _minLeafSize;
         private int _minRoomSize;
+        private int _maxEnemiesPerRoom;
+        private double _enemySpawnChance;
         private CellType[,] _cells;
         private System.Random _rand;
 
-        public BSP(int width, int height, int minLeafSize = 6, int minRoomSize = 3)
+        public BSP(int width, int height, int minLeafSize = 6, int minRoomSize = 3, int maxEnemiesPerRoom = 3, double enemySpawnChance = 0.5f)
         {
             _width = width;
             _height = height;
-            _cells = new CellType[width, height];
             _minLeafSize = minLeafSize;
             _minRoomSize = minRoomSize;
+            _maxEnemiesPerRoom = maxEnemiesPerRoom;
+            _enemySpawnChance = enemySpawnChance;
+
+            _cells = new CellType[width, height];
         }
 
         public void Generate(System.Random rand, Gaps gaps)
@@ -89,6 +94,23 @@ namespace WorldGen
                     _cells[leaf.X + roomX + x1, leaf.Y + roomY + y1] = CellType.Floor;
                 }
             }
+
+            bool doEnemySpawn = _rand.NextDouble() < _enemySpawnChance;
+            if(doEnemySpawn)
+            {
+                int enemiesToSpawn = _rand.Next(1, _maxEnemiesPerRoom+1);
+                int enemiesSpawned = 0;
+                while(enemiesSpawned < enemiesToSpawn)
+                {
+                    int enemyX = _rand.Next(leaf.X + roomX, leaf.X + roomX + roomWidth);
+                    int enemyY = _rand.Next(leaf.Y + roomY, leaf.Y + roomY + roomHeight);
+                    if (_cells[enemyX, enemyY] != CellType.Enemy)
+                    {
+                        _cells[enemyX, enemyY] = CellType.Enemy;
+                        enemiesSpawned++;
+                    }
+                }
+            }
         }
         private void CreateHall(Leaf leaf1, Leaf leaf2)
         {
@@ -134,7 +156,6 @@ namespace WorldGen
                 }
             }
         }
-
         public IEnumerable<Vector2Int> PathCoordinates()
         {
             for (int y = 0; y < _height; y++)
@@ -142,6 +163,17 @@ namespace WorldGen
                 for (int x = 0; x < _width; x++)
                 {
                     if (_cells[x, y] == CellType.Path)
+                        yield return new Vector2Int(x, y);
+                }
+            }
+        }
+        public IEnumerable<Vector2Int> EnemyCoordinates()
+        {
+            for (int y = 0; y < _height; y++)
+            {
+                for (int x = 0; x < _width; x++)
+                {
+                    if (_cells[x, y] == CellType.Enemy)
                         yield return new Vector2Int(x, y);
                 }
             }
@@ -199,7 +231,8 @@ namespace WorldGen
         {
             Wall,
             Floor,
-            Path
+            Path,
+            Enemy,
         }
     }
 }
