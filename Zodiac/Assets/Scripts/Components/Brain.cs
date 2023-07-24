@@ -6,7 +6,6 @@ using UnityEngine;
 public class Brain : ZodiacComponent
 {
     [field: SerializeField] public AiType Ai { get; set; }
-    [field: SerializeField] public GameObject Target { get; set; }
 }
 
 public enum AiType

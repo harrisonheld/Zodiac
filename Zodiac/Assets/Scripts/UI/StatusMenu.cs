@@ -48,9 +48,13 @@ namespace UI
                 "AC: " + health.Defense;
 
             string stats = "";
-            foreach (Stat stat in player.GetComponents<Stat>())
+            Stats statsComponent = player.GetComponent<Stats>();
+            if(statsComponent)
             {
-                stats += stat.StatType.ToString().PadRight(padding, '.') + stat.EffectiveValue() + "\n";
+                foreach (KeyValuePair<StatType, int> stat in statsComponent.BaseStats)
+                {
+                    stats += stat.Key.ToString().PadRight(padding, '.') + stat.Value + "\n";
+                }
             }
             statsText.text = stats + "Turn " + GameManager.Instance.GetTurn() + ", " + ZodiacInput.GetInputMode();
         }

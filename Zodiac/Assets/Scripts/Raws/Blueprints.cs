@@ -98,6 +98,12 @@ namespace Raws
                     {
                         // TODO
                     }
+                    // if the type is a dictionary
+                    else if(propType.IsGenericType && propType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                    {
+                        // TODO
+                        continue;
+                    }
                     else if (propType.IsEnum)
                     {
                         propVal = Enum.Parse(propType, propVal as string);

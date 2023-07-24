@@ -3,7 +3,7 @@
     "tableName": "Junk",
     "entries": [
       {
-        "blueprint": "flower",
+        "blueprint": "Flower",
         "weight": 1
       }
     ]

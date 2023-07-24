@@ -106,22 +106,6 @@
       <Property PropertyName="SlotType" PropertyValue="Legs" />
     </Component>
 		<Component Type="Living" />
-		<Component Type="Stat">
-			<Property PropertyName="StatType" PropertyValue="Vigor" />
-			<Property PropertyName="BaseValue" PropertyValue="40" />
-		</Component>
-		<Component Type="Stat">
-			<Property PropertyName="StatType" PropertyValue="Prowess" />
-			<Property PropertyName="BaseValue" PropertyValue="40" />
-		</Component>
-		<Component Type="Stat">
-			<Property PropertyName="StatType" PropertyValue="Dexterity" />
-			<Property PropertyName="BaseValue" PropertyValue="40" />
-		</Component>
-		<Component Type="Stat">
-			<Property PropertyName="StatType" PropertyValue="Arcane" />
-			<Property PropertyName="BaseValue" PropertyValue="40" />
-		</Component>
     <Component Type="QuickHeal"></Component>
     <Component Type="SproutFlower"></Component>
     <Component Type="Obliterate"></Component>
@@ -130,7 +114,6 @@
 	<Entity ID="3">
 		<Component Type="Brain">
 			<Property PropertyName="Ai" PropertyValue="Seeker" />
-			<Property PropertyName="Target" PropertyValue="2" />
 		</Component>
 		<Component Type="Health">
 			<Property PropertyName="HealthMax" PropertyValue="5" />

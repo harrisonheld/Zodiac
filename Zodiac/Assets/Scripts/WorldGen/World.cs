@@ -51,6 +51,12 @@ namespace WorldGen
             foreach(Vector2Int enemyPos in generator.EnemyCoordinates())
             {
                 GameObject enemy = Blueprints.FromBlueprint("EnthralledAlchemist", enemyPos);
+
+                foreach(GameObject item in ItemSets.SpawnSet("HumanoidEquipment1"))
+                {
+                    enemy.GetComponent<Inventory>().AddItem(item);
+                }
+
                 entities.Add(enemy);
             }
 
@@ -59,6 +65,7 @@ namespace WorldGen
         // pick a terrain generator based on the screen's position
         private static ITerrainGenerator GetTerrainGenerator(int x, int y)
         {
+            // yeah jk
             return new BSP(SCREEN_WIDTH, SCREEN_HEIGHT);
         }
 
@@ -72,6 +79,7 @@ namespace WorldGen
                 int hash = 5381;
                 for (int i = 0; i < toHash.Length; i++)
                 {
+                    // fun fact: nobody knows why the number 33 works so well. it just does
                     hash = hash * 33 + toHash[i];
                 }
 

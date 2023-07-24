@@ -275,6 +275,12 @@
         }
       },
       {
+        "Type": "PhysicalAttributes",
+        "Properties": {
+          "Weight": 150
+        }
+      },
+      {
         "Type": "Living"
       },
       {
@@ -290,10 +296,14 @@
         }
       },
       {
-        "Type": "PhysicalAttributes",
+        "Type": "Stats",
         "Properties": {
-          "OccludesVison": false,
-          "Weight": 150
+          "BaseStats": {
+            "Prowess": 12,
+            "Vitality": 12,
+            "Dexterity": 12,
+            "Arcane": 12
+          }
         }
       }
     ]
@@ -365,6 +375,12 @@
         "Type": "EnergyHaver",
         "Properties": {
           "Quickness": 700
+        }
+      },
+      {
+        "Type": "Brain",
+        "Properties": {
+          "Ai": "Seeker"
         }
       }
     ]

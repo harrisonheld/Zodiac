@@ -173,12 +173,12 @@ public static class ZodiacInput
             if (GameManager.Instance.isValidMovePosition(destPosition))
             {
                 // move
-                GameManager.Instance.Move(GameManager.Instance.ThePlayer, playerPosComp.Pos + move);
+                GameManager.Instance.Move(GameManager.Instance.ThePlayer, destPosition);
             }
             else
             {
                 // attack
-                GameObject target = GameManager.Instance.EntityAt(destPosition);
+                GameObject target = GameManager.Instance.SolidEntityAt(destPosition);
                 GameManager.Instance.BumpAttack(GameManager.Instance.ThePlayer, target);
             }
 

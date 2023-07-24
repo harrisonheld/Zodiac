@@ -59,7 +59,6 @@ public class GameManager : MonoBehaviour
         WorldGen.World.GenerateScreen(screenX, screenY);
         Entities.AddRange(deserialized.Where(e => e.GetComponents<Position>() != null));
 
-        Blueprints.FromBlueprint("Humanoid", new Vector2Int(3, 3));
         Blueprints.FromBlueprint("MithrilDagger", new Vector2Int(3, 15));
         Blueprints.FromBlueprint("HarrisonsFocus", new Vector2Int(3, 15));
     }
@@ -172,6 +171,17 @@ public class GameManager : MonoBehaviour
 
         return result;
     }
+
+    public GameObject SolidEntityAt(Vector2Int pos)
+    {
+        foreach (GameObject entity in EntitiesAt(pos))
+        {
+            if (entity.GetComponent<PhysicalAttributes>().Solid)
+                return entity;
+        }
+
+        return null;
+    }
     public void BreakEntity(GameObject toDestroy)
     {
         // drop all this entities stuff
@@ -200,13 +210,7 @@ public class GameManager : MonoBehaviour
     public bool isValidMovePosition(Vector2Int toCheck)
     {
         // position is valid if nothing solid is here
-        foreach(GameObject entity in EntitiesAt(toCheck))
-        {
-            if (entity.GetComponent<PhysicalAttributes>().Solid)
-                return false;
-        }
-
-        return true;
+        return SolidEntityAt(toCheck) == null;
     }
 
     /// <summary>

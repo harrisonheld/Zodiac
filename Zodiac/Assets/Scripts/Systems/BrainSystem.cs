@@ -23,10 +23,8 @@ public sealed class BrainSystem : ISystem
 					{
 						if (energyHaver.Energy <= 0)
 							break;
-						if (brain.Target == null)
-							break;
 
-						Vector2Int targetPos = brain.Target.GetComponent<Position>().Pos;
+						Vector2Int targetPos = GameManager.Instance.ThePlayer.GetComponent<Position>().Pos;
 						Vector2Int towards = targetPos - myPos;
 						Vector2Int delta = towards;
 						delta.Clamp(new Vector2Int(-1, -1), new Vector2Int(1, 1));
@@ -34,11 +32,7 @@ public sealed class BrainSystem : ISystem
 						// if we are next to the target, attack
 						if (towards == delta)
 						{
-							GameManager.Instance.BumpAttack(brain.gameObject, brain.Target);
-
-							// if target was killed
-							if (brain.Target == null)
-								brain.Ai = AiType.Wanderer;
+							GameManager.Instance.BumpAttack(brain.gameObject, GameManager.Instance.ThePlayer);
 						}
 						else
 						{

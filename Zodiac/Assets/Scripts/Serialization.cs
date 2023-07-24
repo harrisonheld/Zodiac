@@ -10,8 +10,6 @@ using System.Xml.Linq;
 
 public class EntitySerializer
 {
-    private const string BLUEPRINTS_PATH = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Raws\Blueprints\blueprints.xml";
-
     private const string ENTITIES = "Entities"; // the start marker for all entities
     private const string ENTITY = "Entity"; // the start marker for an entity
     private const string ENTITY_ID = "ID"; // used to identify objects. entity references will use this
@@ -21,8 +19,6 @@ public class EntitySerializer
     private const string PROPERTY = "Property";
     private const string PROPERTY_NAME = "PropertyName";
     private const string PROPERTY_VALUE = "PropertyValue";
-    private const string ID = "Id";
-    private const string INHERITS = "Inherits";
 
     private readonly XmlWriterSettings writerSettings = new()
     {
