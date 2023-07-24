@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
             for (int y = 0; y < WorldGen.World.SCREEN_HEIGHT; y++)
                 EntitiesByPosition[x, y] = new List<GameObject>();
 
+        RegisterSystem<ItemSetSystem>();
         RegisterSystem<EnergySystem>();
         RegisterSystem<BrainSystem>();
         RegisterSystem<CooldownSystem>();
@@ -58,9 +59,6 @@ public class GameManager : MonoBehaviour
         WorldGen.World.SetWorldSeed(gameSave.WorldSeed);
         WorldGen.World.GenerateScreen(screenX, screenY);
         Entities.AddRange(deserialized.Where(e => e.GetComponents<Position>() != null));
-
-        Blueprints.FromBlueprint("MithrilDagger", new Vector2Int(3, 15));
-        Blueprints.FromBlueprint("HarrisonsFocus", new Vector2Int(3, 15));
     }
 
     public void Update()

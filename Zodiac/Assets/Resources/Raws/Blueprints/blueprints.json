@@ -382,6 +382,12 @@
         "Properties": {
           "Ai": "Seeker"
         }
+      },
+      {
+        "Type": "ItemSet",
+        "Properties": {
+          "ItemSetName": "HumanoidEquipment1"
+        }
       }
     ]
   }
