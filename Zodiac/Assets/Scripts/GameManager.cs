@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
 
     // a list of Entities that have Position components - IE, ones that exist on the map - not in inventories or things like that
     public List<GameObject> Entities = new List<GameObject>();
-    public List<GameObject>[,] EntitiesByPosition = new List<GameObject>[WorldGen.World.SCREEN_WIDTH, WorldGen.World.SCREEN_HEIGHT];
     [SerializeField] public GameObject ThePlayer;
 
     private List<ISystem> Systems = new List<ISystem>();
@@ -41,11 +40,6 @@ public class GameManager : MonoBehaviour
     {
         CreateNewGameSave();
 
-        // initialize EntitiesByPosition
-        for (int x = 0; x < WorldGen.World.SCREEN_WIDTH; x++)
-            for (int y = 0; y < WorldGen.World.SCREEN_HEIGHT; y++)
-                EntitiesByPosition[x, y] = new List<GameObject>();
-
         RegisterSystem<ItemSetSystem>();
         RegisterSystem<EnergySystem>();
         RegisterSystem<BrainSystem>();
@@ -57,8 +51,9 @@ public class GameManager : MonoBehaviour
         ThePlayer = deserialized[1];
 
         WorldGen.World.SetWorldSeed(gameSave.WorldSeed);
-        WorldGen.World.GenerateScreen(screenX, screenY);
+        WorldGen.World.GenerateZone(screenX, screenY);
         Entities.AddRange(deserialized.Where(e => e.GetComponents<Position>() != null));
+        Blueprints.FromBlueprint("Pisces", new Vector2Int(2, 2));
     }
 
     public void Update()
@@ -85,31 +80,34 @@ public class GameManager : MonoBehaviour
             turn++;
 
             Position playerPos = ThePlayer.GetComponent<Position>();
+            double playerU = playerPos.X / (double)(WorldGen.World.GetCurrentZoneWidth -1);
+            double playerV = playerPos.Y / (double)(WorldGen.World.GetCurrentZoneHeight - 1);
+
             bool leftScreen = false;
-            if (playerPos.Y >= WorldGen.World.SCREEN_HEIGHT)
+            if (playerV > 1.0)
             {
-                playerPos.Y %= WorldGen.World.SCREEN_HEIGHT;
+                playerV = 0.0;
                 gameSave.SaveScreen(screenX, screenY);
                 screenY++;
                 leftScreen = true;
             }
-            else if(playerPos.Y < 0)
+            else if(playerV < 0.0)
             {
-                playerPos.Y += WorldGen.World.SCREEN_HEIGHT;
+                playerV = 1.0;
                 gameSave.SaveScreen(screenX, screenY);
                 screenY--;
                 leftScreen = true;
             }
-            if (playerPos.X >= WorldGen.World.SCREEN_WIDTH)
+            if (playerU > 1.0)
             {
-                playerPos.X %= WorldGen.World.SCREEN_WIDTH;
+                playerU = 0.0;
                 gameSave.SaveScreen(screenX, screenY);
                 screenX++;
                 leftScreen = true;
             }
-            else if (playerPos.X < 0)
+            else if (playerU < 0.0)
             {
-                playerPos.X += WorldGen.World.SCREEN_WIDTH;
+                playerU = 1.0;
                 gameSave.SaveScreen(screenX, screenY);
                 screenX--;
                 leftScreen = true;
@@ -122,14 +120,16 @@ public class GameManager : MonoBehaviour
                     if (entity != ThePlayer)
                         DestroyImmediate(entity);
                 }
-                
                 Entities.Clear();
                 Entities.Add(ThePlayer);
-                
-                if(gameSave.ScreenSaved(screenX, screenY))
+
+                if (gameSave.ScreenSaved(screenX, screenY))
                     Entities.AddRange(gameSave.LoadScreen(screenX, screenY));
                 else
-                    Entities.AddRange(WorldGen.World.GenerateScreen(screenX, screenY));
+                    WorldGen.World.GenerateZone(screenX, screenY);
+
+                playerPos.X = (int)(playerU * (WorldGen.World.GetCurrentZoneWidth - 1));
+                playerPos.Y = (int)(playerV * (WorldGen.World.GetCurrentZoneHeight - 1));
             }
         }
     }

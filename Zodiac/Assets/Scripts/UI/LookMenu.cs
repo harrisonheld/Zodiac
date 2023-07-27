@@ -147,7 +147,7 @@ namespace UI
                 GameObject lookingAt = GameManager.Instance.EntitiesAt(_lookCursorPos).FirstOrDefault();
                 SetSubject(lookingAt);
 
-                bool isLeft = _lookCursorPos.x > (WorldGen.World.SCREEN_WIDTH / 2);
+                bool isLeft = _lookCursorPos.x > (WorldGen.World.GetCurrentZoneWidth / 2);
                 SetSide(isLeft);
             }
             else if (cycle != 0)
@@ -172,7 +172,7 @@ namespace UI
 
             _cursor.transform.position = Camera.main.WorldToScreenPoint(new Vector3(_lookCursorPos.x, _lookCursorPos.y, 0f));
 
-            bool isLeft = _lookCursorPos.x > (WorldGen.World.SCREEN_WIDTH / 2);
+            bool isLeft = _lookCursorPos.x > (WorldGen.World.GetCurrentZoneWidth / 2);
             SetSide(isLeft);
 
             Canvas.enabled = true;
@@ -185,7 +185,7 @@ namespace UI
 
             _cursor.transform.position = Camera.main.WorldToScreenPoint(new Vector3(_lookCursorPos.x, _lookCursorPos.y, 0f));
 
-            bool isLeft = _lookCursorPos.x > (WorldGen.World.SCREEN_WIDTH / 2);
+            bool isLeft = _lookCursorPos.x > (WorldGen.World.GetCurrentZoneWidth / 2);
             SetSide(isLeft);
 
             Canvas.enabled = true;

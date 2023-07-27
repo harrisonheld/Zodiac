@@ -10,12 +10,13 @@ namespace WorldGen
 {
     /// <summary>
     /// This struct represents gaps in the sides of screens that are used to connect screens together / make them walkable.
+    /// The gaps are ranges of doubles from 0.0 to 1.0, indicating the proportion of the screen that is a gap.
     /// </summary>
     internal struct Gaps
     {
-        public InclusiveIntRange north;
-        public InclusiveIntRange east;
-        public InclusiveIntRange south;
-        public InclusiveIntRange west;
+        public InclusiveDoubleRange north;
+        public InclusiveDoubleRange east;
+        public InclusiveDoubleRange south;
+        public InclusiveDoubleRange west;
     }
 }

@@ -45,10 +45,12 @@ namespace WorldGen
 					newCell.y = y;
 
                     // gaps
-                    if (y == _height - 1 && gaps.north.Contains(x) ||
-							x == _width - 1 && gaps.east.Contains(y) ||
-							y == 0 && gaps.south.Contains(x) ||
-							x == 0 && gaps.west.Contains(y))
+                    float u = (float)x / _width;
+					float v = (float)y / _height;
+                    if (y == _height - 1 && gaps.north.Contains(u) ||
+							x == _width - 1 && gaps.east.Contains(v) ||
+							y == 0 && gaps.south.Contains(u) ||
+							x == 0 && gaps.west.Contains(v))
                         newCell.type = CellType.Floor;
                     // walls on edges
                     else if (x == 0 || y == 0 || x == _width - 1 || y == _height - 1)

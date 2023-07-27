@@ -8,19 +8,44 @@ namespace WorldGen
 {
     public static class World
     {
-        private const int WORLD_WIDTH = 30;
-        private const int WORLD_HEIGHT = 30;
+        private static ZoneInfo _currentZone;
+        public static int GetCurrentZoneWidth => _currentZone.Width;
+        public static int GetCurrentZoneHeight => _currentZone.Height;
 
-        public const int SCREEN_WIDTH = 28;
-        public const int SCREEN_HEIGHT = 21;
-        
         private static int worldSeed = 0;
         public static void SetWorldSeed(int newSeed)
         {
             worldSeed = newSeed;
         }
 
-        public static List<GameObject> GenerateScreen(int x, int y)
+        public static List<GameObject> GenerateZone(int x, int y)
+        {
+            GenerateZoneInfo(x, y);
+            _currentZone.Generator.Generate(_currentZone.ZoneRandom, _currentZone.Gaps);
+            // write all the gap spaces to log
+            Debug.Log(
+                $"Gaps: north: {_currentZone.Gaps.north.Start} - {_currentZone.Gaps.north.End},"+
+                $" east: {_currentZone.Gaps.east.Start} - {_currentZone.Gaps.east.End},"+
+                $" south: {_currentZone.Gaps.south.Start} - {_currentZone.Gaps.south.End},"+
+                $" west: {_currentZone.Gaps.west.Start} - {_currentZone.Gaps.west.End}"
+            );
+
+            List<GameObject> entities = new();
+            foreach (Vector2Int wallPos in _currentZone.Generator.WallCoordinates())
+            {
+                string blueprint = _currentZone.ZoneRandom.NextDouble() <= 0.7 ? "LimestoneWall" : "LimestoneWallAlt";
+                GameObject wall = Blueprints.FromBlueprint(blueprint, wallPos);
+                entities.Add(wall);
+            }
+            foreach (Vector2Int pathPos in _currentZone.Generator.PathCoordinates())
+            {
+                GameObject path = Blueprints.FromBlueprint("Path", pathPos);
+                entities.Add(path);
+            }
+
+            return entities;
+        }
+        private static void GenerateZoneInfo(int x, int y)
         {
             Gaps gaps = new()
             {
@@ -30,43 +55,14 @@ namespace WorldGen
                 west = GenerateEdge(x, y, Direction.West)
             };
 
-            int screenSeed = StableHash(worldSeed, x, y);
-            System.Random random = new(screenSeed);
+            int zoneSeed = StableHash(x, y, worldSeed);
 
-            ITerrainGenerator generator = GetTerrainGenerator(x, y);
-            generator.Generate(random, gaps);
-
-            List<GameObject> entities = new();
-            foreach (Vector2Int wallPos in generator.WallCoordinates())
-            {
-                string blueprint = random.NextDouble() <= 0.7 ? "LimestoneWall" : "LimestoneWallAlt";
-                GameObject wall = Blueprints.FromBlueprint(blueprint, wallPos);
-                entities.Add(wall);
-            }
-            foreach (Vector2Int pathPos in generator.PathCoordinates())
-            {
-                GameObject path = Blueprints.FromBlueprint("Path", pathPos);
-                entities.Add(path);
-            }
-            foreach(Vector2Int enemyPos in generator.EnemyCoordinates())
-            {
-                GameObject enemy = Blueprints.FromBlueprint("EnthralledAlchemist", enemyPos);
-
-                foreach(GameObject item in ItemSets.SpawnSet("HumanoidEquipment1"))
-                {
-                    enemy.GetComponent<Inventory>().AddItem(item);
-                }
-
-                entities.Add(enemy);
-            }
-
-            return entities;
-        }
-        // pick a terrain generator based on the screen's position
-        private static ITerrainGenerator GetTerrainGenerator(int x, int y)
-        {
-            // yeah jk
-            return new BSP(SCREEN_WIDTH, SCREEN_HEIGHT);
+            _currentZone = new ZoneInfo();
+            _currentZone.ZoneRandom = new System.Random(zoneSeed);
+            _currentZone.Gaps = gaps;
+            _currentZone.Width = (_currentZone.ZoneRandom.Next(6) + 4) * 4;
+            _currentZone.Height = _currentZone.Width / 4 * 3;
+            _currentZone.Generator = new CellularAutomata(_currentZone.Width, _currentZone.Height);
         }
 
         // hash that will persist across application restarts
@@ -86,7 +82,7 @@ namespace WorldGen
                 return hash;
             }
         }
-        private static InclusiveIntRange GenerateEdge(int x, int y, Direction dir)
+        private static InclusiveDoubleRange GenerateEdge(int x, int y, Direction dir)
         {
             if (dir == Direction.South)
             {
@@ -104,14 +100,13 @@ namespace WorldGen
             // is constructing new Randoms this frequently a good idea?
             // a problem for a future harrison.
             System.Random rand = new(seed);
-            int GAP_MIN = 3;
-            int GAP_MAX = 7;
-            int bound = (dir == Direction.North) ? SCREEN_WIDTH : SCREEN_HEIGHT;
+            double GAP_MIN = 0.3;
+            double GAP_MAX = 0.7;
 
-            int gapWidth = rand.Next(GAP_MIN, GAP_MAX + 1);
-            int gap1 = rand.Next(0, bound - gapWidth);
-            int gap2 = gap1 + gapWidth;
-            return new InclusiveIntRange(gap1, gap2);
+            double gapWidth = rand.NextDouble() * (GAP_MAX - GAP_MIN) + GAP_MIN;
+            double gapStart = rand.NextDouble() * (1.0 - gapWidth);
+            double gapEnd = gapStart + gapWidth;
+            return new InclusiveDoubleRange(gapStart, gapEnd);
         }
     }
 }

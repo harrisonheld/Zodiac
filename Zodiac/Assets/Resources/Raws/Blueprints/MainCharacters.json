@@ -1,0 +1,30 @@
+[
+  {
+    "Id": "Pisces",
+    "Inherits": "Humanoid",
+    "Components": [
+      {
+        "Type": "Visual",
+        "Properties": {
+          "DisplayName": "Pisces",
+          "Description": "Pisces' hands are always busy crafting wonders.",
+          "Sprite": "pisces2"
+        }
+      }
+    ]
+  },
+  {
+    "Id": "Staccato",
+    "Inherits": "Humanoid",
+    "Components": [
+      {
+        "Type": "Visual",
+        "Properties": {
+          "DisplayName": "Staccato",
+          "Description": "fortnite ballsack",
+          "Sprite": "human4"
+        }
+      }
+    ]
+  }
+]
