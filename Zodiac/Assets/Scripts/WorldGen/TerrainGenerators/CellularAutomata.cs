@@ -14,24 +14,24 @@ namespace WorldGen
 			new int[] {0, -1}
 		};
 
+		private ZoneInfo _zoneInfo;
+
 		private int _iterations;
 		private double _fillPercent;
 		private int _width, _height;
 		private Cell[,] _cells;
+		private double _enemyChance;
 
 		private List<Cell> _cavernCells = new List<Cell>();
 		private int _cavernCount = int.MaxValue;
 
 		private System.Random _rand = null;
 
-		public CellularAutomata(int _width, int _height, int _iterations = 4, double _fillPercent = 0.50)
+		public CellularAutomata(int iterations = 4, double fillPercent = 0.50, double enemyChance = 0.03)
 		{
-			this._width = _width;
-			this._height = _height;
-			this._iterations = _iterations;
-			this._fillPercent = _fillPercent;
-
-            _cells = new Cell[this._width, this._height];
+			_iterations = iterations;
+			_fillPercent = fillPercent;
+			_enemyChance = enemyChance;
 		}
 		private void Generate(Gaps gaps)
 		{
@@ -114,11 +114,35 @@ namespace WorldGen
 					}
 				}
 			}
+
+			// place enemies
+			foreach (Vector2Int coord in FloorCoordinates())
+			{
+                if (_rand.NextDouble() < _enemyChance)
+				{
+					_cells[coord.x, coord.y].type = CellType.Enemy;
+                }
+            }
 		}
 		public void Generate(System.Random rand, Gaps gaps)
 		{
-            _rand = rand;
-			Generate(gaps);
+			_rand = rand;
+			_width = (_rand.Next(6) + 4) * 4;
+			_height = _width / 4 * 3;
+            _cells = new Cell[this._width, this._height];
+
+			_zoneInfo = new ZoneInfo()
+			{
+				Height = _height,
+				Width = _width,
+			};
+
+            Generate(gaps);
+		}
+
+		public ZoneInfo GetZoneInfo()
+		{
+			return _zoneInfo;
 		}
 
 		public IEnumerable<Vector2Int> WallCoordinates()
@@ -156,9 +180,16 @@ namespace WorldGen
 		}
 		public IEnumerable<Vector2Int> EnemyCoordinates()
 		{
-			var up = new NotImplementedException("i don't feel so good...");
-			throw up;
-		}
+            for (int y = 0; y < _height; y++)
+            {
+                for (int x = 0; x < _width; x++)
+                {
+                    if (_cells[x, y].type == CellType.Enemy)
+                        yield return new Vector2Int(x, y);
+                }
+            }
+        }
+
         private bool InBounds(int x, int y)
         {
             return x >= 0 && x < _width && y >= 0 && y < _height;
@@ -334,7 +365,8 @@ namespace WorldGen
 		{
 			Floor,
 			Wall,
-			Path
+			Path,
+			Enemy
 		}
 	}
 }

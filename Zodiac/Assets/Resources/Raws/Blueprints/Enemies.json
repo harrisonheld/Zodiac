@@ -1,0 +1,89 @@
+[
+  {
+    "Id": "EnthralledAlchemist",
+    "Inherits": "Humanoid",
+    "Components": [
+      {
+        "Type": "Visual",
+        "Properties": {
+          "DisplayName": "enthralled alchemist",
+          "Description": "the fledgling aclhemist toils with eyes that gleam like gold and hands that are never still. Consumed now, but once 'twas true. Without lying, certain and most true",
+          "Sprite": "human3"
+        }
+      },
+      {
+        "Type": "EnergyHaver",
+        "Properties": {
+          "Quickness": 700
+        }
+      },
+      {
+        "Type": "Brain",
+        "Properties": {
+          "Ai": "Seeker"
+        }
+      },
+      {
+        "Type": "ItemSet",
+        "Properties": {
+          "ItemSetName": "HumanoidEquipment1"
+        }
+      }
+    ]
+  },
+  {
+    "Id": "LanguishingSmoke",
+    "Inherits": "Creature",
+    "Components": [
+      {
+        "Type": "Visual",
+        "Properties": {
+          "DisplayName": "languishing smoke",
+          "Description": "the monster made of smoke shifts and undulates like a billowing cloud. But as soon as you lay eyes upon it, a tiny prick is felt at the back of your head",
+          "Sprite": "voidbird"
+        }
+      },
+      {
+        "Type": "EnergyHaver",
+        "Properties": {
+          "Quickness": 500
+        }
+      },
+      {
+        "Type": "LookingHurts"
+      }
+    ]
+  },
+  {
+    "Id": "PorcelainFrog",
+    "Inherits": "Creature",
+    "Components": [
+      {
+        "Type": "Visual",
+        "Properties": {
+          "DisplayName": "porcelain frog",
+          "Description": "a frog made entirely of porcelain. Its alabaster body is smooth and glossy",
+          "Sprite": "frog_critter"
+        }
+      },
+      {
+        "Type": "PhysicalAttributes",
+        "Properties": {
+          "Solid":  false
+        }
+      },
+      {
+        "Type": "EnergyHaver",
+        "Properties": {
+          "Quickness": 500
+        }
+      },
+      {
+        "Type": "Item"
+      },
+      {
+        "Type": "TheBeacon"
+      }
+    ]
+  }
+]

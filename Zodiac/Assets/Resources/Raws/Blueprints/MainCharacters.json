@@ -1,5 +1,38 @@
 [
   {
+    "Id": "You",
+    "Inherits": "Humanoid",
+    "Components": [
+      {
+        "Type": "Visual",
+        "Properties": {
+          "DisplayName": "You",
+          "Description": "It's you.",
+          "Sprite": "human2"
+        }
+      },
+      {
+        "Type": "Health",
+        "Properties": {
+          "HealthMax": 100,
+          "HealthCurrent": 100
+        }
+      },
+      {
+        "Type": "Dominate"
+      },
+      {
+        "Type": "Obliterate"
+      },
+      {
+        "Type": "QuickHeal"
+      },
+      {
+        "Type": "SproutFlower"
+      }
+    ]
+  },
+  {
     "Id": "Pisces",
     "Inherits": "Humanoid",
     "Components": [

@@ -1,0 +1,25 @@
+[
+  {
+    "conversation_id": "PiscesConversation",
+    "nodes": [
+      {
+        "node_id" : "begin",
+        "text": "Howdy pardner.",
+        "options": [
+          {
+            "text": "Howdy.",
+            "next": "PiscesConversation"
+          },
+          {
+            "text": "Krill yourself.",
+            "next": "PiscesConversation"
+          },
+          {
+            "text": "What?",
+            "next": "PiscesConversation"
+          }
+        ]
+      }
+    ]
+  }
+]

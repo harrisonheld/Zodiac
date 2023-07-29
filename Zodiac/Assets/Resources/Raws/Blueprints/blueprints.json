@@ -174,14 +174,14 @@
     ]
   },
   {
-    "Id": "HarrisonsFocus",
+    "Id": "VampiricFocus",
     "Inherits": "Item",
     "Components": [
       {
         "Type": "Visual",
         "Properties": {
-          "DisplayName": "Harrison's Focus",
-          "Description": "a relic tied to a heroic figure named Harrison, who was known for his unmatched prowess, as well as his scholarly research into the school of magic known as 'gainz'. The focus is said to have been forged as a symbol of his unwavering dedication to training and his insatiable desire for strength",
+          "DisplayName": "vampiric focus",
+          "Description": "an unadorned copper ball which fits in the palm of the hand",
           "Sprite": "marble"
         }
       },
@@ -195,7 +195,7 @@
         "Type": "StatBonus",
         "Properties": {
           "StatType": "Prowess",
-          "Bonus": 500
+          "Bonus": 2
         }
       }
     ]
@@ -355,38 +355,6 @@
         "Type": "Slot",
         "Properties": {
           "SlotType": "Legs"
-        }
-      }
-    ]
-  },
-  {
-    "Id": "EnthralledAlchemist",
-    "Inherits": "Humanoid",
-    "Components": [
-      {
-        "Type": "Visual",
-        "Properties": {
-          "DisplayName": "enthralled alchemist",
-          "Description": "the fledgling aclhemist toils with eyes that gleam like gold and hands that are never still. Consumed now, but once 'twas true. Without lying, certain and most true",
-          "Sprite": "human3"
-        }
-      },
-      {
-        "Type": "EnergyHaver",
-        "Properties": {
-          "Quickness": 700
-        }
-      },
-      {
-        "Type": "Brain",
-        "Properties": {
-          "Ai": "Seeker"
-        }
-      },
-      {
-        "Type": "ItemSet",
-        "Properties": {
-          "ItemSetName": "HumanoidEquipment1"
         }
       }
     ]

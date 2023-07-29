@@ -19,21 +19,27 @@ namespace WorldGen
         private CellType[,] _cells;
         private System.Random _rand;
 
-        public BSP(int width, int height, int minLeafSize = 6, int minRoomSize = 3, int maxEnemiesPerRoom = 3, double enemySpawnChance = 0.5f)
+        private ZoneInfo _zoneInfo;
+
+        public BSP(int minLeafSize = 6, int minRoomSize = 3, int maxEnemiesPerRoom = 3, double enemySpawnChance = 0.5f)
         {
-            _width = width;
-            _height = height;
             _minLeafSize = minLeafSize;
             _minRoomSize = minRoomSize;
             _maxEnemiesPerRoom = maxEnemiesPerRoom;
             _enemySpawnChance = enemySpawnChance;
-
-            _cells = new CellType[width, height];
         }
 
         public void Generate(System.Random rand, Gaps gaps)
         {
             _rand = rand;
+            _width = (_rand.Next(6) + 4) * 4;
+            _height = _width / 4 * 3;
+            _zoneInfo = new ZoneInfo()
+            {
+                Width = _width,
+                Height = _height
+            };
+            _cells = new CellType[_width, _height];
 
             Leaf root = new Leaf(0, 0, _width, _height, _minLeafSize);
             List<Leaf> leaves = new() { root };
@@ -62,6 +68,11 @@ namespace WorldGen
                 }
             }
             CreateRooms(root);
+        }
+
+        public ZoneInfo GetZoneInfo()
+        {
+            return _zoneInfo;
         }
 
         private void CreateRooms(Leaf leaf)
@@ -178,6 +189,7 @@ namespace WorldGen
                 }
             }
         }
+
         private class Leaf
         {
             public int Height;

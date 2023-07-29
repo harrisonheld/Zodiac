@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [Header("Info")]
     [SerializeField] private int turn = 0;
     [SerializeField] private int screenX = 2;
-    [SerializeField] private int screenY = 15;
+    [SerializeField] private int screenY = 14;
 
     private GameSave gameSave;
 
@@ -45,15 +45,10 @@ public class GameManager : MonoBehaviour
         RegisterSystem<BrainSystem>();
         RegisterSystem<CooldownSystem>();
 
-        string testpath = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Entities\moonshinercave.xml";
-        EntitySerializer serializer = new();
-        List <GameObject> deserialized = serializer.DeserializeScene(testpath);
-        ThePlayer = deserialized[1];
-
         WorldGen.World.SetWorldSeed(gameSave.WorldSeed);
         WorldGen.World.GenerateZone(screenX, screenY);
-        Entities.AddRange(deserialized.Where(e => e.GetComponents<Position>() != null));
-        Blueprints.FromBlueprint("Pisces", new Vector2Int(2, 2));
+
+        ThePlayer = Blueprints.FromBlueprint("You", new Vector2Int(2, 2));
     }
 
     public void Update()
