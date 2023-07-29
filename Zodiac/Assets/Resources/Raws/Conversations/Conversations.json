@@ -1,25 +1,23 @@
 [
   {
-    "conversation_id": "PiscesConversation",
-    "nodes": [
-      {
-        "node_id" : "begin",
-        "text": "Howdy pardner.",
-        "options": [
-          {
-            "text": "Howdy.",
-            "next": "PiscesConversation"
-          },
-          {
-            "text": "Krill yourself.",
-            "next": "PiscesConversation"
-          },
-          {
-            "text": "What?",
-            "next": "PiscesConversation"
-          }
-        ]
-      }
+    "nodeId": "PiscesConversation_Begin",
+    "npcText": "Howdy.",
+    "options": [
+      "PiscesConversation_Howdy",
+      "PiscesConversation_Hot"
     ]
+  },
+  {
+    "nodeId": "PiscesConversation_Howdy",
+    "playerText": "Howdy.",
+    "npcText": "That all?",
+    "options": [
+      "PiscesConversation_Hot"
+    ]
+  },
+  {
+    "nodeId": "PiscesConversation_Hot",
+    "playerText": "It's hot out.",
+    "npcText": "Always is."
   }
 ]

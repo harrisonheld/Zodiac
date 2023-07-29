@@ -15,7 +15,7 @@ namespace Raws
     {
         private const string BLUEPRINTS_DIR = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Raws\ItemSets\";
 
-        private static Dictionary<string, ItemSet> _itemSets = new Dictionary<string, ItemSet>();
+        private static Dictionary<string, ItemSet> _itemSets = new();
         private static bool _initialized = false;
         private static void Initialize()
         {

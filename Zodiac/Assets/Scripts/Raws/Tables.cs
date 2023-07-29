@@ -12,7 +12,7 @@ namespace Raws
     {
         private const string TABLES_DIR = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Raws\Tables\";
 
-        private static Dictionary<string, LootTable> _tables = new Dictionary<string, LootTable>();
+        private static Dictionary<string, LootTable> _tables = new();
         private static bool _initialized = false;
         private static void Initialize()
         {

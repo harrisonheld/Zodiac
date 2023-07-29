@@ -15,7 +15,7 @@ namespace Raws
     {
         private const string BLUEPRINTS_DIR = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Raws\Blueprints\";
 
-        private static Dictionary<string, EntityBlueprint> _blueprints = new Dictionary<string, EntityBlueprint>();
+        private static Dictionary<string, EntityBlueprint> _blueprints = new();
         private static bool _initialized = false;
         private static void Initialize()
         {

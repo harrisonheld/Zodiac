@@ -118,6 +118,11 @@ namespace UI
             Open(menu);
         }
 
+        public void ShowConversation(string startNode)
+        {
+            Debug.Log("talkin to" + startNode);
+        }
+
         public void ShowAlert(string text)
         {
             AlertMenu menu = Instantiate(_alertMenuPrefab).GetComponent<AlertMenu>();

@@ -43,6 +43,12 @@
           "Description": "Pisces' hands are always busy crafting wonders.",
           "Sprite": "pisces2"
         }
+      },
+      {
+        "Type": "Conversation",
+        "Properties": {
+          "ConversationId": "PiscesConversation_Begin"
+        }
       }
     ]
   },

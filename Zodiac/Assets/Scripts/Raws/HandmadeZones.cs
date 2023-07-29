@@ -16,7 +16,7 @@ namespace Raws
     {
         private const string ZONES_DIR = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Raws\HandmadeZones\";
 
-        private static Dictionary<(int, int), HandmadeZone> _zones = new Dictionary<(int, int), HandmadeZone>();
+        private static Dictionary<(int, int), HandmadeZone> _zones = new();
         private static bool _initialized = false;
         private static void Initialize()
         {
