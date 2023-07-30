@@ -225,6 +225,7 @@ public static class ZodiacInput
             }
 
             interactions[0].Perform();
+            FreeRoamMode();
         }
     }
     private static void DoAbilityTargetSelectionInput()

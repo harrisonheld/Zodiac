@@ -15,6 +15,7 @@ namespace UI
         [SerializeField] private GameObject _alertMenuPrefab;
         [SerializeField] private GameObject _itemSubMenuPrefab;
         [SerializeField] private GameObject _inventoryPrefab;
+        [SerializeField] private GameObject _conversationMenuPrefab;
 
         // singleton
         public static MenuManager Instance { get; private set; }
@@ -120,7 +121,9 @@ namespace UI
 
         public void ShowConversation(string startNode)
         {
-            Debug.Log("talkin to" + startNode);
+            ConversationMenu menu = Instantiate(_conversationMenuPrefab).GetComponent<ConversationMenu>();
+            menu.SetConversation(startNode);
+            Open(menu);
         }
 
         public void ShowAlert(string text)

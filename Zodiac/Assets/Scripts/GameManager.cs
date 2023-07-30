@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [Header("Info")]
     [SerializeField] private int turn = 0;
     [SerializeField] private int screenX = 2;
-    [SerializeField] private int screenY = 14;
+    [SerializeField] private int screenY = 15;
 
     private GameSave gameSave;
 
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
         WorldGen.World.SetWorldSeed(gameSave.WorldSeed);
         WorldGen.World.GenerateZone(screenX, screenY);
 
-        ThePlayer = Blueprints.FromBlueprint("You", new Vector2Int(2, 2));
+        ThePlayer = Blueprints.FromBlueprint("You", new Vector2Int(13, 13));
     }
 
     public void Update()

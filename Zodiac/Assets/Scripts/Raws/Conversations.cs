@@ -32,8 +32,8 @@ namespace Raws
                 string json = File.ReadAllText(fullPath);
                 List<ConversationNode> nodesInFile = JsonConvert.DeserializeObject<List<ConversationNode>>(json);
 
-                foreach(ConversationNode node in nodesInFile) { 
-                
+                foreach(ConversationNode node in nodesInFile) {
+                    _conversationNodes.Add(node.Id, node);
                 }
             }
         }
@@ -45,16 +45,18 @@ namespace Raws
 
             return _conversationNodes[nodeId];
         }
-        public class ConversationNode
-        {
-            [JsonProperty("nodeId")]
-            public string Id { get; set; }
-            [JsonProperty("playerText")]
-            public string PlayerText { get; set; } = null; // what the player says, shown to the player when they pick it as an option
-            [JsonProperty("npcText")]
-            public string NpcText { get; set; } // what the npc being spoken too says in response to the player text
-            [JsonProperty("options")]
-            public List<string> Options { get; set; } = new(); // what nodes the player can pick in response
-        }
+    }
+
+
+    public class ConversationNode
+    {
+        [JsonProperty("nodeId")]
+        public string Id { get; set; }
+        [JsonProperty("playerText")]
+        public string PlayerText { get; set; } = null; // what the player says, shown to the player when they pick it as an option
+        [JsonProperty("npcText")]
+        public string NpcText { get; set; } // what the npc being spoken too says in response to the player text
+        [JsonProperty("options")]
+        public List<string> Options { get; set; } = new(); // what nodes the player can pick in response
     }
 }

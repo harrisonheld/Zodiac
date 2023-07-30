@@ -10,8 +10,6 @@ namespace UI
     class LookMenu : MonoBehaviour
     {
         public Canvas Canvas { get => GetComponent<Canvas>(); }
-        public GameObject GameObject { get => gameObject; }
-        public CanvasGroup CanvasGroup { get => GetComponent<CanvasGroup>(); }
 
         private int _lookIdx; // which entity to look at, if there are multiple
         private Vector2Int _lookCursorPos;
