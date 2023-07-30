@@ -19,7 +19,6 @@ namespace UI
 
         [SerializeField] TextMeshProUGUI npcText;
         [SerializeField] Image npcPortrait;
-        [SerializeField] 
 
         public void RefreshUI()
         {
@@ -31,6 +30,10 @@ namespace UI
         public void SetConversation(string conversationNodeId)
         {
             _currentNode = Conversations.ById(conversationNodeId);
+        }
+        public void SetSpeaker(GameObject speaker)
+        {
+            npcPortrait.sprite = speaker.GetComponent<SpriteRenderer>().sprite;
         }
     }
 }

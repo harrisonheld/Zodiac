@@ -284,6 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcText: {fileID: 6254738687325862177}
+  npcPortrait: {fileID: 6254738686544210994}
 --- !u!1 &6254738686544210992
 GameObject:
   m_ObjectHideFlags: 0

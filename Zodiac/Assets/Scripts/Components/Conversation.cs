@@ -9,7 +9,7 @@ public class Conversation : ZodiacComponent
 
     public override List<IInteraction> GetInteractions() {
         return new List<IInteraction>() {
-            new StartConversation(ConversationId)
+            new StartConversation(ConversationId, this.gameObject)
         };
     }
 }
