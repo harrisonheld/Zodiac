@@ -19,6 +19,7 @@ namespace UI
 
         [SerializeField] TextMeshProUGUI npcText;
         [SerializeField] Image npcPortrait;
+        [SerializeField] TextMeshProUGUI npcNametag;
         [SerializeField] GameObject choiceContainer;
         [SerializeField] GameObject choicePrefab;
 
@@ -45,6 +46,7 @@ namespace UI
         public void SetSpeaker(GameObject speaker)
         {
             npcPortrait.sprite = speaker.GetComponent<SpriteRenderer>().sprite;
+            npcNametag.text = speaker.GetComponent<Visual>().DisplayName;
         }
     }
 }
