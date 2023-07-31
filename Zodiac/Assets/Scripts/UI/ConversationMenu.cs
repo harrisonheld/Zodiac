@@ -19,6 +19,8 @@ namespace UI
 
         [SerializeField] TextMeshProUGUI npcText;
         [SerializeField] Image npcPortrait;
+        [SerializeField] GameObject choiceContainer;
+        [SerializeField] GameObject choicePrefab;
 
         public void RefreshUI()
         {
@@ -30,6 +32,15 @@ namespace UI
         public void SetConversation(string conversationNodeId)
         {
             _currentNode = Conversations.ById(conversationNodeId);
+
+            foreach(string choice in _currentNode.Options)
+            {
+                ConversationNode choiceNode = Conversations.ById(choice);
+
+                GameObject choiceObject = Instantiate(choicePrefab);
+                choiceObject.transform.SetParent(choiceContainer.transform, false);
+                choiceObject.GetComponent<ConversationChoice>().SetChoice(choiceNode);
+            }
         }
         public void SetSpeaker(GameObject speaker)
         {
