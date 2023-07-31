@@ -4,20 +4,27 @@
     "npcText": "Howdy.",
     "options": [
       "PiscesConversation_Howdy",
-      "PiscesConversation_Hot"
+      "PiscesConversation_Hot",
+      "PiscesConversation_Fish"
     ]
   },
   {
     "nodeId": "PiscesConversation_Howdy",
     "playerText": "Howdy.",
-    "npcText": "That all?",
+    "npcText": "What else?",
     "options": [
-      "PiscesConversation_Hot"
+      "PiscesConversation_Hot",
+      "PiscesConversation_Fish"
     ]
   },
   {
     "nodeId": "PiscesConversation_Hot",
     "playerText": "It's hot out.",
     "npcText": "Always is."
+  },
+  {
+    "nodeId": "PiscesConversation_Fish",
+    "playerText": "You are a pair of fish encircling each other. What is that like?",
+    "npcText": "Quite rude to ask, for starters - and it's only an abstraction. I invite you to press the 'Look' key and see for yourself."
   }
 ]

@@ -258,7 +258,7 @@ public static class ZodiacInput
     }
     public static void LookMode()
     {
-        LookMenu.Instance.Show(GameManager.Instance.ThePlayer.GetComponent<Position>().Pos);
+        LookMenu.Instance.Show(GameManager.Instance.ThePlayer);
         inputMode = InputMode.Look;
     }
     public static void InteractMode()

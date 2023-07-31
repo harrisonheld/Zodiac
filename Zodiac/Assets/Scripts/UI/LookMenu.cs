@@ -165,28 +165,31 @@ namespace UI
         }
         public void Show(Vector2Int lookCursorPos)
         {
+            Canvas.enabled = true;
+
             SetSubject(GameManager.Instance.EntityAt(lookCursorPos));
             _lookCursorPos = lookCursorPos;
 
             _cursor.transform.position = Camera.main.WorldToScreenPoint(new Vector3(_lookCursorPos.x, _lookCursorPos.y, 0f));
+            _cursor.transform.localScale = Vector3.one * (10f / Camera.main.orthographicSize);
 
             bool isLeft = _lookCursorPos.x > (WorldGen.World.GetCurrentZoneWidth / 2);
             SetSide(isLeft);
-
-            Canvas.enabled = true;
 
         }
         public void Show(GameObject subject)
         {
+            Canvas.enabled = true;
+
             SetSubject(subject);
             _lookCursorPos = subject.GetComponent<Position>().Pos;
 
             _cursor.transform.position = Camera.main.WorldToScreenPoint(new Vector3(_lookCursorPos.x, _lookCursorPos.y, 0f));
+            _cursor.transform.localScale = Vector3.one * (10f / Camera.main.orthographicSize);
 
             bool isLeft = _lookCursorPos.x > (WorldGen.World.GetCurrentZoneWidth / 2);
             SetSide(isLeft);
 
-            Canvas.enabled = true;
         }
         public void Hide()
         {

@@ -16,6 +16,7 @@ namespace UI
         public CanvasGroup CanvasGroup { get => GetComponent<CanvasGroup>(); }
 
         private ConversationNode _currentNode;
+        private GameObject _speaker;
 
         [SerializeField] TextMeshProUGUI npcText;
         [SerializeField] Image npcPortrait;
@@ -23,9 +24,56 @@ namespace UI
         [SerializeField] GameObject choiceContainer;
         [SerializeField] GameObject choicePrefab;
 
+        private void Clear()
+        {
+            // mark all children for destruction
+            foreach (Transform child in choiceContainer.transform)
+            {
+                Destroy(child.gameObject);
+            }
+            // detach children now, as they may not be destroyed instantly
+            choiceContainer.transform.DetachChildren();
+
+            npcText.text = "[placeholder text]";
+            npcPortrait.sprite = null;
+            npcNametag.text = "[placeholder name]";
+        }
         public void RefreshUI()
         {
-            npcText.text = _currentNode.NpcText;
+            Clear();
+
+            if(_currentNode != null)
+            {
+                npcText.text = _currentNode.NpcText;
+            }
+
+            if (_speaker != null)
+            {
+                npcPortrait.sprite = _speaker.GetComponent<SpriteRenderer>().sprite;
+                npcNametag.text = _speaker.GetComponent<Visual>().DisplayName;
+            }
+
+            for(int i = 0; i < _currentNode.Options.Count; i++)
+            {
+                string choice = _currentNode.Options[i];
+                ConversationNode choiceNode = Conversations.ById(choice);
+
+                GameObject choiceObject = Instantiate(choicePrefab);
+                choiceObject.transform.SetParent(choiceContainer.transform, false);
+                choiceObject.GetComponent<ConversationChoice>().SetChoice(choiceNode);
+
+                Button choiceButton = choiceObject.GetComponent<Button>();
+                choiceButton.onClick.AddListener(() =>
+                {
+                    SetConversation(choiceNode.Id);
+                    RefreshUI();
+                });
+
+                if(i==0)
+                {
+                    choiceButton.Select();
+                }
+            }
         }
         public void GainFocus()
         {
@@ -33,20 +81,12 @@ namespace UI
         public void SetConversation(string conversationNodeId)
         {
             _currentNode = Conversations.ById(conversationNodeId);
-
-            foreach(string choice in _currentNode.Options)
-            {
-                ConversationNode choiceNode = Conversations.ById(choice);
-
-                GameObject choiceObject = Instantiate(choicePrefab);
-                choiceObject.transform.SetParent(choiceContainer.transform, false);
-                choiceObject.GetComponent<ConversationChoice>().SetChoice(choiceNode);
-            }
+            RefreshUI();
         }
         public void SetSpeaker(GameObject speaker)
         {
-            npcPortrait.sprite = speaker.GetComponent<SpriteRenderer>().sprite;
-            npcNametag.text = speaker.GetComponent<Visual>().DisplayName;
+            _speaker = speaker;
+            RefreshUI();
         }
     }
 }
