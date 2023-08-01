@@ -17,9 +17,9 @@ namespace Raws
 
         private static Dictionary<string, EntityBlueprint> _blueprints = new();
         private static bool _initialized = false;
-        private static void Initialize()
+        public static void Initialize()
         {
-            _initialized = true;
+            _blueprints.Clear();
 
             foreach (string file in Directory.GetFiles(BLUEPRINTS_DIR))
             {
@@ -36,6 +36,8 @@ namespace Raws
                     _blueprints.Add(entityBlueprint.Id, entityBlueprint);
                 }
             }
+
+            _initialized = true;
         }
 
         public static GameObject FromBlueprint(string blueprintId)

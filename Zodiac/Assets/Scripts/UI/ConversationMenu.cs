@@ -53,6 +53,14 @@ namespace UI
                 npcNametag.text = _speaker.GetComponent<Visual>().DisplayName;
             }
 
+            if(!string.IsNullOrEmpty(_currentNode.NpcPortrait))
+            {
+                // TODO: prolly a bad idea to load portraits from disk on the fly like this
+                // but if it causes no performance issues... mwahaha
+                Texture2D tex = Resources.Load<Texture2D>($"Portraits/{_currentNode.NpcPortrait}");
+                npcPortrait.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one * 0.5f);
+            }
+
             for(int i = 0; i < _currentNode.Options.Count; i++)
             {
                 string choice = _currentNode.Options[i];

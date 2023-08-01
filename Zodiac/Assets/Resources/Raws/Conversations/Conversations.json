@@ -2,6 +2,7 @@
   {
     "nodeId": "PiscesConversation_Begin",
     "npcText": "Howdy.",
+    "npcPortrait": "Waverly_Neutral",
     "options": [
       "PiscesConversation_Howdy",
       "PiscesConversation_Hot",
@@ -12,6 +13,7 @@
     "nodeId": "PiscesConversation_Howdy",
     "playerText": "Howdy.",
     "npcText": "What else?",
+    "npcPortrait": "Waverly_Neutral",
     "options": [
       "PiscesConversation_Hot",
       "PiscesConversation_Fish"
@@ -20,11 +22,29 @@
   {
     "nodeId": "PiscesConversation_Hot",
     "playerText": "It's hot out.",
-    "npcText": "Always is."
+    "npcText": "Always is.",
+    "npcPortrait": "Waverly_Bemused",
+    "options": [
+      "PiscesConversation_Fish"
+    ]
   },
   {
     "nodeId": "PiscesConversation_Fish",
     "playerText": "You are a pair of fish encircling each other. What is that like?",
-    "npcText": "Quite rude to ask, for starters - and it's only an abstraction. I invite you to press the 'Look' key and see for yourself."
+    "npcText": "Quite rude to ask, for starters - and it's only an abstraction. I invite you to press the 'Look' key and see for yourself.",
+    "npcPortrait": "Waverly_Shocked",
+    "options": [
+      "PiscesConversation_FishInsist",
+      "PiscesConversation_Hot"
+    ]
+  },
+  {
+    "nodeId": "PiscesConversation_FishInsist",
+    "playerText": "No, I am fairly certain that you are a pair of fish encircling each other.",
+    "npcText": "Speak not when you know not, knave. Lest your blood slake the soil's thirst.",
+    "npcPortrait": "Waverly_Gleeby",
+    "options": [
+      "PiscesConversation_Hot"
+    ]
   }
 ]

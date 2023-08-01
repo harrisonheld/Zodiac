@@ -98,6 +98,15 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""One"",
+                    ""type"": ""Button"",
+                    ""id"": ""9f75e1b4-cd52-44b1-8e80-10a5b33f5886"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -373,6 +382,17 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""OpenEquipment"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""44eab5b8-a105-4897-8672-b51fd04adbb3"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""One"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1458,6 +1478,7 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         m_FreeRoam_GoToLookMode = m_FreeRoam.FindAction("GoToLookMode", throwIfNotFound: true);
         m_FreeRoam_GoToInteractMode = m_FreeRoam.FindAction("GoToInteractMode", throwIfNotFound: true);
         m_FreeRoam_OpenAbilities = m_FreeRoam.FindAction("OpenAbilities", throwIfNotFound: true);
+        m_FreeRoam_One = m_FreeRoam.FindAction("One", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1546,6 +1567,7 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_FreeRoam_GoToLookMode;
     private readonly InputAction m_FreeRoam_GoToInteractMode;
     private readonly InputAction m_FreeRoam_OpenAbilities;
+    private readonly InputAction m_FreeRoam_One;
     public struct FreeRoamActions
     {
         private @ZodiacInputMap m_Wrapper;
@@ -1558,6 +1580,7 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         public InputAction @GoToLookMode => m_Wrapper.m_FreeRoam_GoToLookMode;
         public InputAction @GoToInteractMode => m_Wrapper.m_FreeRoam_GoToInteractMode;
         public InputAction @OpenAbilities => m_Wrapper.m_FreeRoam_OpenAbilities;
+        public InputAction @One => m_Wrapper.m_FreeRoam_One;
         public InputActionMap Get() { return m_Wrapper.m_FreeRoam; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1591,6 +1614,9 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                 @OpenAbilities.started -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOpenAbilities;
                 @OpenAbilities.performed -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOpenAbilities;
                 @OpenAbilities.canceled -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOpenAbilities;
+                @One.started -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOne;
+                @One.performed -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOne;
+                @One.canceled -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOne;
             }
             m_Wrapper.m_FreeRoamActionsCallbackInterface = instance;
             if (instance != null)
@@ -1619,6 +1645,9 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                 @OpenAbilities.started += instance.OnOpenAbilities;
                 @OpenAbilities.performed += instance.OnOpenAbilities;
                 @OpenAbilities.canceled += instance.OnOpenAbilities;
+                @One.started += instance.OnOne;
+                @One.performed += instance.OnOne;
+                @One.canceled += instance.OnOne;
             }
         }
     }
@@ -1873,6 +1902,7 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         void OnGoToLookMode(InputAction.CallbackContext context);
         void OnGoToInteractMode(InputAction.CallbackContext context);
         void OnOpenAbilities(InputAction.CallbackContext context);
+        void OnOne(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

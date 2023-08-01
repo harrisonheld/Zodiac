@@ -82,6 +82,17 @@ public static class ZodiacInput
         // useful stuff
         Vector2Int playerPos = GameManager.Instance.ThePlayer.GetComponent<Position>().Pos;
 
+        // reload Raws
+        if(inputMap.FreeRoam.One.triggered)
+        {
+            Raws.Blueprints.Initialize();
+            Raws.Conversations.Initialize();
+            Raws.HandmadeZones.Initialize();
+            Raws.ItemSets.Initialize();
+            Raws.Tables.Initialize();
+            MenuManager.Instance.ShowAlert("Raws reloaded.");
+        }
+
         // look mode
         if(inputMap.FreeRoam.GoToLookMode.triggered)
         {

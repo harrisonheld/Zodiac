@@ -17,9 +17,9 @@ namespace Raws
 
         private static Dictionary<string, ItemSet> _itemSets = new();
         private static bool _initialized = false;
-        private static void Initialize()
+        public static void Initialize()
         {
-            _initialized = true;
+            _itemSets.Clear();
 
             foreach (string file in Directory.GetFiles(BLUEPRINTS_DIR))
             {
@@ -38,6 +38,8 @@ namespace Raws
                     _itemSets.Add(set.Name, set);
                 }
             }
+
+            _initialized = true;
         }
 
         public static List<GameObject> SpawnSet(string setName)

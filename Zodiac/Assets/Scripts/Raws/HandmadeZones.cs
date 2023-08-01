@@ -18,9 +18,9 @@ namespace Raws
 
         private static Dictionary<(int, int), HandmadeZone> _zones = new();
         private static bool _initialized = false;
-        private static void Initialize()
+        public static void Initialize()
         {
-            _initialized = true;
+            _zones.Clear();
 
             foreach (string file in Directory.GetFiles(ZONES_DIR))
             {
@@ -33,6 +33,8 @@ namespace Raws
                 HandmadeZone zone = JsonConvert.DeserializeObject<HandmadeZone>(json);
                 _zones.Add((zone.WorldX, zone.WorldY), zone);
             }
+
+            _initialized = true;
         }
 
         public static ZoneInfo TryInstantiateZone(int worldX, int worldY)

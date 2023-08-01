@@ -14,9 +14,9 @@ namespace Raws
 
         private static Dictionary<string, LootTable> _tables = new();
         private static bool _initialized = false;
-        private static void Initialize()
+        public static void Initialize()
         {
-            _initialized = true;
+            _tables.Clear();
 
             // load all loot tables from file
             foreach (string file in Directory.GetFiles(TABLES_DIR))
@@ -37,6 +37,8 @@ namespace Raws
                     _tables.Add(table.TableName, table);
                 }
             }
+
+            _initialized = true;
         }
 
         /// <summary>

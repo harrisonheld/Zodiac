@@ -18,9 +18,9 @@ namespace Raws
 
         private static Dictionary<string, ConversationNode> _conversationNodes = new();
         private static bool _initialized = false;
-        private static void Initialize()
+        public static void Initialize()
         {
-            _initialized = true;
+            _conversationNodes.Clear();
 
             foreach (string file in Directory.GetFiles(CONVERSATIONS_DIR))
             {
@@ -36,6 +36,8 @@ namespace Raws
                     _conversationNodes.Add(node.Id, node);
                 }
             }
+
+            _initialized = true;
         }
 
         public static ConversationNode ById(string nodeId)
@@ -55,7 +57,9 @@ namespace Raws
         [JsonProperty("playerText")]
         public string PlayerText { get; set; } = null; // what the player says, shown to the player when they pick it as an option
         [JsonProperty("npcText")]
-        public string NpcText { get; set; } // what the npc being spoken too says in response to the player text
+        public string NpcText { get; set; } // what the npc being spoken too says in response to the player text,
+        [JsonProperty("npcPortrait")]
+        public string NpcPortrait { get; set; } // the portrait to be shown alongside the npc text. if empty, just use the speaker's sprite
         [JsonProperty("options")]
         public List<string> Options { get; set; } = new(); // what nodes the player can pick in response
     }
