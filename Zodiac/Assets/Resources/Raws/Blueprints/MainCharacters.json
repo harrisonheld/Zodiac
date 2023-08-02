@@ -52,6 +52,12 @@
         "Properties": {
           "ConversationId": "PiscesConversation_Begin"
         }
+      },
+      {
+        "Type": "Brain",
+        "Components": {
+          "Ai": "Inert"
+        }
       }
     ]
   },

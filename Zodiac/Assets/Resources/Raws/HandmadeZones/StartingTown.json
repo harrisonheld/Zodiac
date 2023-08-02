@@ -10,15 +10,90 @@
       "x": 10,
       "y": 5
     },
+
     {
-      "blueprint": "LimestoneWallAlt",
+      "blueprint": "Path",
+      "x": 8,
+      "y": 5
+    },
+    {
+      "blueprint": "CopperWall",
+      "x": 8,
+      "y": 4
+    },
+    {
+      "blueprint": "CopperWall",
+      "x": 8,
+      "y": 6
+    },
+
+    {
+      "blueprint": "CopperWall",
       "x": 12,
       "y": 5
     },
     {
-      "blueprint": "LimestoneWallAlt",
+      "blueprint": "CopperWall",
+      "x": 12,
+      "y": 4
+    },
+    {
+      "blueprint": "CopperWall",
+      "x": 12,
+      "y": 6
+    },
+
+    {
+      "blueprint": "CopperWall",
+      "x": 10,
+      "y": 7
+    },
+    {
+      "blueprint": "CopperWall",
       "x": 11,
-      "y": 5
+      "y": 7
+    },
+    {
+      "blueprint": "CopperWall",
+      "x": 9,
+      "y": 7
+    },
+
+    {
+      "blueprint": "CopperWall",
+      "x": 10,
+      "y": 3
+    },
+    {
+      "blueprint": "CopperWall",
+      "x": 11,
+      "y": 3
+    },
+    {
+      "blueprint": "CopperWall",
+      "x": 9,
+      "y": 3
+    },
+
+    {
+      "blueprint": "CopperPillar",
+      "x": 12,
+      "y": 7
+    },
+    {
+      "blueprint": "CopperPillar",
+      "x": 12,
+      "y": 3
+    },
+    {
+      "blueprint": "CopperPillar",
+      "x": 8,
+      "y": 7
+    },
+    {
+      "blueprint": "CopperPillar",
+      "x": 8,
+      "y": 3
     }
   ]
 }

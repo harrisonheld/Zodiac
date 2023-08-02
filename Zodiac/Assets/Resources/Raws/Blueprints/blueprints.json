@@ -231,6 +231,36 @@
     ]
   },
   {
+    "Id": "CopperWall",
+    "Inherits": "Wall",
+    "Components": [
+      {
+        "Type": "Visual",
+        "Properties": {
+          "DisplayName": "Copper Wall",
+          "Description": "A man-made wall crafted from copper plating. It adds a touch of elegance and warmth to the space.",
+          "ColorPrimary": "0.72, 0.45, 0.2",
+          "ColorSecondary": "0.55, 0.31, 0.13",
+          "ColorTertiary": "0.35, 0.19, 0.08"
+        }
+      }
+    ]
+  },
+  {
+    "Id": "CopperPillar",
+    "Inherits": "CopperWall",
+    "Components": [
+      {
+        "Type": "Visual",
+        "Properties": {
+          "DisplayName": "Copper Pillar",
+          "Description": "Copper pillar lol.",
+          "Sprite": "pillar",
+        }
+      }
+    ]
+  },
+  {
     "Id": "LimestoneWall",
     "Inherits": "Wall",
     "Components": [
