@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
         WorldGen.World.SetWorldSeed(gameSave.WorldSeed);
         WorldGen.World.GenerateZone(screenX, screenY);
 
-        ThePlayer = Blueprints.FromBlueprint("You", new Vector2Int(13, 13));
+        ThePlayer = Blueprints.FromBlueprint("You", new Vector2Int(9, 5));
     }
 
     public void Update()

@@ -34,17 +34,40 @@
     "npcText": "Quite rude to ask, for starters - and it's only an abstraction. I invite you to press the 'Look' key and see for yourself.",
     "npcPortrait": "Waverly_Shocked",
     "options": [
-      "PiscesConversation_FishInsist",
+      "PiscesConversation_Fish2",
       "PiscesConversation_Hot"
     ]
   },
   {
-    "nodeId": "PiscesConversation_FishInsist",
+    "nodeId": "PiscesConversation_Fish2",
     "playerText": "No, I am fairly certain that you are a pair of fish encircling each other.",
-    "npcText": "Speak not when you know not, knave. Lest your blood slake the soil's thirst.",
+    "npcText": "Speak not when you know not, lest your blood slake the soil's thirst. Now speak on more pleasant things.",
     "npcPortrait": "Waverly_Gleeby",
     "options": [
+      "PiscesConversation_Fish3",
       "PiscesConversation_Hot"
     ]
+  },
+  {
+    "nodeId": "PiscesConversation_Fish3",
+    "playerText": "You are two fish encircling each other, certain and most true, without lying. Show me.",
+    "npcText": "If you insist. But be warned, you have just made an enemy of me. Remove yourself from my sight, or the glory of my ray shall transmute your face into a fibrous copper powder - and in doing so, marginally improve your visage.",
+    "options": [
+      "PiscesConversation_Fish4",
+      "PiscesConversation_Fish5",
+      "PiscesConversation_Fish6"
+    ]
+  },
+  {
+    "nodeId": "PiscesConversation_Fish4",
+    "playerText": "You have exhausted my goodwill, which was limited to begin with. Now you must be slain."
+  },
+  {
+    "nodeId": "PiscesConversation_Fish5",
+    "playerText": "I will go nowhere."
+  },
+  {
+    "nodeId": "PiscesConversation_Fish6",
+    "playerText": "I'll be leaving now."
   }
 ]

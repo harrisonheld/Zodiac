@@ -1,24 +1,24 @@
 {
+  "zoneName": "Starting Town",
   "worldX": 2,
   "worldY": 15,
-  "width": 40,
-  "height": 30,
-  "zoneName": "Starting Town",
+  "width": 16,
+  "height": 12,
   "entities": [
     {
       "blueprint": "Pisces",
-      "x": 20,
-      "y": 15
+      "x": 10,
+      "y": 5
     },
     {
       "blueprint": "LimestoneWallAlt",
-      "x": 21,
-      "y": 15
+      "x": 12,
+      "y": 5
     },
     {
       "blueprint": "LimestoneWallAlt",
-      "x": 22,
-      "y": 15
+      "x": 11,
+      "y": 5
     }
   ]
 }
