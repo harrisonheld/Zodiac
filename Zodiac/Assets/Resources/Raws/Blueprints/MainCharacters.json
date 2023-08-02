@@ -55,7 +55,7 @@
       },
       {
         "Type": "Brain",
-        "Components": {
+        "Properties": {
           "Ai": "Inert"
         }
       }

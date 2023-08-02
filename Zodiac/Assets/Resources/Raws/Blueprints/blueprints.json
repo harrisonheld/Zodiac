@@ -237,8 +237,8 @@
       {
         "Type": "Visual",
         "Properties": {
-          "DisplayName": "Copper Wall",
-          "Description": "A man-made wall crafted from copper plating. It adds a touch of elegance and warmth to the space.",
+          "DisplayName": "copper wall",
+          "Description": "a wall made from copper plating, providing a warm and rustic appearance to the space",
           "ColorPrimary": "0.72, 0.45, 0.2",
           "ColorSecondary": "0.55, 0.31, 0.13",
           "ColorTertiary": "0.35, 0.19, 0.08"
@@ -253,9 +253,29 @@
       {
         "Type": "Visual",
         "Properties": {
-          "DisplayName": "Copper Pillar",
-          "Description": "Copper pillar lol.",
-          "Sprite": "pillar",
+          "DisplayName": "copper pillar",
+          "Description": "a pillar made from copper plating, designed to provide structural support",
+          "Sprite": "pillar"
+        }
+      }
+    ]
+  },
+  {
+    "Id": "CopperArch",
+    "Inherits": "CopperWall",
+    "Components": [
+      {
+        "Type": "Visual",
+        "Properties": {
+          "DisplayName": "copper archway",
+          "Description": "an archway made from copper plating, offering a modest and unpretentious method of entry to a structure",
+          "Sprite": "arch"
+        }
+      },
+      {
+        "Type": "PhysicalAttributes",
+        "Properties": {
+          "Solid": false
         }
       }
     ]

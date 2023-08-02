@@ -51,7 +51,8 @@
   {
     "nodeId": "PiscesConversation_Fish3",
     "playerText": "You are two fish encircling each other, certain and most true, without lying. Show me.",
-    "npcText": "If you insist. But be warned, you have just made an enemy of me. Remove yourself from my sight, or the glory of my ray shall transmute your face into a fibrous copper powder - and in doing so, marginally improve your visage.",
+    "npcText": "If you insist. Now, I banish you from my study. Hover betwixt the archway, if you must. Any more than that, and the glory of my ray will turn your face into a copper powder - and in doing so, marginally improve your visage.",
+    "npcPortrait": "Waverly_Disgusted",
     "options": [
       "PiscesConversation_Fish4",
       "PiscesConversation_Fish5",
@@ -60,7 +61,7 @@
   },
   {
     "nodeId": "PiscesConversation_Fish4",
-    "playerText": "You have exhausted my goodwill, which was limited to begin with. Now you must be slain."
+    "playerText": "You have exhausted my goodwill. Now you must be slain."
   },
   {
     "nodeId": "PiscesConversation_Fish5",
