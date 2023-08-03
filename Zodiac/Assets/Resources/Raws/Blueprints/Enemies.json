@@ -39,7 +39,7 @@
         "Type": "Visual",
         "Properties": {
           "DisplayName": "languishing smoke",
-          "Description": "the monster made of smoke shifts and undulates like a billowing cloud. But as soon as you lay eyes upon it, a tiny prick is felt at the back of your head",
+          "Description": "the monster made of smoke shifts and undulates as a billowing cloud. But as soon as you lay eyes upon it, a tiny prick is felt at the back of your head. Thankfully, these tend to be docile by nature.",
           "Sprite": "voidbird"
         }
       },
