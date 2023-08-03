@@ -1,8 +1,6 @@
 # Zodiac - A High Fantasy Roguelike
 This is my game, temporarily titled 'Zodiac'. Other potential names include:
 
-Welcome to 'Zodiac,' a thrilling high fantasy roguelike game. Below are some potential names for the game that we're considering:
-
 - Flaming Metal System
 - You, But Starspawn
 - Summer in Otherworld
@@ -12,7 +10,7 @@ Welcome to 'Zodiac,' a thrilling high fantasy roguelike game. Below are some pot
 ### Data-driven
 You can easily introduce new enemies without having to recompile or even restart the game. By adding the necessary entry to the Blueprints folder, the new enemy will be fully functional.
 
-For instance, here's an entry for the "Enthralled Alchemist":
+For instance, here's an entry for the "enthralled alchemist":
 
 ```json
 {
@@ -22,7 +20,7 @@ For instance, here's an entry for the "Enthralled Alchemist":
       {
         "Type": "Visual",
         "Properties": {
-          "DisplayName": "Enthralled Alchemist",
+          "DisplayName": "enthralled alchemist",
           "Description": "The fledgling alchemist toils with eyes that gleam like gold and hands that are never still.",
           "Sprite": "human3"
         }
