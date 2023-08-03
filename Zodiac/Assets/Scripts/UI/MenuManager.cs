@@ -122,7 +122,7 @@ namespace UI
         public void ShowConversation(string startNode, GameObject speaker)
         {
             ConversationMenu menu = Instantiate(_conversationMenuPrefab).GetComponent<ConversationMenu>();
-            menu.SetConversation(startNode);
+            menu.GoToNode(startNode);
             menu.SetSpeaker(speaker);
             Open(menu);
         }

@@ -6,6 +6,7 @@ using TMPro;
 using System.Linq;
 using Raws;
 using UnityEditor.Experimental.GraphView;
+using UnityEngine.InputSystem;
 
 namespace UI
 {
@@ -15,14 +16,24 @@ namespace UI
         public GameObject GameObject { get => gameObject; }
         public CanvasGroup CanvasGroup { get => GetComponent<CanvasGroup>(); }
 
-        private ConversationNode _currentNode;
+        private Stack<string> _conversationNodes = new Stack<string>(); // to keep track of prior nodes so we can go back
         private GameObject _speaker;
 
         [SerializeField] TextMeshProUGUI npcText;
         [SerializeField] Image npcPortrait;
         [SerializeField] TextMeshProUGUI npcNametag;
+        [SerializeField] TextMeshProUGUI helpText;
         [SerializeField] GameObject choiceContainer;
         [SerializeField] GameObject choicePrefab;
+
+        public void Update()
+        {
+            if(ZodiacInput.InputMap.UI.Backspace.triggered)
+            {
+                ZodiacInput.InputMap.UI.Backspace.Reset();
+                GoBackANode();
+            }
+        }
 
         private void Clear()
         {
@@ -41,29 +52,34 @@ namespace UI
         public void RefreshUI()
         {
             Clear();
+            helpText.text = $"Made a mistake? Press '{ZodiacInput.InputMap.UI.Backspace.GetBindingDisplayString()}' to take back what you said.";
 
-            if(_currentNode != null)
+            string currentNodeId = _conversationNodes.Peek();
+            ConversationNode currentNode = Conversations.ById(currentNodeId);
+
+            if (currentNode != null)
             {
-                npcText.text = _currentNode.NpcText;
+                npcText.text = currentNode.NpcText;
             }
 
             if (_speaker != null)
             {
                 npcPortrait.sprite = _speaker.GetComponent<SpriteRenderer>().sprite;
                 npcNametag.text = _speaker.GetComponent<Visual>().DisplayName;
+                npcPortrait.color = Color.white;
             }
 
-            if(!string.IsNullOrEmpty(_currentNode.NpcPortrait))
+            if(!string.IsNullOrEmpty(currentNode.NpcPortrait))
             {
-                Texture2D portrait = Resources.Load<Texture2D>($"Portraits/{_currentNode.NpcPortrait}");
+                Texture2D portrait = Resources.Load<Texture2D>($"Portraits/{currentNode.NpcPortrait}");
                 portrait.filterMode = FilterMode.Point; // for pixelated look
                 npcPortrait.sprite = Sprite.Create(portrait, new Rect(0, 0, portrait.width, portrait.height), Vector2.one * 0.5f);
                 npcPortrait.color = new Color(0.5f, 0.5f, 0.75f);
             }
 
-            for(int i = 0; i < _currentNode.Options.Count; i++)
+            for(int i = 0; i < currentNode.Options.Count; i++)
             {
-                string choice = _currentNode.Options[i];
+                string choice = currentNode.Options[i];
                 ConversationNode choiceNode = Conversations.ById(choice);
 
                 GameObject choiceObject = Instantiate(choicePrefab);
@@ -73,7 +89,7 @@ namespace UI
                 Button choiceButton = choiceObject.GetComponent<Button>();
                 choiceButton.onClick.AddListener(() =>
                 {
-                    SetConversation(choiceNode.Id);
+                    GoToNode(choiceNode.Id);
                     RefreshUI();
                 });
 
@@ -86,10 +102,18 @@ namespace UI
         public void GainFocus()
         {
         }
-        public void SetConversation(string conversationNodeId)
+        public void GoToNode(string conversationNodeId)
         {
-            _currentNode = Conversations.ById(conversationNodeId);
+            _conversationNodes.Push(conversationNodeId);
             RefreshUI();
+        }
+        public void GoBackANode()
+        {
+            if(_conversationNodes.Count > 0)
+            {
+                _conversationNodes.Pop();
+                RefreshUI();
+            }
         }
         public void SetSpeaker(GameObject speaker)
         {

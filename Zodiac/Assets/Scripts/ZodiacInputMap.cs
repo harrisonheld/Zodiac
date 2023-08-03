@@ -491,6 +491,15 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Backspace"",
+                    ""type"": ""Button"",
+                    ""id"": ""3ef60bab-a4a1-41a8-bb64-3c0c937f630a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -909,6 +918,17 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""XR"",
                     ""action"": ""TrackedDeviceOrientation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fa5f6462-20c3-4fc7-bea3-7ce160c84152"",
+                    ""path"": ""<Keyboard>/backspace"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Backspace"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1491,6 +1511,7 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        m_UI_Backspace = m_UI.FindAction("Backspace", throwIfNotFound: true);
         // Look
         m_Look = asset.FindActionMap("Look", throwIfNotFound: true);
         m_Look_Move = m_Look.FindAction("Move", throwIfNotFound: true);
@@ -1666,6 +1687,7 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_RightClick;
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
+    private readonly InputAction m_UI_Backspace;
     public struct UIActions
     {
         private @ZodiacInputMap m_Wrapper;
@@ -1680,6 +1702,7 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
         public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
+        public InputAction @Backspace => m_Wrapper.m_UI_Backspace;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1719,6 +1742,9 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                 @TrackedDeviceOrientation.started -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
+                @Backspace.started -= m_Wrapper.m_UIActionsCallbackInterface.OnBackspace;
+                @Backspace.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnBackspace;
+                @Backspace.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnBackspace;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -1753,6 +1779,9 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                 @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
+                @Backspace.started += instance.OnBackspace;
+                @Backspace.performed += instance.OnBackspace;
+                @Backspace.canceled += instance.OnBackspace;
             }
         }
     }
@@ -1916,6 +1945,7 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+        void OnBackspace(InputAction.CallbackContext context);
     }
     public interface ILookActions
     {
