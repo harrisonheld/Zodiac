@@ -58,4 +58,5 @@ All artwork currently in the game is either made or photographed by me. I am not
 ![Sunbaked Canyons](https://github.com/harrisonheld/Zodiac/assets/24709296/12cb51a4-6f61-4625-b687-60fc9a980640)
 ![Voidbirds](https://github.com/harrisonheld/Zodiac/assets/24709296/6d7dafd5-b4ed-49b0-966c-1061c708ff14)
 ![Pisces' Study](https://github.com/harrisonheld/Zodiac/assets/24709296/68c72890-da63-4c60-8099-5bb223bf67f4)
-![Talking to Pisces](https://github.com/harrisonheld/Zodiac/assets/24709296/ef3b67eb-1f0c-4532-b987-40ca32e7f1d6)
+![Talking to Pisces](https://github.com/harrisonheld/Zodiac/assets/24709296/8b7da60b-36f0-4e8f-8d77-a8e8f1e11a42)
+
