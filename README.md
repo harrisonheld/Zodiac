@@ -7,7 +7,6 @@ Welcome to 'Zodiac,' a thrilling high fantasy roguelike game. Below are some pot
 - You, But Starspawn
 - Summer in Otherworld
 
-# Image Gallery
 ## About the Project
 
 ### Data-driven
