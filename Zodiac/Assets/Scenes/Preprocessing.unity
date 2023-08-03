@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3817bdfd7bd245b479b51a0a6eccf856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originalPortraitsFolderPath: Assets/Textures/UnfilteredPortraits
+  originalPortraitsFolderPath: Assets/Textures/Original Portraits
   filteredPortraitsFolderPath: Assets/Resources/Portraits
   outputWidth: 128
   outputHeight: 128

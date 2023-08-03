@@ -20,6 +20,8 @@ public sealed class ItemSetSystem : ISystem
 				foreach(GameObject item in items)
 				{
                     inv.AddItem(item);
+					if(item.GetComponent<Equippable>() != null)
+						inv.Equip(item);
                 }
 
                 GameObject.Destroy(set);

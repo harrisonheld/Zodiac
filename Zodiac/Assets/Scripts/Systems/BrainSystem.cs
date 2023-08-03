@@ -11,65 +11,60 @@ public sealed class BrainSystem : ISystem
 				continue;
 			}
 
-			Brain brain = entity.GetComponent<Brain>();
-			Position myPosComp = brain.gameObject.GetComponent<Position>();
-			EnergyHaver energyHaver = brain.gameObject.GetComponent<EnergyHaver>();
-
-			Vector2Int myPos = myPosComp.Pos;
-
-			switch (brain.Ai)
+            EnergyHaver energyHaver = entity.GetComponent<EnergyHaver>();
+			while(energyHaver.Energy > 0)
 			{
-				case AiType.Seeker:
-					{
-						if (energyHaver.Energy <= 0)
-							break;
-
-						Vector2Int targetPos = GameManager.Instance.ThePlayer.GetComponent<Position>().Pos;
-						Vector2Int towards = targetPos - myPos;
-						Vector2Int delta = towards;
-						delta.Clamp(new Vector2Int(-1, -1), new Vector2Int(1, 1));
-
-						// if we are next to the target, attack
-						if (towards == delta)
-						{
-							GameManager.Instance.BumpAttack(brain.gameObject, GameManager.Instance.ThePlayer);
-						}
-						else
-						{
-							Vector2Int moveIntention = myPos + delta;
-							GameManager.Instance.AttemptMove(brain.gameObject, moveIntention);
-						}
-					}
-					break;
-
-				case AiType.Wanderer:
-					{
-						if (energyHaver.Energy <= 0)
-							break;
-
-						// [-1, 2) = [-1, 1] for integers
-						int moveX = Random.Range(-1, 2);
-						int moveY = Random.Range(-1, 2);
-						Vector2Int randomMove = new Vector2Int(moveX, moveY);
-						Vector2Int moveIntention = myPos + randomMove;
-						GameManager.Instance.AttemptMove(brain.gameObject, moveIntention);
-					}
-					break;
-
-				case AiType.Projectile:
-					{
-						if (energyHaver.Energy <= 0)
-							break;
-					}
-					break;
-
-
-				case AiType.Inert:
-				default:
-					break;
+				MakeMove(entity);
 			}
 		}
 	}
+
+	private void MakeMove(GameObject entity)
+	{
+        Brain brain = entity.GetComponent<Brain>();
+        Position myPosComp = brain.gameObject.GetComponent<Position>();
+        EnergyHaver energyHaver = entity.GetComponent<EnergyHaver>();
+        Vector2Int myPos = myPosComp.Pos;
+
+        switch (brain.Ai)
+        {
+            case AiType.Seeker:
+                {
+                    Vector2Int targetPos = GameManager.Instance.ThePlayer.GetComponent<Position>().Pos;
+                    Vector2Int towards = targetPos - myPos;
+                    Vector2Int delta = towards;
+                    delta.Clamp(new Vector2Int(-1, -1), new Vector2Int(1, 1));
+
+                    // if we are next to the target, attack
+                    if (towards == delta)
+                    {
+                        GameManager.Instance.BumpAttack(brain.gameObject, GameManager.Instance.ThePlayer);
+                    }
+                    else
+                    {
+                        Vector2Int moveIntention = myPos + delta;
+                        GameManager.Instance.AttemptMove(brain.gameObject, moveIntention);
+                    }
+                }
+                break;
+
+            case AiType.Wanderer:
+                {
+                    // [-1, 2) = [-1, 1] for integers
+                    int moveX = Random.Range(-1, 2);
+                    int moveY = Random.Range(-1, 2);
+                    Vector2Int randomMove = new Vector2Int(moveX, moveY);
+                    Vector2Int moveIntention = myPos + randomMove;
+                    GameManager.Instance.AttemptMove(brain.gameObject, moveIntention);
+                }
+                break;
+
+            case AiType.Projectile:
+            case AiType.Inert:
+            default:
+                break;
+        }
+    }
 
 	private bool SelectionCriteria(GameObject entity)
 	{

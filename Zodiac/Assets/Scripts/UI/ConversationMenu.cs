@@ -45,9 +45,10 @@ namespace UI
             // detach children now, as they may not be destroyed instantly
             choiceContainer.transform.DetachChildren();
 
-            npcText.text = "[placeholder text]";
+            npcText.text = "[placeholder text - if you're seeing this, the game is broken]";
             npcPortrait.sprite = null;
-            npcNametag.text = "[placeholder name]";
+            npcNametag.text = "[placeholder text - if you're seeing this, the game is broken]";
+            helpText.text = "[placeholder text - if you're seeing this, the game is broken]";
         }
         public void RefreshUI()
         {
@@ -109,7 +110,7 @@ namespace UI
         }
         public void GoBackANode()
         {
-            if(_conversationNodes.Count > 0)
+            if(_conversationNodes.Count > 1)
             {
                 _conversationNodes.Pop();
                 RefreshUI();

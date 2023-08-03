@@ -133,7 +133,6 @@ public class GameManager : MonoBehaviour
         return turn;
     }
 
-
     private void RegisterSystem<T>() where T : ISystem, new() {
         ISystem system = new T();
         Systems.Add(system);
@@ -238,13 +237,15 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        // calculate attack stats
+        // in the case of no weapon, use these default values
         int attackDamage = 1;
         int attackCost = 1000; // cost of the attack in energy
 
-        // get the equippable in the first slot
-        GameObject attackerPrimary = attacker.GetComponent<Slot>()?.Contained;
-        if(attackerPrimary != null)
+        // get the first melee weapon we have equipped
+        GameObject attackerPrimary = attacker.GetComponents<Slot>()
+                                             .FirstOrDefault(s => s.Contained?.GetComponent<MeleeWeapon>() != null)?
+                                             .Contained;
+        if (attackerPrimary != null)
         {
             MeleeWeapon weapon = attackerPrimary.GetComponent<MeleeWeapon>();
             if(weapon != null)
