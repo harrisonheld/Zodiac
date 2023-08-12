@@ -58,13 +58,15 @@ namespace UI
             else
                 healthText.text = "";
 
+            body.text += "\n";
             // add flavor texts for components
             foreach (var comp in subject.GetComponents<ZodiacComponent>())
             {
                 string desc = comp.GetDescription();
                 if (desc != null)
-                    body.text += "\n\n * " + desc;
+                    body.text += "\n* " + desc;
             }
+            body.text += "\n";
 
             // add list of equipment
             Slot[] slots = subject.GetComponents<Slot>();
@@ -74,7 +76,7 @@ namespace UI
                     return str.TrimEnd(',');
                 });
             if (eqDesc != "")
-                eqDesc = "\n\nEquipment: " + eqDesc;
+                eqDesc = "\nEquipment: " + eqDesc;
             body.text += eqDesc;
         }
         public void GainFocus()

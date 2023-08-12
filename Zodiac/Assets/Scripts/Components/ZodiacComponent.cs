@@ -12,29 +12,6 @@ public abstract class ZodiacComponent : MonoBehaviour
     public virtual List<IInteraction> GetInteractions() { return new(); }
     public virtual string GetDescription() { return null; }
 
-    
-    public virtual void Serialize(EntitySerializer writer)
-    {
-        Type type = this.GetType();
-        writer.WriteStartComponent(type.Name);
-
-        // get all public instance (ie, non static) fields
-        PropertyInfo[] propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-        foreach (var propertyInfo in propertyInfos)
-        {
-            // check if the property has the ZodiacNoSerialize attribute
-            if (Attribute.IsDefined(propertyInfo, typeof(ZodiacNoSerializeAttribute)))
-                continue;
-
-            var propName = propertyInfo.Name;
-            object propValue = propertyInfo.GetValue(this);
-
-            writer.WriteProperty(propName, propValue);
-        }
-
-        writer.WriteEndComponent();
-    }
-
 
     public virtual void HandleEvent(ZodiacEvent e)
     {

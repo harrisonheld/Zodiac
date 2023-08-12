@@ -98,13 +98,14 @@ namespace Raws
                     // if the type is a kind of list
                     if (typeof(IList).IsAssignableFrom(propType))
                     {
-                        // TODO
+                        propVal = (propVal as JObject).ToObject(propType);
+                        propInfo.SetValue(zodiacComponent, propVal);
                     }
                     // if the type is a dictionary
-                    else if(propType.IsGenericType && propType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                    else if (typeof(IDictionary).IsAssignableFrom(propType))
                     {
-                        // TODO
-                        continue;
+                        propVal = (propVal as JObject).ToObject(propType);
+                        propInfo.SetValue(zodiacComponent, propVal);
                     }
                     else if (propType.IsEnum)
                     {
@@ -123,6 +124,21 @@ namespace Raws
                         propInfo.SetValue(zodiacComponent, propVal);
                     }
                 }
+            }
+
+            // add items from item sets
+            foreach (ItemSet set in entity.GetComponents<ItemSet>())
+            {
+                Inventory inv = entity.GetComponent<Inventory>();
+                List<GameObject> items = Raws.ItemSets.SpawnSet(set.ItemSetName);
+                foreach (GameObject item in items)
+                {
+                    inv.AddItem(item);
+                    if (item.GetComponent<Equippable>() != null)
+                        inv.Equip(item);
+                }
+
+                GameObject.Destroy(set);
             }
 
             return entity;

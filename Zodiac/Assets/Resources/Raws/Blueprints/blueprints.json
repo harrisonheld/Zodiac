@@ -192,10 +192,17 @@
         }
       },
       {
-        "Type": "StatBonus",
+        "Type": "StatModWhileEquipped",
         "Properties": {
           "StatType": "Prowess",
           "Bonus": 2
+        }
+      },
+      {
+        "Type": "StatModWhileEquipped",
+        "Properties": {
+          "StatType": "Vigor",
+          "Bonus": -2
         }
       }
     ]
@@ -346,13 +353,14 @@
         }
       },
       {
-        "Type": "Stats",
+        "Type": "BaseStats",
         "Properties": {
-          "BaseStats": {
-            "Prowess": 12,
-            "Vitality": 12,
-            "Dexterity": 12,
-            "Arcane": 12
+          "Stats": {
+            "Prowess": 10,
+            "Vitality": 10,
+            "Dexterity": 10,
+            "Arcane": 10,
+            "Defense": 0
           }
         }
       }

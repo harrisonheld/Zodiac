@@ -64,40 +64,8 @@ public class PortraitProcessing : MonoBehaviour
                 else
                     newPixels[i] = white;
             }
+
             filteredPortrait.SetPixels(newPixels);
-
-            // Floyd-Steinberg dithering
-            for (int y = 0; y < filteredPortrait.height; y++)
-            {
-                for (int x = 0; x < filteredPortrait.width; x++)
-                {
-                    Color oldColor = filteredPortrait.GetPixel(x, y);
-                    Color newColor = newPixels[y * filteredPortrait.width + x];
-                    filteredPortrait.SetPixel(x, y, newColor);
-                    Color error = oldColor - newColor;
-
-                    if (x < filteredPortrait.width - 1)
-                    {
-                        filteredPortrait.SetPixel(x + 1, y, filteredPortrait.GetPixel(x + 1, y) + error * 7 / 16f);
-                    }
-
-                    if (x > 0 && y < filteredPortrait.height - 1)
-                    {
-                        filteredPortrait.SetPixel(x - 1, y + 1, filteredPortrait.GetPixel(x - 1, y + 1) + error * 3 / 16f);
-                    }
-
-                    if (y < filteredPortrait.height - 1)
-                    {
-                        filteredPortrait.SetPixel(x, y + 1, filteredPortrait.GetPixel(x, y + 1) + error * 5 / 16f);
-                    }
-
-                    if (x < filteredPortrait.width - 1 && y < filteredPortrait.height - 1)
-                    {
-                        filteredPortrait.SetPixel(x + 1, y + 1, filteredPortrait.GetPixel(x + 1, y + 1) + error * 1 / 16f);
-                    }
-                }
-            }
-
             filteredPortrait.Apply();
 
             // Save the filtered portrait as a PNG file in the filtered portraits folder

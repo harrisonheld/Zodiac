@@ -14,12 +14,15 @@ public sealed class BrainSystem : ISystem
             EnergyHaver energyHaver = entity.GetComponent<EnergyHaver>();
 			while(energyHaver.Energy > 0)
 			{
-				MakeMove(entity);
+				bool finished = MakeMove(entity);
+                if (finished)
+                    break;
 			}
 		}
 	}
 
-	private void MakeMove(GameObject entity)
+    // will return true if the entity wishes to voluntarily end its turn
+	private bool MakeMove(GameObject entity)
 	{
         Brain brain = entity.GetComponent<Brain>();
         Position myPosComp = brain.gameObject.GetComponent<Position>();
@@ -64,6 +67,8 @@ public sealed class BrainSystem : ISystem
             default:
                 break;
         }
+
+        return true;
     }
 
 	private bool SelectionCriteria(GameObject entity)

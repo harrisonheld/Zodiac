@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public static class GameObjectExtentions {
+public static class GameObjectExtentions 
+{
     public static void FireEvent(this GameObject go, ZodiacEvent e)
     {
         foreach (ZodiacComponent comp in go.GetComponents<ZodiacComponent>())
@@ -20,8 +21,38 @@ public static class GameObjectExtentions {
             .ToList();
     }
 
-    public static string GetPickName(this GameObject obj)
+
+    public static Dictionary<string, int> GetEffectiveStats(this GameObject entity)
     {
-        return obj.name;
+        Dictionary<string, int> result = new Dictionary<string, int>();
+
+        // deep clone base stats
+        Dictionary<string, int> baseStats = entity.GetComponent<BaseStats>().Stats;
+        if (baseStats != null)
+        {
+            foreach (KeyValuePair<string, int> pair in baseStats)
+                result.Add(pair.Key, pair.Value);
+        }
+
+        // add equipment stats
+        foreach (Slot slot in entity.GetComponents<Slot>())
+        {
+            if (slot.Contained == null)
+                continue;
+
+            var equipmentStatMods = slot.Contained.GetComponents<StatModWhileEquipped>();
+            foreach (StatModWhileEquipped statMod in equipmentStatMods)
+            {
+                string stat = statMod.StatType;
+                int mod = statMod.Bonus;
+
+                if (result.ContainsKey(stat))
+                    result[stat] += mod;
+                else
+                    result.Add(stat, mod);
+            }
+        }
+
+        return result;
     }
 }

@@ -40,7 +40,6 @@ public class GameManager : MonoBehaviour
     {
         CreateNewGameSave();
 
-        RegisterSystem<ItemSetSystem>();
         RegisterSystem<EnergySystem>();
         RegisterSystem<BrainSystem>();
         RegisterSystem<CooldownSystem>();
@@ -49,6 +48,10 @@ public class GameManager : MonoBehaviour
         WorldGen.World.GenerateZone(screenX, screenY);
 
         ThePlayer = Blueprints.FromBlueprint("You", new Vector2Int(9, 5));
+        ThePlayer.GetComponent<BaseStats>().Stats.Add("Blorptitiousness", 18);
+
+        Blueprints.FromBlueprint("EnthralledAlchemist", new Vector2Int(5, 5));
+        Blueprints.FromBlueprint("Staccato", new Vector2Int(4, 5));
     }
 
     public void Update()
