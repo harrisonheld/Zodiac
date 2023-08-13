@@ -94,6 +94,12 @@
       "blueprint": "CopperPillar",
       "x": 8,
       "y": 3
+    },
+
+    {
+      "blueprint": "CopperStatue",
+      "x": 11,
+      "y": 6
     }
   ]
 }

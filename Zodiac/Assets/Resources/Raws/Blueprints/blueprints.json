@@ -288,6 +288,20 @@
     ]
   },
   {
+    "Id": "CopperStatue",
+    "Inherits": "CopperWall",
+    "Components": [
+      {
+        "Type": "Visual",
+        "Properties": {
+          "DisplayName": "copper war trophy",
+          "Description": "The hood fails to hide a face frozen in cupric anguish. This enthralled alchemist's hands have finally been stilled.",
+          "Sprite": "human3"
+        }
+      }
+    ]
+  },
+  {
     "Id": "LimestoneWall",
     "Inherits": "Wall",
     "Components": [
@@ -356,9 +370,9 @@
         "Type": "BaseStats",
         "Properties": {
           "Stats": {
-            "Prowess": 10,
-            "Vigor": 10,
+            "Strength": 10,
             "Dexterity": 10,
+            "Blimbo": 10,
             "Arcane": 10,
             "Defense": 0
           }
