@@ -178,18 +178,7 @@ public class GameManager : MonoBehaviour
     }
     public void BreakEntity(GameObject toDestroy)
     {
-        // drop all this entities stuff
-        Inventory inv = toDestroy.GetComponent<Inventory>();
-        if(inv != null)
-        {
-            // uneqip everything
-            inv.UnequipEverything();
-            // drop it all
-            while(inv.HasItems())
-            {
-                Drop(toDestroy, inv.Items[0]);
-            }
-        }
+        DropAll(toDestroy);
 
         // tell user
         string deathMessage = $"The {toDestroy.GetComponent<Visual>().DisplayName} is destroyed.";
@@ -201,6 +190,22 @@ public class GameManager : MonoBehaviour
         Entities.Remove(toDestroy);
         GameObject.Destroy(toDestroy);
     }
+    public void DropAll(GameObject dropper)
+    {
+        // drop all this entities stuff
+        Inventory inv = dropper.GetComponent<Inventory>();
+        if (inv != null)
+        {
+            // uneqip everything
+            inv.UnequipEverything();
+            // drop it all
+            while (inv.HasItems())
+            {
+                Drop(dropper, inv.Items[0]);
+            }
+        }
+    }
+
     public bool isValidMovePosition(Vector2Int toCheck)
     {
         // position is valid if nothing solid is here

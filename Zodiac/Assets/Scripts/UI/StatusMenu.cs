@@ -44,8 +44,7 @@ namespace UI
             int padding = 11;
 
             Health health = player.GetComponent<Health>();
-            healthText.text = "HP: " + health.GetHealthString() + "\n" +
-                "AC: " + health.Defense;
+            healthText.text = "HP: " + health.GetHealthString();
 
             string stats = "";
             foreach (KeyValuePair<string, int> stat in player.GetEffectiveStats())

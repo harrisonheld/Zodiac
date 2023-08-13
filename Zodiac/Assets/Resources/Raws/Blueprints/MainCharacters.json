@@ -58,6 +58,15 @@
         "Properties": {
           "Ai": "Inert"
         }
+      },
+      {
+        "Type": "TransmutingRay",
+        "Properties": {
+          "MaterialName": "copper",
+          "MaterialColorPrimary": "0.72, 0.45, 0.2",
+          "MaterialColorSecondary": "0.55, 0.31, 0.13",
+          "MaterialColorTertiary": "0.35, 0.19, 0.08"
+        }
       }
     ]
   },

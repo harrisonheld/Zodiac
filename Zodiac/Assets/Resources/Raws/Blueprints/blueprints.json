@@ -45,8 +45,7 @@
         "Type": "Health",
         "Properties": {
           "HealthMax": 1,
-          "HealthCurrent": 1,
-          "Defense": 0
+          "HealthCurrent": 1
         }
       }
     ]
@@ -223,8 +222,7 @@
         "Type": "Health",
         "Properties": {
           "HealthMax": 100,
-          "HealthCurrent": 100,
-          "Defense": 1
+          "HealthCurrent": 100
         }
       },
       {
