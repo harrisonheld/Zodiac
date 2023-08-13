@@ -115,7 +115,7 @@
       {
         "Type": "MeleeWeapon",
         "Properties": {
-          "Damage": 2,
+          "Damage": "1d6",
           "AttackCost": 500
         }
       }
@@ -142,7 +142,7 @@
       {
         "Type": "MeleeWeapon",
         "Properties": {
-          "Damage": 2
+          "Damage": "1d6"
         }
       }
     ]
@@ -168,7 +168,7 @@
       {
         "Type": "MeleeWeapon",
         "Properties": {
-          "Damage": 3
+          "Damage": "1d4+2"
         }
       }
     ]
@@ -357,7 +357,7 @@
         "Properties": {
           "Stats": {
             "Prowess": 10,
-            "Vitality": 10,
+            "Vigor": 10,
             "Dexterity": 10,
             "Arcane": 10,
             "Defense": 0

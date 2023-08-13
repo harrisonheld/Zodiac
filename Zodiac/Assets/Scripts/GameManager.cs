@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour
         WorldGen.World.GenerateZone(screenX, screenY);
 
         ThePlayer = Blueprints.FromBlueprint("You", new Vector2Int(9, 5));
-        ThePlayer.GetComponent<BaseStats>().Stats.Add("Blorptitiousness", 18);
 
         Blueprints.FromBlueprint("EnthralledAlchemist", new Vector2Int(5, 5));
         Blueprints.FromBlueprint("Staccato", new Vector2Int(4, 5));
@@ -241,7 +240,7 @@ public class GameManager : MonoBehaviour
         }
 
         // in the case of no weapon, use these default values
-        int attackDamage = 1;
+        string attackDamage = "1d2";
         int attackCost = 1000; // cost of the attack in energy
 
         // get the first melee weapon we have equipped
@@ -260,7 +259,29 @@ public class GameManager : MonoBehaviour
 
         attacker.GetComponent<EnergyHaver>().Energy -= attackCost;
 
-        targetHealth.HealthCurrent -= Mathf.Max(0, attackDamage - targetHealth.Defense);
+        Dictionary<string, int> attackerStats = attacker.GetEffectiveStats();
+        Dictionary<string, int> targetStats = attacker.GetEffectiveStats();
+
+        int targetDefense = 0;
+        targetStats.TryGetValue("Defense", out targetDefense);
+
+        int rawDamage = Dice.Parse(attackDamage);
+        int damageAfterArmorSoak = Mathf.Max(0, rawDamage - targetDefense);
+
+        // tell user
+        string attackMessage = $"The {attacker.GetComponent<Visual>().DisplayName} attacks the {target.GetComponent<Visual>().DisplayName} for {damageAfterArmorSoak} damage.";
+        if(attacker == ThePlayer)
+        {
+            attackMessage = $"You attack the {target.GetComponent<Visual>().DisplayName} for {damageAfterArmorSoak} damage.";
+        }
+        else if(target == ThePlayer)
+        {
+            attackMessage = $"The {attacker.GetComponent<Visual>().DisplayName} attacks you for {damageAfterArmorSoak} damage.";
+        }
+        MenuManager.Instance.Log(attackMessage);
+
+        targetHealth.HealthCurrent -= damageAfterArmorSoak;
+
     }
     public void Pickup(GameObject pickerUpper, GameObject item)
     {
