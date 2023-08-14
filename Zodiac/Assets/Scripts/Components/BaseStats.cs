@@ -33,4 +33,10 @@ public class Stats
                 _stats.Add(key, value);
         }
     }
+
+    public int GetMod(string stat)
+    {
+        int statValue = this[stat];
+        return (statValue - 10) / 2;
+    }
 }

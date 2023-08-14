@@ -50,9 +50,9 @@ public class GameManager : MonoBehaviour
         ThePlayer = Blueprints.FromBlueprint("You", new Vector2Int(9, 5));
 
         Blueprints.FromBlueprint("EnthralledAlchemist", new Vector2Int(5, 5));
-        Blueprints.FromBlueprint("Staccato", new Vector2Int(4, 5));
+        // Blueprints.FromBlueprint("Staccato", new Vector2Int(4, 5));
         Blueprints.FromBlueprint("FrogWarden", new Vector2Int(3, 4));
-        Blueprints.FromBlueprint("Judas", new Vector2Int(3, 4));
+        Blueprints.FromBlueprint("Judas", new Vector2Int(1, 1));
     }
 
     public void Update()
@@ -182,13 +182,8 @@ public class GameManager : MonoBehaviour
     {
         DropAll(toDestroy);
 
-        // tell user
-        string deathMessage = $"The {toDestroy.GetComponent<Visual>().DisplayName} is destroyed.";
-        if (toDestroy.GetComponent<Living>() != null)
-            deathMessage = $"The {toDestroy.GetComponent<Visual>().DisplayName} dies.";
-        MenuManager.Instance.Log(deathMessage);
+        MenuManager.Instance.LogDeath(toDestroy);
 
-        // bye bye!
         Entities.Remove(toDestroy);
         GameObject.Destroy(toDestroy);
     }
@@ -258,22 +253,11 @@ public class GameManager : MonoBehaviour
         Stats attackerStats = attacker.GetEffectiveStats();
         Stats targetStats   =   target.GetEffectiveStats();
 
-        int toHit = Dice.Roll("1d20") + (attackerStats["Prowess"] - 10) / 2;
-        int dodge = (targetStats["Dexterity"] - 10) / 2;
-        if(toHit < dodge)
+        int toHit = attackerStats.GetMod("Prowess");
+        int dodge = targetStats.GetMod("Dexterity");
+        if(toHit + Dice.Roll("1d20") < dodge)
         {
-            // tell user about the miss
-            string missMessage = $"The {attacker.GetComponent<Visual>().DisplayName} misses the {target.GetComponent<Visual>().DisplayName}.";
-            if (attacker == ThePlayer)
-            {
-                missMessage = $"You miss the {target.GetComponent<Visual>().DisplayName}.";
-            }
-            else if (target == ThePlayer)
-            {
-                missMessage = $"The {attacker.GetComponent<Visual>().DisplayName} misses you.";
-            }
-            MenuManager.Instance.Log(missMessage);
-
+            MenuManager.Instance.LogMiss(attacker, target);
             return;
         }
 
@@ -282,32 +266,12 @@ public class GameManager : MonoBehaviour
 
         if(damageAfterArmorSoak <= 0)
         {
-            // tell user failed to penetrate armor
-            string armorMessage = $"The {attacker.GetComponent<Visual>().DisplayName} fails to penetrate the {target.GetComponent<Visual>().DisplayName}'s armor.";
-            if (attacker == ThePlayer)
-            {
-                armorMessage = $"You fail to penetrate the {target.GetComponent<Visual>().DisplayName}'s armor.";
-            }
-            else if (target == ThePlayer)
-            {
-                armorMessage = $"The {attacker.GetComponent<Visual>().DisplayName} fails to penetrate your armor.";
-            }
-            MenuManager.Instance.Log(armorMessage);
+            MenuManager.Instance.LogArmorChink(attacker, target);
             return;
         }
 
         // tell user
-        string attackMessage = $"The {attacker.GetComponent<Visual>().DisplayName} attacks the {target.GetComponent<Visual>().DisplayName} for {damageAfterArmorSoak} damage.";
-        if(attacker == ThePlayer)
-        {
-            attackMessage = $"You attack the {target.GetComponent<Visual>().DisplayName} for {damageAfterArmorSoak} damage.";
-        }
-        else if(target == ThePlayer)
-        {
-            attackMessage = $"The {attacker.GetComponent<Visual>().DisplayName} attacks you for {damageAfterArmorSoak} damage.";
-        }
-        MenuManager.Instance.Log(attackMessage);
-
+        MenuManager.Instance.LogAttack(attacker, target, damageAfterArmorSoak);
         targetHealth.HealthCurrent -= damageAfterArmorSoak;
     }
     public void Pickup(GameObject pickerUpper, GameObject item)
@@ -320,15 +284,8 @@ public class GameManager : MonoBehaviour
         
         pickerUpper.GetComponent<Inventory>().AddItem(item);
         pickerUpper.GetComponent<EnergyHaver>().Energy -= Constants.COST_PICKUP;
-
-        if (pickerUpper == ThePlayer)
-        {
-            StatusMenu.Instance.Log($"You pick up the {item.GetComponent<Visual>().DisplayName}");
-        }
-        else
-        {
-            StatusMenu.Instance.Log($"The {pickerUpper.GetComponent<Visual>().DisplayName} picks up the {item.GetComponent<Visual>().DisplayName}");
-        }
+        
+        MenuManager.Instance.LogPickup(pickerUpper, item);
 
         // fire an event
         var @event = new PickedUpEvent()

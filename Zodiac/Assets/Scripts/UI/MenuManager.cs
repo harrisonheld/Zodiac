@@ -102,10 +102,81 @@ namespace UI
         {
             StatusMenu.Instance.SetSize(size);
         }
+
         public void Log(string info)
         {
             StatusMenu.Instance.Log(info);
         }
+        public void LogMiss(GameObject attacker, GameObject target)
+        {
+            // tell user about the miss
+            string missMessage = $"The {attacker.GetComponent<Visual>().DisplayName} misses the {target.GetComponent<Visual>().DisplayName}.";
+            if (attacker == GameManager.Instance.ThePlayer)
+            {
+                missMessage = $"You miss the {target.GetComponent<Visual>().DisplayName}.";
+            }
+            else if (target == GameManager.Instance.ThePlayer)
+            {
+                missMessage = $"The {attacker.GetComponent<Visual>().DisplayName} misses you.";
+            }
+            StatusMenu.Instance.Log(missMessage);
+        }
+        public void LogAttack(GameObject attacker, GameObject target, int damage)
+        {
+            // tell user about the damage
+            string damageMessage = $"The {attacker.GetComponent<Visual>().DisplayName} hits the {target.GetComponent<Visual>().DisplayName} for {damage} damage.";
+            if (attacker == GameManager.Instance.ThePlayer)
+            {
+                damageMessage = $"You hit the {target.GetComponent<Visual>().DisplayName} for {damage} damage.";
+            }
+            else if (target == GameManager.Instance.ThePlayer)
+            {
+                damageMessage = $"The {attacker.GetComponent<Visual>().DisplayName} hits you for {damage} damage.";
+            }
+            StatusMenu.Instance.Log(damageMessage);
+        }
+        public void LogDeath(GameObject dearlyDeparted)
+        {
+            // tell user about the death
+            string deathMessage = $"The {dearlyDeparted.GetComponent<Visual>().DisplayName} is destroyed.";
+            if (dearlyDeparted == GameManager.Instance.ThePlayer)
+            {
+                deathMessage = $"You die.";
+            }
+            else if (dearlyDeparted.GetComponent<Living>() != null)
+            {
+                deathMessage = $"The {dearlyDeparted.GetComponent<Visual>().DisplayName} dies.";
+            }
+            
+            StatusMenu.Instance.Log(deathMessage);
+        }
+        public void LogArmorChink(GameObject attacker, GameObject target)
+        {
+            string armorMessage = $"The {attacker.GetComponent<Visual>().DisplayName} hits the {target.GetComponent<Visual>().DisplayName}, but the attack bounces off their armor.";
+            if (attacker == GameManager.Instance.ThePlayer)
+            {
+                armorMessage = $"You hit the {target.GetComponent<Visual>().DisplayName}, but the attack bounces off their armor.";
+            }
+            else if (target == GameManager.Instance.ThePlayer)
+            {
+                armorMessage = $"The {attacker.GetComponent<Visual>().DisplayName} hits you, but the attack bounces off your armor.";
+            }
+            StatusMenu.Instance.Log(armorMessage);
+        }
+        public void LogPickup(GameObject pickerUpper, GameObject item)
+        {
+            string pickupMessage;
+            if (pickerUpper == GameManager.Instance.ThePlayer)
+            {
+                pickupMessage = $"You pick up the {item.GetComponent<Visual>().DisplayName}";
+            }
+            else
+            {
+                pickupMessage = $"The {pickerUpper.GetComponent<Visual>().DisplayName} picks up the {item.GetComponent<Visual>().DisplayName}";
+            }
+            StatusMenu.Instance.Log(pickupMessage);
+        }
+
         public void ShowPickMenu<T>(IList<T> options,
                                Action<T> action,
                                Func<T, string> getName = null,

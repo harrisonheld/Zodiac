@@ -66,7 +66,7 @@ namespace UI
         public void Log(string text)
         {
             Debug.Log(text);
-            logText.text += $"<{GameManager.Instance.GetTurn()}>: {text}\n";
+            logText.text += $"[TURN {GameManager.Instance.GetTurn()}]:".PadRight(13) +  $"{text}\n";
         }
     }
 }
