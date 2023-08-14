@@ -64,7 +64,14 @@ public class Visual : ZodiacComponent
         }
         set
         {
-            gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/" + value);
+            Sprite loaded = Resources.Load<Sprite>("Sprites/" + value);
+            if(loaded == null)
+            {
+                Debug.LogWarning("Sprite not found: " + value);
+                this.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Misc/error");
+                return;
+            }
+            gameObject.GetComponent<SpriteRenderer>().sprite = loaded;
             spriteName = value;
         }
     }

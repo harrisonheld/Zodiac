@@ -228,7 +228,7 @@ public class GameManager : MonoBehaviour
         var targetHealth = target.GetComponent<Health>();
         if (targetHealth == null)
         {
-            Debug.LogError("Failed to attack as target has no health component.");
+            Debug.LogWarning("Failed to attack as target has no health component.");
             return;
         }
 
