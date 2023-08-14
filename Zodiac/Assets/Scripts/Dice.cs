@@ -30,7 +30,7 @@ public class Dice
     /// </list>
     /// Example: 2d6 + 1d4 - 1
     /// </summary>
-    public static int Parse(string expression)
+    public static int Roll(string expression)
     {
         // Remove whitespace
         expression = Regex.Replace(expression, @"\s+", "");

@@ -69,6 +69,16 @@ public class Position : ZodiacComponent
             StopCoroutine(visualLerpCoroutine);
         visualLerpCoroutine = StartCoroutine(LerpTo(newPos));
     }
+    public void VisualBump(Vector2Int target)
+    {
+        if (visualLerpCoroutine != null)
+            StopCoroutine(visualLerpCoroutine);
+
+        // only bump a quarters of the way
+        Vector2 partial = Vector2.Lerp(transform.position, target, 0.25f);
+        // bump to the target and back, only visually
+        visualLerpCoroutine = StartCoroutine(LerpToAndBack(partial));
+    }
 
     private IEnumerator LerpTo(Vector2Int destination)
     {
@@ -86,6 +96,33 @@ public class Position : ZodiacComponent
         }
 
         transform.position = end;
+    }
+    private IEnumerator LerpToAndBack(Vector2 destination)
+    {
+        Vector2 start = transform.position;
+        Vector2 end = destination;
+
+        float elapsed = 0.0f;
+        float time = 0.25f;
+
+        // lerp to
+        while (elapsed < time / 2)
+        {
+            float t = 2 * elapsed / time;
+            transform.position = Vector2.Lerp(start, end, t);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        // lerp back
+        while (elapsed < time)
+        {
+            float t = 2 * elapsed / time - 1;
+            transform.position = Vector2.Lerp(end, start, t);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = start;
     }
 
     private void Awake()

@@ -368,9 +368,8 @@
         "Type": "BaseStats",
         "Properties": {
           "Stats": {
-            "Strength": 10,
+            "Prowess": 10,
             "Dexterity": 10,
-            "Blimbo": 10,
             "Arcane": 10,
             "Defense": 0
           }

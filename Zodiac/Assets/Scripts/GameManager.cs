@@ -190,21 +190,7 @@ public class GameManager : MonoBehaviour
         Entities.Remove(toDestroy);
         GameObject.Destroy(toDestroy);
     }
-    public void DropAll(GameObject dropper)
-    {
-        // drop all this entities stuff
-        Inventory inv = dropper.GetComponent<Inventory>();
-        if (inv != null)
-        {
-            // uneqip everything
-            inv.UnequipEverything();
-            // drop it all
-            while (inv.HasItems())
-            {
-                Drop(dropper, inv.Items[0]);
-            }
-        }
-    }
+
 
     public bool isValidMovePosition(Vector2Int toCheck)
     {
@@ -244,6 +230,9 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        // animate a little bump
+        attacker.GetComponent<Position>().VisualBump(target.GetComponent<Position>().Pos);
+
         // in the case of no weapon, use these default values
         string attackDamage = "1d2";
         int attackCost = 1000; // cost of the attack in energy
@@ -267,10 +256,30 @@ public class GameManager : MonoBehaviour
         Dictionary<string, int> attackerStats = attacker.GetEffectiveStats();
         Dictionary<string, int> targetStats = attacker.GetEffectiveStats();
 
+        int toHit = Dice.Roll("1d20") + (attackerStats["Prowess"] - 10) / 2;
+        int dodge = (targetStats["Dexterity"] - 10) / 2;
+        if(toHit < dodge)
+        {
+            // tell user about the miss
+            string missMessage = $"The {attacker.GetComponent<Visual>().DisplayName} misses the {target.GetComponent<Visual>().DisplayName}.";
+            if (attacker == ThePlayer)
+            {
+                missMessage = $"You miss the {target.GetComponent<Visual>().DisplayName}.";
+            }
+            else if (target == ThePlayer)
+            {
+                missMessage = $"The {attacker.GetComponent<Visual>().DisplayName} misses you.";
+            }
+            MenuManager.Instance.Log(missMessage);
+
+            return;
+        }
+
+
         int targetDefense = 0;
         targetStats.TryGetValue("Defense", out targetDefense);
 
-        int rawDamage = Dice.Parse(attackDamage);
+        int rawDamage = Dice.Roll(attackDamage);
         int damageAfterArmorSoak = Mathf.Max(0, rawDamage - targetDefense);
 
         // tell user
@@ -325,17 +334,20 @@ public class GameManager : MonoBehaviour
 
         Entities.Add(toDrop.gameObject);
     }
-
-    public static int ChebyshevDistance(Vector2Int a, Vector2Int b)
+    public void DropAll(GameObject dropper)
     {
-		/*
-         * d = Max( |delta X|, |delta Y| )
-         * This makes all 8 adjacent tiles equadistant - an interesting property!
-        */
-
-		int changeInX = a.x - b.x;
-        int changeInY = a.y - b.y;
-        return Mathf.Max(Mathf.Abs(changeInX), Mathf.Abs(changeInY));
+        // drop all this entities stuff
+        Inventory inv = dropper.GetComponent<Inventory>();
+        if (inv != null)
+        {
+            // uneqip everything
+            inv.UnequipEverything();
+            // drop it all
+            while (inv.HasItems())
+            {
+                Drop(dropper, inv.Items[0]);
+            }
+        }
     }
 
 

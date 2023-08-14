@@ -7,6 +7,8 @@ using System.Xml;
 using UnityEngine;
 using System.Linq;
 using System.Xml.Linq;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 public class EntitySerializer
 {
@@ -18,9 +20,16 @@ public class EntitySerializer
     private Dictionary<int, GameObject> EntityIdToGameObject = new();
     private Dictionary<int, ZodiacComponent> ComponentIdToComponent = new();
 
+    private TextWriter writer;
+    private JsonSerializer serializer;
+
     public void SerializeScene(string path)
     {
         Clear();
+
+        serializer = new JsonSerializer();
+        writer = new StreamWriter(path);
+
 
         // serialize all components
         List<string> componentJsons = new List<string>();
@@ -28,11 +37,31 @@ public class EntitySerializer
         {
             foreach (ZodiacComponent component in entity.GetComponents<ZodiacComponent>())
             {
-                string json = JsonUtility.ToJson(component);
-                componentJsons.Add(json);
+                SerializeComponentProperties(component);
             }
         }
         string componentListJson = JsonUtility.ToJson(componentJsons);
+    }
+    public void SerializeComponentProperties(ZodiacComponent component)
+    {
+        Type componentType = component.GetType();
+
+        SerializedComponentData data = new SerializedComponentData();
+        data.ComponentType = componentType;
+        data.ComponentId = GetComponentId(component);
+
+        PropertyInfo[] properties = componentType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+        foreach (PropertyInfo property in properties)
+        {
+            if (!property.GetCustomAttributes(typeof(ZodiacNoSerializeAttribute), true).Any())
+            {
+                data.AddProperty(property.Name, property.GetValue(component));
+            }
+        }
+
+        JsonSerializerSettings settings = new JsonSerializerSettings();
+        settings.Converters.Add(new ColorConverter());
+        string json = JsonConvert.SerializeObject(data, settings);
     }
     public List<GameObject> DeserializeScene(string path)
     {
@@ -78,7 +107,7 @@ public class EntitySerializer
     }
 
 
-    private int GetEntityId(GameObject entity)
+    public int GetEntityId(GameObject entity)
     {
         // if this entity has yet to be referenced, assign it a new id
         if (!ObjectIds.ContainsKey(entity))
@@ -86,7 +115,7 @@ public class EntitySerializer
 
         return ObjectIds[entity];
     }
-    private int GetComponentId(ZodiacComponent component)
+    public int GetComponentId(ZodiacComponent component)
     {
         // if this entity has yet to be referenced, assign it a new id
         if (!ComponentIds.ContainsKey(component))
@@ -94,7 +123,43 @@ public class EntitySerializer
 
         return ComponentIds[component];
     }
+
+    [Serializable]
+    private class SerializedComponentData
+    {
+        public Type ComponentType;
+        public int ComponentId;
+        public Dictionary<string, object> Properties = new Dictionary<string, object>();
+
+        public void AddProperty(string name, object value)
+        {
+            Properties[name] = value;
+        }
+    }
+
+    private class ColorConverter : JsonConverter
+    {
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(Color);
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            string colorString = reader.Value.ToString();
+            float[] rgb = colorString.Split(',').Select(component => float.Parse(component)).ToArray();
+            return new Color(rgb[0], rgb[1], rgb[2]);
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            Color color = (Color)value;
+            string colorString = $"{color.r},{color.g},{color.b}";
+            writer.WriteValue(colorString);
+        }
+    }
 }
+
 
 [System.AttributeUsage(System.AttributeTargets.Property)]
 public class ZodiacNoSerializeAttribute : System.Attribute
