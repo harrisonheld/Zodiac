@@ -66,16 +66,21 @@ public class Position : ZodiacComponent
 
         pos = newPos;
         if (visualLerpCoroutine != null)
+        {
             StopCoroutine(visualLerpCoroutine);
+        }
         visualLerpCoroutine = StartCoroutine(LerpTo(newPos));
     }
     public void VisualBump(Vector2Int target)
     {
         if (visualLerpCoroutine != null)
+        {
             StopCoroutine(visualLerpCoroutine);
+            transform.position = (Vector2)pos;
+        }
 
         // only bump a quarters of the way
-        Vector2 partial = Vector2.Lerp(transform.position, target, 0.25f);
+        Vector2 partial = Vector2.Lerp(pos, target, 0.25f);
         // bump to the target and back, only visually
         visualLerpCoroutine = StartCoroutine(LerpToAndBack(partial));
     }

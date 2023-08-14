@@ -81,6 +81,44 @@
           "Description": "fortnite ballsack",
           "Sprite": "human4"
         }
+      },
+      {
+        "Type": "Brain",
+        "Properties": {
+          "Ai": "Inert"
+        }
+      }
+    ]
+  },
+  {
+    "Id": "Judas",
+    "Inherits": "Humanoid",
+    "Components": [
+      {
+        "Type": "Visual",
+        "Properties": {
+          "DisplayName": "Knight Judas",
+          "Description": "he have 2 heads lol",
+          "Sprite": "human2"
+        }
+      },
+      {
+        "Type": "Brain",
+        "Properties": {
+          "Ai": "Inert"
+        }
+      },
+      {
+        "Type": "Slot",
+        "Properties": {
+          "SlotType": "Head"
+        }
+      },
+      {
+        "Type": "ItemSet",
+        "Properties": {
+          "ItemSetName": "Judas"
+        }
       }
     ]
   }

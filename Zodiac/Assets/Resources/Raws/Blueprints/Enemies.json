@@ -26,7 +26,39 @@
       {
         "Type": "ItemSet",
         "Properties": {
-          "ItemSetName": "HumanoidEquipment1"
+          "ItemSetName": "Humanoid1"
+        }
+      }
+    ]
+  },
+  {
+    "Id": "FrogWarden",
+    "Inherits": "Humanoid",
+    "Components": [
+      {
+        "Type": "Visual",
+        "Properties": {
+          "DisplayName": "frog warden",
+          "Description": "a creature in the shape of a man, wrought of decayed sinews and oozing ichors. The pus-filled eyes are windows to a vacant soul. Through the mire, its skeletal fingers grasp at amphibious creatures with undisputed affection. For what ghastly purpose, no one knows.",
+          "Sprite": "human1"
+        }
+      },
+      {
+        "Type": "EnergyHaver",
+        "Properties": {
+          "Quickness": 700
+        }
+      },
+      {
+        "Type": "Brain",
+        "Properties": {
+          "Ai": "Seeker"
+        }
+      },
+      {
+        "Type": "ItemSet",
+        "Properties": {
+          "ItemSetName": "FrogWarden"
         }
       }
     ]
@@ -72,13 +104,13 @@
       {
         "Type": "PhysicalAttributes",
         "Properties": {
-          "Solid":  false
+          "Solid": false
         }
       },
       {
         "Type": "EnergyHaver",
         "Properties": {
-          "Quickness": 500
+          "Quickness": 300
         }
       },
       {

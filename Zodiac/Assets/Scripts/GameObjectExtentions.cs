@@ -22,16 +22,16 @@ public static class GameObjectExtentions
     }
 
 
-    public static Dictionary<string, int> GetEffectiveStats(this GameObject entity)
+    public static Stats GetEffectiveStats(this GameObject entity)
     {
-        Dictionary<string, int> result = new Dictionary<string, int>();
+        Stats result = new Stats();
 
-        // deep clone base stats
+        // deep clone base stats dict into stats
         Dictionary<string, int> baseStats = entity.GetComponent<BaseStats>().Stats;
         if (baseStats != null)
         {
             foreach (KeyValuePair<string, int> pair in baseStats)
-                result.Add(pair.Key, pair.Value);
+                result[pair.Key] = pair.Value;
         }
 
         // add equipment stats
@@ -46,10 +46,7 @@ public static class GameObjectExtentions
                 string stat = statMod.StatType;
                 int mod = statMod.Bonus;
 
-                if (result.ContainsKey(stat))
-                    result[stat] += mod;
-                else
-                    result.Add(stat, mod);
+                result[stat] += mod;
             }
         }
 

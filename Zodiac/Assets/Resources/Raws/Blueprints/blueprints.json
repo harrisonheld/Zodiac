@@ -147,6 +147,33 @@
     ]
   },
   {
+    "Id": "CopperArmor",
+    "Inherits": "Item",
+    "Components": [
+      {
+        "Type": "Visual",
+        "Properties": {
+          "DisplayName": "copper armor",
+          "Description": "this my armor lol",
+          "Sprite": "chestplate"
+        }
+      },
+      {
+        "Type": "Equippable",
+        "Properties": {
+          "SlotType": "Body"
+        }
+      },
+      {
+        "Type": "StatModWhileEquipped",
+        "Properties": {
+          "StatType": "Defense",
+          "Bonus": 2
+        }
+      }
+    ]
+  },
+  {
     "Id": "CopperShortsword",
     "Inherits": "Item",
     "Components": [
@@ -193,15 +220,48 @@
       {
         "Type": "StatModWhileEquipped",
         "Properties": {
-          "StatType": "Prowess",
+          "StatType": "Dexterity",
           "Bonus": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "MaskSneer",
+    "Inherits": "Item",
+    "Components": [
+      {
+        "Type": "Visual",
+        "Properties": {
+          "DisplayName": "sneering mask",
+          "Description": "a scornful mask with a contemptuous grin",
+          "Sprite": "mask"
+        }
+      },
+      {
+        "Type": "Equippable",
+        "Properties": {
+          "SlotType": "Head"
         }
       },
       {
         "Type": "StatModWhileEquipped",
         "Properties": {
-          "StatType": "Vigor",
-          "Bonus": -2
+          "StatType": "Dexterity",
+          "Bonus": 2
+        }
+      }
+    ]
+  },
+  {
+    "Id": "MaskJeer",
+    "Inherits": "MaskSneer",
+    "Components": [
+      {
+        "Type": "Visual",
+        "Properties": {
+          "DisplayName": "jeering mask",
+          "Description": "a snide mask whose features mock the world",
         }
       }
     ]
@@ -231,6 +291,14 @@
           "Solid": true,
           "OccludesVison": true,
           "Weight": 1000
+        }
+      },
+      {
+        "Type": "BaseStats",
+        "Properties": {
+          "Stats": {
+            "Defense": 10
+          }
         }
       }
     ]

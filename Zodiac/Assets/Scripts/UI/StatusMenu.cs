@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 namespace UI
 {
@@ -37,21 +38,26 @@ namespace UI
             if (player == null)
             {
                 healthText.text = "";
-                statsText.text = "";
+                this.statsText.text = "";
                 return;
             }
-
-            int padding = 11;
 
             Health health = player.GetComponent<Health>();
             healthText.text = "HP: " + health.GetHealthString();
 
-            string stats = "";
-            foreach (KeyValuePair<string, int> stat in player.GetEffectiveStats())
+            Stats playerStats = player.GetEffectiveStats();
+            string statsText = "";
+            string[] statsToDisplay = new string[] { "Prowess", "Dexterity", "Arcane", "Defense"};
+            int padding = statsToDisplay.Max(stat => stat.Length) + 2;
+            for(int i = 0; i < statsToDisplay.Length; i++)
             {
-                stats += stat.Key.PadRight(padding, '.') + stat.Value + "\n";
+                string stat = statsToDisplay[i];
+
+                statsText += stat.PadRight(padding, '.') + playerStats[stat] + "\n";
             }
-            statsText.text = stats + "Turn " + GameManager.Instance.GetTurn() + ", " + ZodiacInput.GetInputMode();
+            statsText += "\n";
+
+            this.statsText.text = statsText + "Turn " + GameManager.Instance.GetTurn() + ", " + ZodiacInput.GetInputMode();
         }
         public void SetSize(Vector2 size)
         {

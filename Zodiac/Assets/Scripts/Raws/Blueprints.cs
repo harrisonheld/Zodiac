@@ -141,6 +141,12 @@ namespace Raws
                 GameObject.Destroy(set);
             }
 
+            // hide it so its not visible at the origin
+            if(entity.GetComponent<Position>() == null)
+            {
+                entity.transform.position = (Vector2)Constants.OFFSCREEN;
+            }
+
             return entity;
         }
         public static GameObject FromBlueprint(string blueprintId, Vector2Int pos)

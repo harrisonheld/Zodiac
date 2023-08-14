@@ -51,6 +51,8 @@ public class GameManager : MonoBehaviour
 
         Blueprints.FromBlueprint("EnthralledAlchemist", new Vector2Int(5, 5));
         Blueprints.FromBlueprint("Staccato", new Vector2Int(4, 5));
+        Blueprints.FromBlueprint("FrogWarden", new Vector2Int(3, 4));
+        Blueprints.FromBlueprint("Judas", new Vector2Int(3, 4));
     }
 
     public void Update()
@@ -226,7 +228,7 @@ public class GameManager : MonoBehaviour
         var targetHealth = target.GetComponent<Health>();
         if (targetHealth == null)
         {
-            Debug.Log("Failed to attack as target has no health component.");
+            Debug.LogError("Failed to attack as target has no health component.");
             return;
         }
 
@@ -253,8 +255,8 @@ public class GameManager : MonoBehaviour
 
         attacker.GetComponent<EnergyHaver>().Energy -= attackCost;
 
-        Dictionary<string, int> attackerStats = attacker.GetEffectiveStats();
-        Dictionary<string, int> targetStats = attacker.GetEffectiveStats();
+        Stats attackerStats = attacker.GetEffectiveStats();
+        Stats targetStats   =   target.GetEffectiveStats();
 
         int toHit = Dice.Roll("1d20") + (attackerStats["Prowess"] - 10) / 2;
         int dodge = (targetStats["Dexterity"] - 10) / 2;
@@ -275,12 +277,24 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-
-        int targetDefense = 0;
-        targetStats.TryGetValue("Defense", out targetDefense);
-
         int rawDamage = Dice.Roll(attackDamage);
-        int damageAfterArmorSoak = Mathf.Max(0, rawDamage - targetDefense);
+        int damageAfterArmorSoak = Mathf.Max(0, rawDamage - targetStats["Defense"]);
+
+        if(damageAfterArmorSoak <= 0)
+        {
+            // tell user failed to penetrate armor
+            string armorMessage = $"The {attacker.GetComponent<Visual>().DisplayName} fails to penetrate the {target.GetComponent<Visual>().DisplayName}'s armor.";
+            if (attacker == ThePlayer)
+            {
+                armorMessage = $"You fail to penetrate the {target.GetComponent<Visual>().DisplayName}'s armor.";
+            }
+            else if (target == ThePlayer)
+            {
+                armorMessage = $"The {attacker.GetComponent<Visual>().DisplayName} fails to penetrate your armor.";
+            }
+            MenuManager.Instance.Log(armorMessage);
+            return;
+        }
 
         // tell user
         string attackMessage = $"The {attacker.GetComponent<Visual>().DisplayName} attacks the {target.GetComponent<Visual>().DisplayName} for {damageAfterArmorSoak} damage.";
@@ -295,7 +309,6 @@ public class GameManager : MonoBehaviour
         MenuManager.Instance.Log(attackMessage);
 
         targetHealth.HealthCurrent -= damageAfterArmorSoak;
-
     }
     public void Pickup(GameObject pickerUpper, GameObject item)
     {

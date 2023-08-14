@@ -1,6 +1,22 @@
 [
   {
-    "itemSetName": "HumanoidEquipment1",
+    "itemSetName": "Humanoid1",
+    "items": [
+      {
+        "table": "Weapons1",
+        "count": 1
+      },
+      {
+        "blueprint": "CopperArmor",
+        "count": 1
+      },
+      {
+        "blueprint": "VampiricFocus"
+      }
+    ]
+  },
+  {
+    "itemSetName": "FrogWarden",
     "items": [
       {
         "table": "Weapons1",
@@ -11,8 +27,23 @@
         "count": 3
       },
       {
-        "blueprint": "VampiricFocus"
+        "blueprint": "PorcelainFrog",
+        "count": 1
       }
     ]
-  }  
+  },
+  {
+    "itemSetName": "Judas",
+    "items": [
+      {
+        "blueprint": "CopperDagger"
+      },
+      {
+        "blueprint": "MaskSneer"
+      },
+      {
+        "blueprint": "MaskJeer"
+      }
+    ]
+  }
 ]
