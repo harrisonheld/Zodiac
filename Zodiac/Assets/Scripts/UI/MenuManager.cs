@@ -152,14 +152,14 @@ namespace UI
         }
         public void LogArmorChink(GameObject attacker, GameObject target)
         {
-            string armorMessage = $"The {attacker.GetComponent<Visual>().DisplayName} hits the {target.GetComponent<Visual>().DisplayName}, but the attack bounces off their armor.";
+            string armorMessage = $"The {attacker.GetComponent<Visual>().DisplayName} hits the {target.GetComponent<Visual>().DisplayName}, but the attack fails to penetrate.";
             if (attacker == GameManager.Instance.ThePlayer)
             {
-                armorMessage = $"You hit the {target.GetComponent<Visual>().DisplayName}, but the attack bounces off their armor.";
+                armorMessage = $"You hit the {target.GetComponent<Visual>().DisplayName}, but the attack fails to penetrate.";
             }
             else if (target == GameManager.Instance.ThePlayer)
             {
-                armorMessage = $"The {attacker.GetComponent<Visual>().DisplayName} hits you, but the attack bounces off your armor.";
+                armorMessage = $"The {attacker.GetComponent<Visual>().DisplayName} hits you, but the attack fails to penetrate.";
             }
             StatusMenu.Instance.Log(armorMessage);
         }
@@ -220,7 +220,7 @@ namespace UI
         public void EquipmentMenu()
         {
             ShowPickMenu(
-                options: GameManager.Instance.ThePlayer.GetComponents<Slot>(),
+                options: GameManager.Instance.ThePlayer.GetComponents<Slot>().OrderBy(s => s.SlotType).ToList(),
                 action: slot =>
                 {
                     if(slot.Empty)

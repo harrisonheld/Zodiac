@@ -227,14 +227,14 @@
     ]
   },
   {
-    "Id": "MaskSneer",
+    "Id": "SneeringMask",
     "Inherits": "Item",
     "Components": [
       {
         "Type": "Visual",
         "Properties": {
           "DisplayName": "sneering mask",
-          "Description": "a scornful mask with a contemptuous grin",
+          "Description": "a mask with a contemptuous grin that mocks the world",
           "Sprite": "mask"
         }
       },
@@ -254,14 +254,14 @@
     ]
   },
   {
-    "Id": "MaskJeer",
-    "Inherits": "MaskSneer",
+    "Id": "WeepingMask",
+    "Inherits": "SneeringMask",
     "Components": [
       {
         "Type": "Visual",
         "Properties": {
-          "DisplayName": "jeering mask",
-          "Description": "a snide mask whose features mock the world",
+          "DisplayName": "weeping mask",
+          "Description": "a bizarre mask whose features are twisted in hyperbolic sadness. Blue streams of tears are painted down the cheeks.",
         }
       }
     ]
