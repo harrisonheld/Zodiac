@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour
 
     // singleton pattern
     public static GameManager Instance { get; private set; }
-
     public void Awake()
     {
         if (Instance == null) // If there is no instance already
@@ -255,7 +254,7 @@ public class GameManager : MonoBehaviour
 
         int toHit = attackerStats.GetMod("Prowess");
         int dodge = targetStats.GetMod("Dexterity");
-        if(toHit + Dice.Roll("1d20") < dodge)
+        if(toHit + Dice.Roll("1d20") <= dodge)
         {
             MenuManager.Instance.LogMiss(attacker, target);
             return;
