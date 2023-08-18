@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using UI;
 using Raws;
+using Zodiac.Serialization;
 
 public class GameManager : MonoBehaviour
 {
@@ -116,15 +117,19 @@ public class GameManager : MonoBehaviour
                 foreach(GameObject entity in Entities)
                 {
                     if (entity != ThePlayer)
-                        DestroyImmediate(entity);
+                        Destroy(entity);
                 }
                 Entities.Clear();
                 Entities.Add(ThePlayer);
 
                 if (gameSave.ScreenSaved(screenX, screenY))
-                    Entities.AddRange(gameSave.LoadScreen(screenX, screenY));
+                {
+                    Entities.AddRange(gameSave.LoadScreen(screenX, screenY).Where(entity => entity.GetComponent<Position>() != null));
+                }
                 else
+                {
                     WorldGen.World.GenerateZone(screenX, screenY);
+                }
 
                 playerPos.X = (int)(playerU * (WorldGen.World.GetCurrentZoneWidth - 1));
                 playerPos.Y = (int)(playerV * (WorldGen.World.GetCurrentZoneHeight - 1));

@@ -107,6 +107,24 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Two"",
+                    ""type"": ""Button"",
+                    ""id"": ""5940a0ec-0484-4b0b-a8c6-0f0280b85088"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Three"",
+                    ""type"": ""Button"",
+                    ""id"": ""4510cbf0-bacf-40cf-8019-6a67ce89f51b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -393,6 +411,28 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""One"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b231ef3f-c4e7-43e3-88af-077ac77a3244"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Two"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c2e993fc-b542-41fe-8743-d89a0a71aed7"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Three"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1499,6 +1539,8 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         m_FreeRoam_GoToInteractMode = m_FreeRoam.FindAction("GoToInteractMode", throwIfNotFound: true);
         m_FreeRoam_OpenAbilities = m_FreeRoam.FindAction("OpenAbilities", throwIfNotFound: true);
         m_FreeRoam_One = m_FreeRoam.FindAction("One", throwIfNotFound: true);
+        m_FreeRoam_Two = m_FreeRoam.FindAction("Two", throwIfNotFound: true);
+        m_FreeRoam_Three = m_FreeRoam.FindAction("Three", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1589,6 +1631,8 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_FreeRoam_GoToInteractMode;
     private readonly InputAction m_FreeRoam_OpenAbilities;
     private readonly InputAction m_FreeRoam_One;
+    private readonly InputAction m_FreeRoam_Two;
+    private readonly InputAction m_FreeRoam_Three;
     public struct FreeRoamActions
     {
         private @ZodiacInputMap m_Wrapper;
@@ -1602,6 +1646,8 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         public InputAction @GoToInteractMode => m_Wrapper.m_FreeRoam_GoToInteractMode;
         public InputAction @OpenAbilities => m_Wrapper.m_FreeRoam_OpenAbilities;
         public InputAction @One => m_Wrapper.m_FreeRoam_One;
+        public InputAction @Two => m_Wrapper.m_FreeRoam_Two;
+        public InputAction @Three => m_Wrapper.m_FreeRoam_Three;
         public InputActionMap Get() { return m_Wrapper.m_FreeRoam; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1638,6 +1684,12 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                 @One.started -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOne;
                 @One.performed -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOne;
                 @One.canceled -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOne;
+                @Two.started -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnTwo;
+                @Two.performed -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnTwo;
+                @Two.canceled -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnTwo;
+                @Three.started -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnThree;
+                @Three.performed -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnThree;
+                @Three.canceled -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnThree;
             }
             m_Wrapper.m_FreeRoamActionsCallbackInterface = instance;
             if (instance != null)
@@ -1669,6 +1721,12 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                 @One.started += instance.OnOne;
                 @One.performed += instance.OnOne;
                 @One.canceled += instance.OnOne;
+                @Two.started += instance.OnTwo;
+                @Two.performed += instance.OnTwo;
+                @Two.canceled += instance.OnTwo;
+                @Three.started += instance.OnThree;
+                @Three.performed += instance.OnThree;
+                @Three.canceled += instance.OnThree;
             }
         }
     }
@@ -1932,6 +1990,8 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         void OnGoToInteractMode(InputAction.CallbackContext context);
         void OnOpenAbilities(InputAction.CallbackContext context);
         void OnOne(InputAction.CallbackContext context);
+        void OnTwo(InputAction.CallbackContext context);
+        void OnThree(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

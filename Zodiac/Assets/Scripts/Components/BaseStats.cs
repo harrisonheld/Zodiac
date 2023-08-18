@@ -1,9 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 public class BaseStats : ZodiacComponent
 {
     [field: SerializeField] public Dictionary<string, int> Stats { get; set; } = new Dictionary<string, int>();
+
+    public override void Serialize(BinaryWriter writer)
+    {
+        writer.Write(Stats.Count);
+        foreach (var stat in Stats)
+        {
+            writer.Write(stat.Key);
+            writer.Write(stat.Value);
+        }
+    }
+    public override void Deserialize(BinaryReader reader, Dictionary<int, GameObject> idToEntity = null)
+    {
+        int count = reader.ReadInt32();
+        for (int i = 0; i < count; i++)
+        {
+            string key = reader.ReadString();
+            int value = reader.ReadInt32();
+            Stats.Add(key, value);
+        }
+    }
 }
 
 public class Stats

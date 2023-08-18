@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using UnityEngine;
 
@@ -7,6 +8,17 @@ using UnityEngine;
 public class Inventory : ZodiacComponent
 {
     [field: SerializeField]  public List<GameObject> Items { get; set; } = new();
+
+
+
+    public override void Serialize(BinaryWriter writer)
+    {
+        WriteEntityList(writer, Items);
+    }
+    public override void Deserialize(BinaryReader reader, Dictionary<int, GameObject> idToEntity = null)
+    {
+        Items = ReadEntityList(reader, idToEntity);
+    }
 
     public void AddItem(GameObject item)
     {

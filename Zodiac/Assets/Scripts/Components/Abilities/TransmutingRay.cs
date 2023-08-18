@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -14,6 +16,21 @@ public class TransmutingRay : AbilityBase
     public Color MaterialColorPrimary { get; set; }
     public Color MaterialColorSecondary { get; set; }
     public Color MaterialColorTertiary { get; set; }
+
+    public override void Serialize(BinaryWriter writer)
+    {
+        writer.Write(MaterialName);
+        WriteColor(writer, MaterialColorPrimary);
+        WriteColor(writer, MaterialColorSecondary);
+        WriteColor(writer, MaterialColorTertiary);
+    }
+    public override void Deserialize(BinaryReader reader, Dictionary<int, GameObject> idToEntity = null)
+    {
+        MaterialName = reader.ReadString();
+        MaterialColorPrimary = ReadColor(reader);
+        MaterialColorSecondary = ReadColor(reader);
+        MaterialColorTertiary = ReadColor(reader);
+    }
 
     public void Awake()
     {

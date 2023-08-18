@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -15,8 +16,8 @@ public class Visual : ZodiacComponent
         }
         set
         {
-            this.gameObject.name = value;
             displayName = value;
+            gameObject.name = value;
         }
     }
     [field: SerializeField] public string Description { get; set; } = "DESCRIPTION_HERE";
@@ -31,7 +32,8 @@ public class Visual : ZodiacComponent
         set
         {
             colorPrimary = value;
-            material.SetColor("_Out1", colorPrimary);
+            if(material != null)
+                material.SetColor("_Out1", colorPrimary);
         }
     }
     public Color ColorSecondary
@@ -40,7 +42,8 @@ public class Visual : ZodiacComponent
         set
         {
             colorSecondary = value;
-            material.SetColor("_Out2", colorSecondary);
+            if (material != null)
+                material.SetColor("_Out2", colorSecondary);
         }
     }
     public Color ColorTertiary
@@ -49,13 +52,12 @@ public class Visual : ZodiacComponent
         set
         {
             colorTertiary = value;
-            material.SetColor("_Out3", colorTertiary);
+            if (material != null)
+                material.SetColor("_Out3", colorTertiary);
         }
     }
 
-    /// <summary>
-    /// The sprite as a string.
-    /// </summary>
+    /// <summary>The sprite as a string.</summary>
     public string Sprite
     {
         get
@@ -74,6 +76,25 @@ public class Visual : ZodiacComponent
             gameObject.GetComponent<SpriteRenderer>().sprite = loaded;
             spriteName = value;
         }
+    }
+
+    public override void Serialize(BinaryWriter writer)
+    {
+        writer.Write(DisplayName);
+        writer.Write(Description);
+        writer.Write(Sprite);
+        WriteColor(writer, colorPrimary);
+        WriteColor(writer, colorSecondary);
+        WriteColor(writer, colorTertiary);
+    }
+    public override void Deserialize(BinaryReader reader, Dictionary<int, GameObject> idToEntity = null)
+    {
+        DisplayName = reader.ReadString();
+        Description = reader.ReadString();
+        Sprite = reader.ReadString();
+        ColorPrimary = ReadColor(reader);
+        ColorSecondary = ReadColor(reader);
+        ColorTertiary = ReadColor(reader);
     }
 
     public Sprite GetUnitySprite()

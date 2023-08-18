@@ -5,8 +5,9 @@ public abstract class AbilityBase : ZodiacComponent
 {
     [ZodiacNoSerialize]
     public abstract ITargetingMechanism TargetingMechanism { get; }
-    [ZodiacNoSerialize]
 
+
+    [ZodiacNoSerialize]
     public virtual int RechargeTime => 10;
     [ZodiacNoSerialize]
     public virtual int EnergyCost => 1000;
@@ -14,6 +15,7 @@ public abstract class AbilityBase : ZodiacComponent
     public virtual string AbilityName => "[AbilityBase]";
 
     public int Cooldown { get; set; } = 0;
+
     public virtual void Activate()
     {
         MenuManager.Instance.Log($"{AbilityName} was cast by {gameObject.GetComponent<Visual>().DisplayName}.");

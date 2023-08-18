@@ -92,6 +92,20 @@ public static class ZodiacInput
             Raws.Tables.Initialize();
             MenuManager.Instance.ShowAlert("Raws reloaded.");
         }
+        // test serialization
+        if(inputMap.FreeRoam.Two.triggered)
+        {
+            Serializer serializer = new Serializer();
+            serializer.SerializeScene(@"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\test.star");
+            MenuManager.Instance.ShowAlert("Scene serialized.");
+        }
+        // test deserialization
+        if(inputMap.FreeRoam.Three.triggered)
+        {
+            Deserializer deserializer = new Deserializer();
+            deserializer.DeserializeScene(@"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\test.star");
+            MenuManager.Instance.ShowAlert("Scene deserialized.");
+        }
 
         // look mode
         if(inputMap.FreeRoam.GoToLookMode.triggered)
