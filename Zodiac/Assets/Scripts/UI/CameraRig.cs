@@ -28,7 +28,7 @@ namespace UI
             // background color
             string biome = GameManager.Instance.BiomeId;
             BiomeInfo biomeInfo = Raws.Biomes.ById(biome);
-            Camera.main.backgroundColor = biomeInfo.BackgroundColor;
+            Camera.main.backgroundColor = biomeInfo.ColorBackground;
 
             // size the camera to fit the game area
             Camera.main.orthographicSize = (float)GameManager.Instance.ZoneHeight / 2.0f;

@@ -78,6 +78,8 @@ namespace UI
             if (eqDesc != "")
                 eqDesc = "\nEquipment: " + eqDesc;
             body.text += eqDesc;
+
+            _cursor.GetComponent<Image>().color = Raws.Biomes.ById(GameManager.Instance.BiomeId).ColorCursor;
         }
         public void GainFocus()
         {

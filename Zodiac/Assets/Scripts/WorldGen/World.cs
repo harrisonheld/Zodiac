@@ -62,7 +62,7 @@ namespace WorldGen
 
             zoneInfo.X = x;
             zoneInfo.Y = y;
-            zoneInfo.BiomeId = "DesertCanyon";
+            zoneInfo.BiomeId = "JoyousWilds";
             return zoneInfo;
         }
         private static ITerrainGenerator SelectTerrainGenerator(int x, int y)

@@ -5,6 +5,14 @@
     "Description": "A canyon in the desert.",
     "ColorBackground": "#37376C",
     "ColorCursor": "#3675DE",
-    "ColorPortraits": "#8888BB"
+    "ColorPortrait": "#8888BB"
+  },
+  {
+    "Id": "JoyousWilds",
+    "Name": "Joyous Wilds",
+    "Description": "The Joyous Wilds.",
+    "ColorBackground": "#407F7F",
+    "ColorCursor": "#6CA299",
+    "ColorPortrait": "#CD88AF"
   }
 ]

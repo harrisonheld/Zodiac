@@ -31,7 +31,6 @@ namespace Raws
                 string json = File.ReadAllText(fullPath);
 
                 JsonSerializerSettings settings = new JsonSerializerSettings();
-                settings.Converters.Add(new ColorConverter());
                 List<BiomeInfo> biomesInFile = JsonConvert.DeserializeObject<List<BiomeInfo>>(json, settings);
 
                 foreach (BiomeInfo biome in biomesInFile)
@@ -50,32 +49,6 @@ namespace Raws
 
             return _biomes[biomeId];
         }
-
-        private class ColorConverter : JsonConverter
-        {
-            public override bool CanConvert(Type objectType)
-            {
-                return objectType == typeof(Color);
-            }
-
-            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-            {
-                if (reader.TokenType == JsonToken.String)
-                {
-                    string colorString = (string)reader.Value;
-                    Color color;
-                    if (ColorUtility.TryParseHtmlString(colorString, out color))
-                        return color;
-                }
-
-                throw new JsonSerializationException("Invalid color value.");
-            }
-
-            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-            {
-                throw new NotImplementedException();
-            }
-        }
     }
 
     public class BiomeInfo
@@ -83,8 +56,37 @@ namespace Raws
         public string Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; } = null;
-        public Color BackgroundColor { get; set; }
-        public Color CursorColor { get; set; }
-        public Color PortraitColor { get; set; }
+        [JsonConverter(typeof(ColorConverter))]
+        public Color ColorBackground { get; set; }
+        [JsonConverter(typeof(ColorConverter))]
+        public Color ColorCursor { get; set; }
+        [JsonConverter(typeof(ColorConverter))]
+        public Color ColorPortrait { get; set; }
+    }
+
+    public class ColorConverter : JsonConverter<Color>
+    {
+        public override Color ReadJson(JsonReader reader, Type objectType, Color existingValue, bool hasExistingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.String)
+            {
+                string colorValue = reader.Value.ToString();
+
+                if (colorValue.StartsWith("#") && colorValue.Length == 7) // #ABCDEF format
+                {
+                    Color color;
+                    if(ColorUtility.TryParseHtmlString(colorValue, out color))
+                        return color;
+                    throw new JsonException($"Invalid Color: {colorValue}");
+                }
+            }
+
+            throw new JsonException("Unexpected token or format while deserializing Color.");
+        }
+
+        public override void WriteJson(JsonWriter writer, Color value, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
