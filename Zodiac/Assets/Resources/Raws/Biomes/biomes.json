@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "DesertCanyon",
+    "Name": "Desert Canyon",
+    "Description": "A canyon in the desert.",
+    "ColorBackground": "#37376C",
+    "ColorCursor": "#3675DE",
+    "ColorPortraits": "#8888BB"
+  }
+]

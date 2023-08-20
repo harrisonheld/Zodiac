@@ -75,7 +75,7 @@ namespace UI
                 Texture2D portrait = Resources.Load<Texture2D>($"Portraits/{currentNode.NpcPortrait}");
                 portrait.filterMode = FilterMode.Point; // for pixelated look
                 npcPortrait.sprite = Sprite.Create(portrait, new Rect(0, 0, portrait.width, portrait.height), Vector2.one * 0.5f);
-                npcPortrait.color = new Color(0.5f, 0.5f, 0.75f);
+                npcPortrait.color = Raws.Biomes.ById(GameManager.Instance.BiomeId).PortraitColor;
             }
 
             for(int i = 0; i < currentNode.Options.Count; i++)

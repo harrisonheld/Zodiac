@@ -147,7 +147,7 @@ namespace UI
                 GameObject lookingAt = GameManager.Instance.EntitiesAt(_lookCursorPos).FirstOrDefault();
                 SetSubject(lookingAt);
 
-                bool isLeft = _lookCursorPos.x > (WorldGen.World.GetCurrentZoneWidth / 2);
+                bool isLeft = _lookCursorPos.x > (GameManager.Instance.ZoneWidth / 2);
                 SetSide(isLeft);
             }
             else if (cycle != 0)
@@ -175,7 +175,7 @@ namespace UI
             _cursor.transform.position = Camera.main.WorldToScreenPoint(new Vector3(_lookCursorPos.x, _lookCursorPos.y, 0f));
             _cursor.transform.localScale = Vector3.one * (10f / Camera.main.orthographicSize);
 
-            bool isLeft = _lookCursorPos.x > (WorldGen.World.GetCurrentZoneWidth / 2);
+            bool isLeft = _lookCursorPos.x > (GameManager.Instance.ZoneWidth / 2);
             SetSide(isLeft);
 
         }
@@ -189,7 +189,7 @@ namespace UI
             _cursor.transform.position = Camera.main.WorldToScreenPoint(new Vector3(_lookCursorPos.x, _lookCursorPos.y, 0f));
             _cursor.transform.localScale = Vector3.one * (10f / Camera.main.orthographicSize);
 
-            bool isLeft = _lookCursorPos.x > (WorldGen.World.GetCurrentZoneWidth / 2);
+            bool isLeft = _lookCursorPos.x > (GameManager.Instance.ZoneWidth / 2);
             SetSide(isLeft);
 
         }

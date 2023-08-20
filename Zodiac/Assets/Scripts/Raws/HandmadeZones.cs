@@ -54,7 +54,10 @@ namespace Raws
             return new ZoneInfo()
             {
                 Width = zone.Width,
-                Height = zone.Height
+                Height = zone.Height,
+                X = worldX,
+                Y = worldY,
+                BiomeId = zone.BiomeId
             };
         }
 
@@ -70,6 +73,8 @@ namespace Raws
             public int Height { get; set; }
             [JsonProperty("zoneName")]
             public string ZoneName { get; set; }
+            [JsonProperty("biomeId")]
+            public string BiomeId { get; set; }
             [JsonProperty("entities")]
             public List<HandplacedEntity> HandplaceEntities { get; set; }
         }

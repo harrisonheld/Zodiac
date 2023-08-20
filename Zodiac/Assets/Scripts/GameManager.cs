@@ -10,10 +10,12 @@ public class GameManager : MonoBehaviour
 {
     [Header("Info")]
     [SerializeField] private int turn = 0;
-    [SerializeField] private int screenX = 2;
-    [SerializeField] private int screenY = 15;
-
+    [SerializeField] private WorldGen.ZoneInfo CurrentZoneInfo;
     private GameSave gameSave;
+
+    public int ZoneWidth => CurrentZoneInfo.Width;
+    public int ZoneHeight => CurrentZoneInfo.Height;
+    public string BiomeId => CurrentZoneInfo.BiomeId;
 
     // a list of Entities that have Position components - IE, ones that exist on the map - not in inventories or things like that
     public List<GameObject> Entities = new List<GameObject>();
@@ -45,7 +47,7 @@ public class GameManager : MonoBehaviour
         RegisterSystem<CooldownSystem>();
 
         WorldGen.World.SetWorldSeed(gameSave.WorldSeed);
-        WorldGen.World.GenerateZone(screenX, screenY);
+        CurrentZoneInfo = WorldGen.World.GenerateZone(2, 15);
 
         ThePlayer = Blueprints.FromBlueprint("You", new Vector2Int(9, 5));
 
@@ -79,41 +81,36 @@ public class GameManager : MonoBehaviour
             turn++;
 
             Position playerPos = ThePlayer.GetComponent<Position>();
-            double playerU = playerPos.X / (double)(WorldGen.World.GetCurrentZoneWidth -1);
-            double playerV = playerPos.Y / (double)(WorldGen.World.GetCurrentZoneHeight - 1);
+            double playerU = playerPos.X / (double)(ZoneWidth -  1);
+            double playerV = playerPos.Y / (double)(ZoneHeight - 1);
 
-            bool leftScreen = false;
+            Vector2Int leftDir = new(0, 0);
             if (playerV > 1.0)
             {
                 playerV = 0.0;
-                gameSave.SaveScreen(screenX, screenY);
-                screenY++;
-                leftScreen = true;
+                leftDir += Vector2Int.up;
             }
             else if(playerV < 0.0)
             {
                 playerV = 1.0;
-                gameSave.SaveScreen(screenX, screenY);
-                screenY--;
-                leftScreen = true;
+                leftDir += Vector2Int.down;
             }
             if (playerU > 1.0)
             {
                 playerU = 0.0;
-                gameSave.SaveScreen(screenX, screenY);
-                screenX++;
-                leftScreen = true;
+                leftDir += Vector2Int.right;
             }
             else if (playerU < 0.0)
             {
                 playerU = 1.0;
-                gameSave.SaveScreen(screenX, screenY);
-                screenX--;
-                leftScreen = true;
+                leftDir += Vector2Int.left;
             }
 
-            if (leftScreen)
+            if (leftDir != Vector2Int.zero)
             {
+                gameSave.SaveZone(CurrentZoneInfo);
+
+                // todo: delete gameobjects in inventories etc.
                 foreach(GameObject entity in Entities)
                 {
                     if (entity != ThePlayer)
@@ -122,17 +119,19 @@ public class GameManager : MonoBehaviour
                 Entities.Clear();
                 Entities.Add(ThePlayer);
 
-                if (gameSave.ScreenSaved(screenX, screenY))
+                int newZoneX = CurrentZoneInfo.X + leftDir.x;
+                int newZoneY = CurrentZoneInfo.Y + leftDir.y;
+                if (gameSave.ZoneSaved(newZoneX, newZoneY))
                 {
-                    Entities.AddRange(gameSave.LoadScreen(screenX, screenY).Where(entity => entity.GetComponent<Position>() != null));
+                    CurrentZoneInfo = gameSave.LoadZone(newZoneX, newZoneY);
                 }
                 else
                 {
-                    WorldGen.World.GenerateZone(screenX, screenY);
+                    CurrentZoneInfo = WorldGen.World.GenerateZone(newZoneX, newZoneY);
                 }
 
-                playerPos.X = (int)(playerU * (WorldGen.World.GetCurrentZoneWidth - 1));
-                playerPos.Y = (int)(playerV * (WorldGen.World.GetCurrentZoneHeight - 1));
+                playerPos.X = (int)(playerU * (ZoneWidth - 1));
+                playerPos.Y = (int)(playerV * (ZoneHeight - 1));
             }
         }
     }

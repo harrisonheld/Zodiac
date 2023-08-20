@@ -11,17 +11,13 @@ namespace WorldGen
 {
     public static class World
     {
-        private static ZoneInfo _currentZoneInfo;
-        public static int GetCurrentZoneWidth => _currentZoneInfo.Width;
-        public static int GetCurrentZoneHeight => _currentZoneInfo.Height;
-
         private static int worldSeed = 0;
         public static void SetWorldSeed(int newSeed)
         {
             worldSeed = newSeed;
         }
 
-        public static void GenerateZone(int x, int y)
+        public static ZoneInfo GenerateZone(int x, int y)
         {
             Gaps gaps = new()
             {
@@ -31,15 +27,17 @@ namespace WorldGen
                 west = GenerateEdge(x, y, Direction.West)
             };
 
-            _currentZoneInfo = HandmadeZones.TryInstantiateZone(x, y);
-            if (_currentZoneInfo != null)
-                return; // zone was handmade, no need to generate
+            ZoneInfo zoneInfo = HandmadeZones.TryInstantiateZone(x, y);
+            if (zoneInfo != null)
+            {
+                return zoneInfo;
+            }
 
             int zoneSeed = StableHash(x, y, worldSeed);
             System.Random zoneRandom = new(zoneSeed);
             ITerrainGenerator generator = SelectTerrainGenerator(x, y);
             generator.Generate(zoneRandom, gaps);
-            _currentZoneInfo = generator.GetZoneInfo();
+            zoneInfo = generator.GetZoneInfo();
 
             foreach (Vector2Int wallPos in generator.WallCoordinates())
             {
@@ -61,6 +59,11 @@ namespace WorldGen
                 else
                     enemy = Blueprints.FromBlueprint("LanguishingSmoke", enemyPos);
             }
+
+            zoneInfo.X = x;
+            zoneInfo.Y = y;
+            zoneInfo.BiomeId = "DesertCanyon";
+            return zoneInfo;
         }
         private static ITerrainGenerator SelectTerrainGenerator(int x, int y)
         {

@@ -32,7 +32,8 @@ namespace Raws
                 string json = File.ReadAllText(fullPath);
                 List<ConversationNode> nodesInFile = JsonConvert.DeserializeObject<List<ConversationNode>>(json);
 
-                foreach(ConversationNode node in nodesInFile) {
+                foreach (ConversationNode node in nodesInFile)
+                {
                     _conversationNodes.Add(node.Id, node);
                 }
             }

@@ -10,16 +10,11 @@ using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
-public class Serializer
+public class ZoneContentSerializer
 {
-    public void SerializeScene(string path)
+    public void SerializeScene(BinaryWriter writer)
     {
-        using FileStream stream = new FileStream(path, FileMode.Create);
-        using BinaryWriter writer = new BinaryWriter(stream);
-
-        var entities = GameObject.FindObjectsOfType<ZodiacComponent>()
-                        .Select(c => c.gameObject)
-                        .Distinct();
+        var entities = GameManager.Instance.Entities;
 
         writer.Write(entities.Count());
 

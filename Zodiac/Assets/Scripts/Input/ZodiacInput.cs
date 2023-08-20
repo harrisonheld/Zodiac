@@ -90,21 +90,17 @@ public static class ZodiacInput
             Raws.HandmadeZones.Initialize();
             Raws.ItemSets.Initialize();
             Raws.Tables.Initialize();
+            Raws.Biomes.Initialize();
             MenuManager.Instance.ShowAlert("Raws reloaded.");
+            return;
         }
-        // test serialization
         if(inputMap.FreeRoam.Two.triggered)
         {
-            Serializer serializer = new Serializer();
-            serializer.SerializeScene(@"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\test.star");
-            MenuManager.Instance.ShowAlert("Scene serialized.");
+            return;
         }
-        // test deserialization
-        if(inputMap.FreeRoam.Three.triggered)
+        if (inputMap.FreeRoam.Three.triggered)
         {
-            Deserializer deserializer = new Deserializer();
-            deserializer.DeserializeScene(@"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\test.star");
-            MenuManager.Instance.ShowAlert("Scene deserialized.");
+            return;
         }
 
         // look mode

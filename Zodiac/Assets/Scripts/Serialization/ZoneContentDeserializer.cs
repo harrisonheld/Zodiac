@@ -10,14 +10,11 @@ using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
-public class Deserializer
+public class ZoneContentDeserializer
 {
-    public List<GameObject> DeserializeScene(string path)
+    public List<GameObject> DeserializeScene(BinaryReader reader)
     {
         Dictionary<int, GameObject> idToEntity = new Dictionary<int, GameObject>();
-
-        using FileStream stream = new FileStream(path, FileMode.Open);
-        using BinaryReader reader = new BinaryReader(stream);
 
         int entitiesCount = reader.ReadInt32();
 

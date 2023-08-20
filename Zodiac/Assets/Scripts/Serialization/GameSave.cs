@@ -7,6 +7,7 @@ using UnityEngine;
 using Unity;
 
 using System.IO;
+using WorldGen;
 
 namespace Zodiac.Serialization
 {
@@ -32,26 +33,42 @@ namespace Zodiac.Serialization
             WorldSeed = 69;
         }
 
-        public void SaveScreen(int x, int y)
+        public void SaveZone(ZoneInfo info)
         {
-            Serializer serializer = new();
-            string path = ScreenFilePath(x, y);
-            serializer.SerializeScene(path);
+            string path = ZoneFilePath(info.X, info.Y);
+            using FileStream stream = new FileStream(path, FileMode.Create);
+            using BinaryWriter writer = new BinaryWriter(stream);
+            
+            info.Serialize(writer);
+
+            ZoneContentSerializer serializer = new();
+            serializer.SerializeScene(writer);
         }
-        public List<GameObject> LoadScreen(int x, int y)
+        public ZoneInfo LoadZone(int x, int y)
         {
-            string path = ScreenFilePath(x, y);
-            Deserializer deserializer = new();
-            return deserializer.DeserializeScene(path);
+            string path = ZoneFilePath(x, y);
+            using FileStream stream = new FileStream(path, FileMode.Open);
+            using BinaryReader reader = new BinaryReader(stream);
+
+            ZoneInfo info = new();
+            info.Deserialize(reader);
+
+            ZoneContentDeserializer deserializer = new();
+            List<GameObject> entities = deserializer.DeserializeScene(reader);
+
+            IEnumerable<GameObject> havePos = entities.Where(e => e.GetComponent<Position>() != null);
+            GameManager.Instance.Entities.AddRange(havePos);
+
+            return info;
         }
-        public bool ScreenSaved(int x, int y)
+        public bool ZoneSaved(int x, int y)
         {
-            string path = ScreenFilePath(x, y);
+            string path = ZoneFilePath(x, y);
             return File.Exists(path);
         }
-        private string ScreenFilePath(int x, int y)
+        private string ZoneFilePath(int x, int y)
         {
-            string path = Path.Combine(FolderName, $"screen{x}-{y}.xml");
+            string path = Path.Combine(FolderName, $"screen{x}-{y}.star");
             return path;
         }
 
