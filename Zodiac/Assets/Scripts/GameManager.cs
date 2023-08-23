@@ -9,19 +9,21 @@ using Zodiac.Serialization;
 public class GameManager : MonoBehaviour
 {
     [Header("Info")]
-    [SerializeField] private int turn = 0;
-    [SerializeField] private WorldGen.ZoneInfo CurrentZoneInfo;
-    private GameSave gameSave;
+    [SerializeField] private int _turn = 0;
+    [SerializeField] private WorldGen.ZoneInfo _currentZoneInfo;
+    private GameSave _gameSave;
 
-    public int ZoneWidth => CurrentZoneInfo.Width;
-    public int ZoneHeight => CurrentZoneInfo.Height;
-    public string BiomeId => CurrentZoneInfo.BiomeId;
-
+    public int ZoneWidth => _currentZoneInfo.Width;
+    public int ZoneHeight => _currentZoneInfo.Height;
+    public int ZoneX => _currentZoneInfo.X;
+    public int ZoneY => _currentZoneInfo.Y;
+    public string BiomeId => _currentZoneInfo.BiomeId;
+    public int Turn => _turn;
     // a list of Entities that have Position components - IE, ones that exist on the map - not in inventories or things like that
     public List<GameObject> Entities = new List<GameObject>();
     [SerializeField] public GameObject ThePlayer;
 
-    private List<ISystem> Systems = new List<ISystem>();
+    private List<ISystem> _systems = new List<ISystem>();
 
     // singleton pattern
     public static GameManager Instance { get; private set; }
@@ -46,8 +48,8 @@ public class GameManager : MonoBehaviour
         RegisterSystem<BrainSystem>();
         RegisterSystem<CooldownSystem>();
 
-        WorldGen.World.SetWorldSeed(gameSave.WorldSeed);
-        CurrentZoneInfo = WorldGen.World.GenerateZone(2, 15);
+        WorldGen.World.SetWorldSeed(_gameSave.WorldSeed);
+        _currentZoneInfo = WorldGen.World.GenerateZone(2, 15);
 
         ThePlayer = Blueprints.FromBlueprint("You", new Vector2Int(9, 5));
 
@@ -74,11 +76,11 @@ public class GameManager : MonoBehaviour
         bool inputDone = ZodiacInput.DoPlayerInput();
         if (inputDone)
         {
-            foreach (ISystem system in Systems) {
+            foreach (ISystem system in _systems) {
                 system.Tick();
             }
 
-            turn++;
+            _turn++;
 
             Position playerPos = ThePlayer.GetComponent<Position>();
             double playerU = playerPos.X / (double)(ZoneWidth -  1);
@@ -108,7 +110,7 @@ public class GameManager : MonoBehaviour
 
             if (leftDir != Vector2Int.zero)
             {
-                gameSave.SaveZone(CurrentZoneInfo);
+                _gameSave.SaveZone(_currentZoneInfo);
 
                 // todo: delete gameobjects in inventories etc.
                 foreach(GameObject entity in Entities)
@@ -119,15 +121,15 @@ public class GameManager : MonoBehaviour
                 Entities.Clear();
                 Entities.Add(ThePlayer);
 
-                int newZoneX = CurrentZoneInfo.X + leftDir.x;
-                int newZoneY = CurrentZoneInfo.Y + leftDir.y;
-                if (gameSave.ZoneSaved(newZoneX, newZoneY))
+                int newZoneX = _currentZoneInfo.X + leftDir.x;
+                int newZoneY = _currentZoneInfo.Y + leftDir.y;
+                if (_gameSave.ZoneSaved(newZoneX, newZoneY))
                 {
-                    CurrentZoneInfo = gameSave.LoadZone(newZoneX, newZoneY);
+                    _currentZoneInfo = _gameSave.LoadZone(newZoneX, newZoneY);
                 }
                 else
                 {
-                    CurrentZoneInfo = WorldGen.World.GenerateZone(newZoneX, newZoneY);
+                    _currentZoneInfo = WorldGen.World.GenerateZone(newZoneX, newZoneY);
                 }
 
                 playerPos.X = (int)(playerU * (ZoneWidth - 1));
@@ -135,14 +137,10 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public int GetTurn()
-    {
-        return turn;
-    }
 
     private void RegisterSystem<T>() where T : ISystem, new() {
         ISystem system = new T();
-        Systems.Add(system);
+        _systems.Add(system);
     }
 
     /// <summary>
@@ -326,6 +324,6 @@ public class GameManager : MonoBehaviour
 
     private void CreateNewGameSave()
     {
-        gameSave = new GameSave();
+        _gameSave = new GameSave();
     }
 }

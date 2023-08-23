@@ -57,7 +57,10 @@ namespace UI
             }
             statsText += "\n";
 
-            this.statsText.text = statsText + "Turn " + GameManager.Instance.GetTurn() + ", " + ZodiacInput.GetInputMode();
+            this.statsText.text = statsText;
+            this.statsText.text += $"Turn {GameManager.Instance.Turn}";
+            this.statsText.text += $", {ZodiacInput.GetInputMode()}";
+            this.statsText.text += $", ({GameManager.Instance.ZoneX}, {GameManager.Instance.ZoneY})";
         }
         public void SetSize(Vector2 size)
         {
@@ -66,7 +69,7 @@ namespace UI
         public void Log(string text)
         {
             Debug.Log(text);
-            logText.text += $"[TURN {GameManager.Instance.GetTurn()}]:".PadRight(13) +  $"{text}\n";
+            logText.text += $"[TURN {GameManager.Instance.Turn}]:".PadRight(13) +  $"{text}\n";
         }
     }
 }

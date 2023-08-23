@@ -49,6 +49,9 @@ namespace WorldGen
 
         private static IZoneGenerator SelectZoneGenerator(int x, int y)
         {
+            if (4 <= x && x <= 6 && 14 <= y && y <= 16)
+                return new HallsOfGrayGenerator();
+
             return new DesertCanyonGenerator();
         }
 
