@@ -119,6 +119,12 @@
         "Properties": {
           "ItemSetName": "Judas"
         }
+      },
+      {
+        "Type": "Conversation",
+        "Properties": {
+          "ConversationId": "JudasConversation_Begin"
+        }
       }
     ]
   }

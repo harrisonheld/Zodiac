@@ -52,11 +52,6 @@ public class GameManager : MonoBehaviour
         _currentZoneInfo = WorldGen.World.GenerateZone(2, 15);
 
         ThePlayer = Blueprints.FromBlueprint("You", new Vector2Int(9, 5));
-
-        Blueprints.FromBlueprint("EnthralledAlchemist", new Vector2Int(5, 5));
-        // Blueprints.FromBlueprint("Staccato", new Vector2Int(4, 5));
-        Blueprints.FromBlueprint("FrogWarden", new Vector2Int(3, 4));
-        Blueprints.FromBlueprint("Judas", new Vector2Int(1, 1));
     }
 
     public void Update()

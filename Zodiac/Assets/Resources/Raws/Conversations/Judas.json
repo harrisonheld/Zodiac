@@ -1,0 +1,25 @@
+[
+  {
+    "nodeId": "JudasConversation_Begin",
+    "npcText": "Howdy.",
+    "npcPortrait": "Judas_Neutral",
+    "options": [
+      "JudasConversation_NeedWork"
+    ]
+  },
+  {
+    "nodeId": "JudasConversation_NeedWork",
+    "playerText": "I'm looking for something to do.",
+    "npcText": "The Halls of Gray can be found not too far east from here.",
+    "npcPortrait": "Judas_Neutral",
+    "options": [
+      "JudasConversation_HallsOfGray"
+    ]
+  },
+  {
+    "nodeId": "JudasConversation_HallsOfGray",
+    "playerText": "What does this Halls of Gray look like?",
+    "npcText": "*The dungeon is described to you in excrutiating detail, which takes several minutes. You try to interrupt, but to no avail. By the end, you're a little sorry you asked.*",
+    "npcPortrait": "Cathedral"
+  }
+]

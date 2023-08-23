@@ -46,10 +46,10 @@ namespace UI
             // detach children now, as they may not be destroyed instantly
             choiceContainer.transform.DetachChildren();
 
-            npcText.text = "[placeholder text - if you're seeing this, the game is broken]";
+            npcText.text = "[placeholder text]";
             npcPortrait.sprite = null;
-            npcNametag.text = "[placeholder text - if you're seeing this, the game is broken]";
-            helpText.text = "[placeholder text - if you're seeing this, the game is broken]";
+            npcNametag.text = "[placeholder text]";
+            helpText.text = "[placeholder text]";
         }
         public void RefreshUI()
         {
@@ -76,9 +76,16 @@ namespace UI
             if(!string.IsNullOrEmpty(currentNode.NpcPortrait))
             {
                 Texture2D portrait = Resources.Load<Texture2D>($"Portraits/{currentNode.NpcPortrait}");
-                portrait.filterMode = FilterMode.Point; // for pixelated look
-                npcPortrait.sprite = Sprite.Create(portrait, new Rect(0, 0, portrait.width, portrait.height), Vector2.one * 0.5f);
-                npcPortrait.color = biome.ColorPortrait;
+                if(portrait == null)
+                {
+                    Debug.LogWarning($"Could not find portrait '{currentNode.NpcPortrait}'.");
+                }
+                else
+                {
+                    portrait.filterMode = FilterMode.Point; // for pixelated look
+                    npcPortrait.sprite = Sprite.Create(portrait, new Rect(0, 0, portrait.width, portrait.height), Vector2.one * 0.5f);
+                    npcPortrait.color = biome.ColorPortrait;
+                }
             }
 
             for(int i = 0; i < currentNode.Options.Count; i++)
