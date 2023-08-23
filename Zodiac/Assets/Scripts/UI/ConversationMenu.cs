@@ -21,6 +21,7 @@ namespace UI
 
         [SerializeField] TextMeshProUGUI npcText;
         [SerializeField] Image npcPortrait;
+        [SerializeField] Image npcPortraitFrame;
         [SerializeField] TextMeshProUGUI npcNametag;
         [SerializeField] TextMeshProUGUI helpText;
         [SerializeField] GameObject choiceContainer;
@@ -58,6 +59,8 @@ namespace UI
             string currentNodeId = _conversationNodes.Peek();
             ConversationNode currentNode = Conversations.ById(currentNodeId);
 
+            BiomeInfo biome = Raws.Biomes.ById(GameManager.Instance.BiomeId);
+            npcPortraitFrame.GetComponent<Image>().color = biome.ColorCursor;
             if (currentNode != null)
             {
                 npcText.text = currentNode.NpcText;
@@ -75,7 +78,7 @@ namespace UI
                 Texture2D portrait = Resources.Load<Texture2D>($"Portraits/{currentNode.NpcPortrait}");
                 portrait.filterMode = FilterMode.Point; // for pixelated look
                 npcPortrait.sprite = Sprite.Create(portrait, new Rect(0, 0, portrait.width, portrait.height), Vector2.one * 0.5f);
-                npcPortrait.color = Raws.Biomes.ById(GameManager.Instance.BiomeId).ColorPortrait;
+                npcPortrait.color = biome.ColorPortrait;
             }
 
             for(int i = 0; i < currentNode.Options.Count; i++)

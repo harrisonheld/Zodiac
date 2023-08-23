@@ -1,0 +1,21 @@
+[
+  {
+    "tableName": "HallsOfGrayEnemies",
+    "entries": [
+      {
+        "blueprint": "EnthralledAlchemist",
+        "weight": 1
+      }
+    ]
+  },
+
+  {
+    "tableName": "HallsOfGrayWalls",
+    "entries": [
+      {
+        "blueprint": "GrayBrickwork",
+        "weight": 7
+      }
+    ]
+  }
+]

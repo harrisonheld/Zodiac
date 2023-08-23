@@ -14,7 +14,9 @@ public class ZoneContentSerializer
 {
     public void SerializeScene(BinaryWriter writer)
     {
-        var entities = GameManager.Instance.Entities;
+        var entities = GameObject.FindObjectsOfType<ZodiacComponent>()
+                                 .Select(c => c.gameObject)
+                                 .Distinct();
 
         writer.Write(entities.Count());
 

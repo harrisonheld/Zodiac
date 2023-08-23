@@ -21,6 +21,7 @@ namespace WorldGen
             writer.Write(Height);
             writer.Write(X);
             writer.Write(Y);
+            writer.Write(BiomeId);
         }
         public void Deserialize(BinaryReader reader)
         {
@@ -28,6 +29,7 @@ namespace WorldGen
             Height = reader.ReadInt32();
             X = reader.ReadInt32();
             Y = reader.ReadInt32();
+            BiomeId = reader.ReadString();
         }
     }
 }

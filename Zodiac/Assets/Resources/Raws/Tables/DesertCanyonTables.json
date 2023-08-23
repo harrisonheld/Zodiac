@@ -1,0 +1,33 @@
+[
+  {
+    "tableName": "DesertCanyonEnemies",
+    "entries": [
+      {
+        "blueprint": "EnthralledAlchemist",
+        "weight": 1
+      },
+      {
+        "blueprint": "PorcelainFrog",
+        "weight": 1
+      },
+      {
+        "blueprint": "LanguishingSmoke",
+        "weight": 1
+      }
+    ]
+  },
+
+  {
+    "tableName": "DesertCanyonWalls",
+    "entries": [
+      {
+        "blueprint": "LimestoneWall",
+        "weight": 7
+      },
+      {
+        "blueprint": "LimestoneWallAlt",
+        "weight": 3
+      }
+    ]
+  }
+]

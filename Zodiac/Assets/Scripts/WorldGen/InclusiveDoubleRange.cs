@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WorldGen
 {
-    internal struct InclusiveDoubleRange
+    public struct InclusiveDoubleRange
     {
         public double Start { get; set; }
         public double End { get; set; }

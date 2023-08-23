@@ -832,6 +832,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcText: {fileID: 6254738687325862177}
   npcPortrait: {fileID: 6254738686544210994}
+  npcPortraitFrame: {fileID: 1058897658266435324}
   npcNametag: {fileID: 2222554176504048723}
   helpText: {fileID: 6481206855947670820}
   choiceContainer: {fileID: 1796653102364694467}

@@ -37,6 +37,17 @@ namespace Raws
             _initialized = true;
         }
 
+        public static HandmadeZone GetZone(int worldX, int worldY)
+        {
+            if (!_initialized)
+                Initialize();
+
+            if (!_zones.ContainsKey((worldX, worldY)))
+                return null; // no zone at those coordinates
+
+            return _zones[(worldX, worldY)];
+        }
+
         public static ZoneInfo TryInstantiateZone(int worldX, int worldY)
         {
             if (!_initialized)
@@ -61,7 +72,7 @@ namespace Raws
             };
         }
 
-        private class HandmadeZone
+        public class HandmadeZone
         {
             [JsonProperty("worldX")]
             public int WorldX { get; set; }
@@ -75,11 +86,13 @@ namespace Raws
             public string ZoneName { get; set; }
             [JsonProperty("biomeId")]
             public string BiomeId { get; set; }
+            [JsonProperty("gaps")]
+            public Gaps Gaps { get; set; }
             [JsonProperty("entities")]
             public List<HandplacedEntity> HandplaceEntities { get; set; }
         }
 
-        private class HandplacedEntity
+        public class HandplacedEntity
         {
             [JsonProperty("blueprint")]
             public string Blueprint { get; set; }

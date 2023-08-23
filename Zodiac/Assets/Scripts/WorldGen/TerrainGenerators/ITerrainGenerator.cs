@@ -6,8 +6,7 @@ namespace WorldGen
 {
     internal interface ITerrainGenerator
     {
-        public void Generate(System.Random random, Gaps gaps);
-        public ZoneInfo GetZoneInfo();
+        public void Generate(System.Random random, int width, int height, Gaps gaps);
 
         public IEnumerable<Vector2Int> WallCoordinates();
         public IEnumerable<Vector2Int> FloorCoordinates();

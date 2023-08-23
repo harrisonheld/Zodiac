@@ -14,8 +14,6 @@ namespace WorldGen
 			new int[] {0, -1}
 		};
 
-		private ZoneInfo _zoneInfo;
-
 		private int _iterations;
 		private double _fillPercent;
 		private int _width, _height;
@@ -124,25 +122,15 @@ namespace WorldGen
                 }
             }
 		}
-		public void Generate(System.Random rand, Gaps gaps)
+		public void Generate(System.Random rand, int width, int height, Gaps gaps)
 		{
 			_rand = rand;
-			_width = (_rand.Next(6) + 4) * 4;
-			_height = _width / 4 * 3;
+			_width = width;
+			_height = height;
+
             _cells = new Cell[this._width, this._height];
 
-			_zoneInfo = new ZoneInfo()
-			{
-				Height = _height,
-				Width = _width,
-			};
-
             Generate(gaps);
-		}
-
-		public ZoneInfo GetZoneInfo()
-		{
-			return _zoneInfo;
 		}
 
 		public IEnumerable<Vector2Int> WallCoordinates()

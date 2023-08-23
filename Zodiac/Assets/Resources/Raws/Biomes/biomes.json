@@ -14,5 +14,13 @@
     "ColorBackground": "#407F7F",
     "ColorCursor": "#6CA299",
     "ColorPortrait": "#CD88AF"
+  },
+  {
+    "Id": "HallsOfGray",
+    "Name": "Halls of Gray",
+    "Description": "Mysterious and dimly lit halls covered in shades of grey.",
+    "ColorBackground": "#222222",
+    "ColorCursor": "#DDDDDD",
+    "ColorPortrait": "#555555"
   }
 ]

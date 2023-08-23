@@ -401,6 +401,22 @@
     ]
   },
   {
+    "Id": "GrayBrickwork",
+    "Inherits": "Wall",
+    "Components": [
+      {
+        "Type": "Visual",
+        "Properties": {
+          "DisplayName": "gray brickwork",
+          "Description": "a sturdy wall made from gray bricks, giving a sense of solidity to the surroundings",
+          "ColorPrimary": "0.5, 0.5, 0.5",
+          "ColorSecondary": "0.45, 0.45, 0.45",
+          "ColorTertiary": "0.4, 0.4, 0.4"
+        }
+      }
+    ]
+  },
+  {
     "Id": "Creature",
     "Inherits": "PhysicalObject",
     "Components": [
