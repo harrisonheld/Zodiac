@@ -321,6 +321,8 @@ public class GameManager : MonoBehaviour
     private void CreateNewGameSave()
     {
         QuestManager.Instance.AddQuest("NewArrival");
+        QuestManager.Instance.AddQuest("HallsOfGray");
+
         _gameSave = new GameSave();
     }
 }

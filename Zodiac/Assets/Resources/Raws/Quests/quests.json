@@ -2,7 +2,7 @@
   {
     "Id": "NewArrival",
     "Title": "New Arrival",
-    "Description": "In Which our Protaganist Becomes Acquainted with the Denizens of a Sleepy Town",
+    "Subtitle": "In Which our Protaganist Becomes Acquainted with the Denizens of a Sleepy Town",
     "Steps": [
       {
         "Id": "NewArrival_TalkToPisces",
@@ -18,9 +18,16 @@
   {
     "Id": "HallsOfGray",
     "Title": "Halls of Gray",
-    "Description": "In which our Protaganist Seeks Out Adventure in a Perilous Dungeon Known as Halls of Gray",
+    "Subtitle": "In which our Protaganist Seeks Out Adventure in a Perilous Dungeon Known as Halls of Gray",
     "Steps": [
-      // idk we'll get here when we get here
+      {
+        "Id": "HallsOfGray_FindDungeon",
+        "Description": "Travel due west from [todo: think of name for starting town] until you find Halls of Gray."
+      },
+      {
+        "Id": "HallsOfGray_KillCreature",
+        "Description": "Slay the beast which roams the premises."
+      }
     ]
   }
 ]

@@ -36,13 +36,20 @@ namespace UI
 
             QuestManager.Instance.GetActiveQuests().ForEach(quest =>
             {
-                sb.AppendLine(quest.Title);
-                sb.AppendLine(quest.Subtitle);
+                if(quest.IsComplete)
+                {
+                    sb.Append("[COMPLETE] ");
+                }
+                sb.AppendLine($"{quest.Title}: {quest.Subtitle}");
+                sb.AppendLine();
+
                 quest.Steps.ForEach(step =>
                 {
-                    sb.Append(step.IsComplete ? '+' : '-'); sb.Append('\t'); sb.Append(step.Description);
+                    sb.Append('\t'); sb.Append(step.IsComplete ? "[COMPLETE]" : "-"); sb.Append("  "); sb.Append(step.Description);
                     sb.AppendLine();
                 });
+
+                sb.AppendLine();
             });
 
             text.text = sb.ToString();
