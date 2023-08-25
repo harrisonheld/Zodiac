@@ -5,14 +5,12 @@
     "Description": "In Which our Protaganist Becomes Acquainted with the Denizens of a Sleepy Town",
     "Steps": [
       {
-        "Type": "SpeakToNpc",
-        "Description": "Speak to Pisces in her copper spire.",
-        "TargetNPCBlueprint": "Pisces"
+        "Id": "NewArrival_TalkToPisces",
+        "Description": "Speak to Pisces in her copper spire."
       },
       {
-        "Type": "SpeakToNpc",
-        "Description": "Speak to Judas.",
-        "TargetNPCBlueprint": "Judas"
+        "Id": "NewArrival_TalkToJudas",
+        "Description": "Speak to Judas."
       }
     ]
   },

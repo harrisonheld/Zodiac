@@ -29,9 +29,7 @@ namespace Raws
                 string filePath = Path.Combine(QUESTS_DIR, file);
 
                 string json = File.ReadAllText(filePath);
-                JsonSerializerSettings settings = new JsonSerializerSettings();
-                settings.Converters.Add(new QuestStepConverter());
-                List<Quest> questsInFile = JsonConvert.DeserializeObject<List<Quest>>(json, settings);
+                List<Quest> questsInFile = JsonConvert.DeserializeObject<List<Quest>>(json);
 
                 foreach (Quest quest in questsInFile)
                 {
@@ -48,34 +46,6 @@ namespace Raws
                 Initialize();
 
             return _quests[questId];
-        }
-
-        private class QuestStepConverter : JsonConverter
-        {
-            public override bool CanConvert(Type objectType)
-            {
-                return objectType == typeof(QuestStepBase);
-            }
-            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-            {
-                JObject jsonObject = JObject.Load(reader);
-
-                if (jsonObject["Type"] == null)
-                    throw new JsonSerializationException("Quest type not specified.");
-
-                string questType = jsonObject["Type"].Value<string>();
-                if (questType == "SpeakToNpc")
-                {
-                    return jsonObject.ToObject<QuestStepSpeakToNpc>();
-                }
-
-                throw new JsonSerializationException($"Could not find the quest type '{questType}'.");
-            }
-
-            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-            {
-                throw new NotImplementedException();
-            }
         }
     }
 }

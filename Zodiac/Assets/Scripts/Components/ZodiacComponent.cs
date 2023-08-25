@@ -140,6 +140,7 @@ public abstract class ZodiacComponent : MonoBehaviour
     }
     public virtual bool HandleEvent(PickedUpEvent e) { return false; }
     public virtual bool HandleEvent(LookedAtEvent e) { return false; }
+    public virtual bool HandleEvent(SpokenToEvent e) { return false; }
 }
 
 [System.AttributeUsage(System.AttributeTargets.Property)]

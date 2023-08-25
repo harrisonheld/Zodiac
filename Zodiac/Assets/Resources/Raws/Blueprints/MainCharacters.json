@@ -54,6 +54,13 @@
         }
       },
       {
+        "Type": "CompleteQuestStepOnSpokenTo",
+        "Properties": {
+          "QuestId": "NewArrival",
+          "QuestStepId": "NewArrival_TalkToPisces"
+        }
+      },
+      {
         "Type": "Brain",
         "Properties": {
           "Ai": "Inert"
@@ -124,6 +131,13 @@
         "Type": "Conversation",
         "Properties": {
           "ConversationId": "JudasConversation_Begin"
+        }
+      },
+      {
+        "Type": "CompleteQuestStepOnSpokenTo",
+        "Properties": {
+          "QuestId": "NewArrival",
+          "QuestStepId": "NewArrival_TalkToJudas"
         }
       }
     ]

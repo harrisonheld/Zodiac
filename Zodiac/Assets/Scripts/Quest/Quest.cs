@@ -8,6 +8,6 @@ namespace QuestNamespace
         public string Title { get; set; }
         public string Subtitle { get; set; }
         public string Description { get; set; }
-        public List<QuestStepBase> Steps { get; set; }
+        public List<QuestStep> Steps { get; set; }
     }
 }

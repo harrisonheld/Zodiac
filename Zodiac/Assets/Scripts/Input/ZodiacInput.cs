@@ -91,6 +91,7 @@ public static class ZodiacInput
             Raws.ItemSets.Initialize();
             Raws.Tables.Initialize();
             Raws.Biomes.Initialize();
+            Raws.Quests.Initialize();
             MenuManager.Instance.ShowAlert("Raws reloaded.");
             return;
         }

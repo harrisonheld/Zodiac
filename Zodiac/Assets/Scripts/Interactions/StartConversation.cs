@@ -16,6 +16,7 @@ class StartConversation : IInteraction
 
     public void Perform()
     {
+        _speaker.FireEvent(new SpokenToEvent());
         MenuManager.Instance.ShowConversation(_convoStartNode, _speaker);
     }
 }
