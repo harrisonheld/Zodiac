@@ -31,6 +31,13 @@ namespace QuestNamespace
         {
             Quest quest = _activeQuests.Find(q => q.Id == QuestId);
             QuestStep step = quest.Steps.Find(s => s.Id == QuestStepId);
+
+            if (step.IsComplete)
+            {
+                // don't double complete
+                Debug.LogWarning($"Tried to complete quest step '{step.Id}', but it is already complete.");
+                return;
+            }
             step.IsComplete = true;
 
             MenuManager.Instance.LogQuestStepComplete(quest, step);
