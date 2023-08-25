@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using UnityEngine;
 
 namespace QuestNamespace
@@ -16,7 +18,7 @@ namespace QuestNamespace
             Instance = this;
         }
 
-        private List<Quest> _activeQuests = new List<Quest>();
+        [SerializeField] private List<Quest> _activeQuests = new List<Quest>();
 
         public void AddQuest(string questId)
         {
@@ -26,7 +28,55 @@ namespace QuestNamespace
 
         public void CompleteQuestStep(string QuestId, string QuestStepId)
         {
-            return;
+            Quest quest = _activeQuests.Find(q => q.Id == QuestId);
+            QuestStep step = quest.Steps.Find(s => s.Id == QuestStepId);
+            step.IsComplete = true;
+
+            // complete quest if all steps complete
+            if (quest.Steps.TrueForAll(s => s.IsComplete))
+            {
+                quest.IsComplete = true;
+            }
+        }
+
+        public void Serialize(BinaryWriter writer)
+        {
+            writer.Write(_activeQuests.Count);
+
+            for(int i = 0; i < _activeQuests.Count; i++)
+            {
+                writer.Write(_activeQuests[i].Id);
+                writer.Write(_activeQuests[i].IsComplete);
+                writer.Write(_activeQuests[i].Steps.Count);
+
+                for(int j = 0; j < _activeQuests[i].Steps.Count; j++)
+                {
+                    writer.Write(_activeQuests[i].Steps[j].Id);
+                    writer.Write(_activeQuests[i].Steps[j].IsComplete);
+                }
+            }
+        }
+        public void Deserialize(BinaryReader reader)
+        {
+            _activeQuests.Clear();
+
+            int questsCount = reader.ReadInt32();
+
+            for(int i = 0; i < questsCount; i++)
+            {
+                string questId = reader.ReadString();
+                bool questIsComplete = reader.ReadBoolean();
+
+                Quest quest = Raws.Quests.FromId(questId);
+
+                int stepsCount = reader.ReadInt32();
+                for(int j = 0; j < stepsCount; j++)
+                {
+                    string stepId = reader.ReadString();
+                    bool stepIsComplete = reader.ReadBoolean();
+                    quest.Steps.Where(s => s.Id == stepId).First().IsComplete = stepIsComplete;
+                }
+            }
         }
     }
 }

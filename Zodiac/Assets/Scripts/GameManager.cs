@@ -5,6 +5,7 @@ using System.Linq;
 using UI;
 using Raws;
 using Zodiac.Serialization;
+using QuestNamespace;
 
 public class GameManager : MonoBehaviour
 {
@@ -47,9 +48,6 @@ public class GameManager : MonoBehaviour
         RegisterSystem<EnergySystem>();
         RegisterSystem<BrainSystem>();
         RegisterSystem<CooldownSystem>();
-
-        QuestNamespace.Quest quest1 = Quests.FromId("NewArrival");
-        QuestNamespace.Quest quest2 = Quests.FromId("HallsOfGray");
 
         WorldGen.World.SetWorldSeed(_gameSave.WorldSeed);
         _currentZoneInfo = WorldGen.World.GenerateZone(2, 15);
@@ -121,7 +119,7 @@ public class GameManager : MonoBehaviour
 
                 int newZoneX = _currentZoneInfo.X + leftDir.x;
                 int newZoneY = _currentZoneInfo.Y + leftDir.y;
-                if (_gameSave.ZoneSaved(newZoneX, newZoneY))
+                if (_gameSave.isZoneSaved(newZoneX, newZoneY))
                 {
                     _currentZoneInfo = _gameSave.LoadZone(newZoneX, newZoneY);
                 }
@@ -322,6 +320,7 @@ public class GameManager : MonoBehaviour
 
     private void CreateNewGameSave()
     {
+        QuestManager.Instance.AddQuest("NewArrival");
         _gameSave = new GameSave();
     }
 }

@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 46995896}
   - component: {fileID: 46995897}
   - component: {fileID: 46995898}
+  - component: {fileID: 46995899}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -168,9 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb7e5aa36bf986f4892f3b30027424ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turn: 0
-  screenX: 2
-  screenY: 15
+  _turn: 0
   Entities: []
   ThePlayer: {fileID: 0}
 --- !u!114 &46995898
@@ -190,6 +189,18 @@ MonoBehaviour:
   _itemSubMenuPrefab: {fileID: 5993332394052065449, guid: 26d3cc9bd3aa3794fba08d21bbe8a7cf, type: 3}
   _inventoryPrefab: {fileID: 3916173655036655020, guid: 7c38398f15779eb439634802bed26f68, type: 3}
   _conversationMenuPrefab: {fileID: 6254738686171284972, guid: 7f3125e6922f37e47bbd8f91bbf83857, type: 3}
+--- !u!114 &46995899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46995894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03597ebadd1a414c899724d059fcac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &149986454
 GameObject:
   m_ObjectHideFlags: 0

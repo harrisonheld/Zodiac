@@ -8,6 +8,7 @@ using Unity;
 
 using System.IO;
 using WorldGen;
+using QuestNamespace;
 
 namespace Zodiac.Serialization
 {
@@ -33,8 +34,26 @@ namespace Zodiac.Serialization
             WorldSeed = 69;
         }
 
+        public void SaveExtraData()
+        {
+            string path = Path.Combine(FolderName, "save.star");
+            using FileStream stream = new FileStream(path, FileMode.Create);
+            using BinaryWriter writer = new BinaryWriter(stream);
+
+            QuestManager.Instance.Serialize(writer);
+        }
+        public void LoadExtraData()
+        {
+            string path = Path.Combine(FolderName, "save.star");
+            using FileStream stream = new FileStream(path, FileMode.Open);
+            using BinaryReader reader = new BinaryReader(stream);
+
+            QuestManager.Instance.Deserialize(reader);
+        }
         public void SaveZone(ZoneInfo info)
         {
+            SaveExtraData(); // save the whole game
+
             string path = ZoneFilePath(info.X, info.Y);
             using FileStream stream = new FileStream(path, FileMode.Create);
             using BinaryWriter writer = new BinaryWriter(stream);
@@ -46,6 +65,8 @@ namespace Zodiac.Serialization
         }
         public ZoneInfo LoadZone(int x, int y)
         {
+            LoadExtraData(); // load the whole game
+
             string path = ZoneFilePath(x, y);
             using FileStream stream = new FileStream(path, FileMode.Open);
             using BinaryReader reader = new BinaryReader(stream);
@@ -61,7 +82,7 @@ namespace Zodiac.Serialization
 
             return info;
         }
-        public bool ZoneSaved(int x, int y)
+        public bool isZoneSaved(int x, int y)
         {
             string path = ZoneFilePath(x, y);
             return File.Exists(path);
