@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuestNamespace;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -176,6 +177,16 @@ namespace UI
                 pickupMessage = $"The {pickerUpper.GetComponent<Visual>().DisplayName} picks up the {item.GetComponent<Visual>().DisplayName}";
             }
             StatusMenu.Instance.Log(pickupMessage);
+        }
+        public void LogQuestStepComplete(Quest quest, QuestStep step)
+        {
+            string questMessage = $"Quest Step Complete: {quest.Title} - '{step.Title}'";
+            StatusMenu.Instance.Log(questMessage);
+        }
+        public void LogQuestComplete(Quest quest)
+        {
+            string questMessage = $"Quest Complete: {quest.Title}";
+            StatusMenu.Instance.Log(questMessage);
         }
 
         public void ShowConversation(string startNode, GameObject speaker)

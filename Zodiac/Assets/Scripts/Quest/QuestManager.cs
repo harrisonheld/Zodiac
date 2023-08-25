@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using UI;
 using UnityEngine;
 
 namespace QuestNamespace
@@ -32,10 +33,13 @@ namespace QuestNamespace
             QuestStep step = quest.Steps.Find(s => s.Id == QuestStepId);
             step.IsComplete = true;
 
+            MenuManager.Instance.LogQuestStepComplete(quest, step);
+
             // complete quest if all steps complete
             if (quest.Steps.TrueForAll(s => s.IsComplete))
             {
                 quest.IsComplete = true;
+                MenuManager.Instance.LogQuestComplete(quest);
             }
         }
 

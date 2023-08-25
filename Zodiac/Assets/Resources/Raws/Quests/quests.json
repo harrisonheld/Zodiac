@@ -6,10 +6,12 @@
     "Steps": [
       {
         "Id": "NewArrival_TalkToPisces",
+        "Title": "Talk to Pisces",
         "Description": "Speak to Pisces in her copper spire."
       },
       {
         "Id": "NewArrival_TalkToJudas",
+        "Title": "Talk to Judas",
         "Description": "Speak to Judas."
       }
     ]
@@ -22,10 +24,12 @@
     "Steps": [
       {
         "Id": "HallsOfGray_FindDungeon",
+        "Title": "Find Halls of Gray",
         "Description": "Travel due west from [todo: think of name for starting town] until you find Halls of Gray."
       },
       {
         "Id": "HallsOfGray_KillCreature",
+        "Title": "Kill the Creature",
         "Description": "Slay the beast which roams the premises."
       }
     ]
