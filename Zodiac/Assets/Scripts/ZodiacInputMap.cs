@@ -100,6 +100,15 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""OpenQuestMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""d0bfa26c-fd63-4619-94cc-0fb2e42c07d5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""One"",
                     ""type"": ""Button"",
                     ""id"": ""9f75e1b4-cd52-44b1-8e80-10a5b33f5886"",
@@ -433,6 +442,17 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Three"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6334b8a4-8f09-4655-b07a-6385a6d1961b"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenQuestMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1538,6 +1558,7 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         m_FreeRoam_GoToLookMode = m_FreeRoam.FindAction("GoToLookMode", throwIfNotFound: true);
         m_FreeRoam_GoToInteractMode = m_FreeRoam.FindAction("GoToInteractMode", throwIfNotFound: true);
         m_FreeRoam_OpenAbilities = m_FreeRoam.FindAction("OpenAbilities", throwIfNotFound: true);
+        m_FreeRoam_OpenQuestMenu = m_FreeRoam.FindAction("OpenQuestMenu", throwIfNotFound: true);
         m_FreeRoam_One = m_FreeRoam.FindAction("One", throwIfNotFound: true);
         m_FreeRoam_Two = m_FreeRoam.FindAction("Two", throwIfNotFound: true);
         m_FreeRoam_Three = m_FreeRoam.FindAction("Three", throwIfNotFound: true);
@@ -1630,6 +1651,7 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_FreeRoam_GoToLookMode;
     private readonly InputAction m_FreeRoam_GoToInteractMode;
     private readonly InputAction m_FreeRoam_OpenAbilities;
+    private readonly InputAction m_FreeRoam_OpenQuestMenu;
     private readonly InputAction m_FreeRoam_One;
     private readonly InputAction m_FreeRoam_Two;
     private readonly InputAction m_FreeRoam_Three;
@@ -1645,6 +1667,7 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         public InputAction @GoToLookMode => m_Wrapper.m_FreeRoam_GoToLookMode;
         public InputAction @GoToInteractMode => m_Wrapper.m_FreeRoam_GoToInteractMode;
         public InputAction @OpenAbilities => m_Wrapper.m_FreeRoam_OpenAbilities;
+        public InputAction @OpenQuestMenu => m_Wrapper.m_FreeRoam_OpenQuestMenu;
         public InputAction @One => m_Wrapper.m_FreeRoam_One;
         public InputAction @Two => m_Wrapper.m_FreeRoam_Two;
         public InputAction @Three => m_Wrapper.m_FreeRoam_Three;
@@ -1681,6 +1704,9 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                 @OpenAbilities.started -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOpenAbilities;
                 @OpenAbilities.performed -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOpenAbilities;
                 @OpenAbilities.canceled -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOpenAbilities;
+                @OpenQuestMenu.started -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOpenQuestMenu;
+                @OpenQuestMenu.performed -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOpenQuestMenu;
+                @OpenQuestMenu.canceled -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOpenQuestMenu;
                 @One.started -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOne;
                 @One.performed -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOne;
                 @One.canceled -= m_Wrapper.m_FreeRoamActionsCallbackInterface.OnOne;
@@ -1718,6 +1744,9 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
                 @OpenAbilities.started += instance.OnOpenAbilities;
                 @OpenAbilities.performed += instance.OnOpenAbilities;
                 @OpenAbilities.canceled += instance.OnOpenAbilities;
+                @OpenQuestMenu.started += instance.OnOpenQuestMenu;
+                @OpenQuestMenu.performed += instance.OnOpenQuestMenu;
+                @OpenQuestMenu.canceled += instance.OnOpenQuestMenu;
                 @One.started += instance.OnOne;
                 @One.performed += instance.OnOne;
                 @One.canceled += instance.OnOne;
@@ -1989,6 +2018,7 @@ public partial class @ZodiacInputMap : IInputActionCollection2, IDisposable
         void OnGoToLookMode(InputAction.CallbackContext context);
         void OnGoToInteractMode(InputAction.CallbackContext context);
         void OnOpenAbilities(InputAction.CallbackContext context);
+        void OnOpenQuestMenu(InputAction.CallbackContext context);
         void OnOne(InputAction.CallbackContext context);
         void OnTwo(InputAction.CallbackContext context);
         void OnThree(InputAction.CallbackContext context);

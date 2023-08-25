@@ -19,13 +19,13 @@ namespace QuestNamespace
         }
 
         [SerializeField] private List<Quest> _activeQuests = new List<Quest>();
+        public List<Quest> GetActiveQuests() => _activeQuests;
 
         public void AddQuest(string questId)
         {
             Quest quest = Raws.Quests.FromId(questId);
             _activeQuests.Add(quest);
         }
-
         public void CompleteQuestStep(string QuestId, string QuestStepId)
         {
             Quest quest = _activeQuests.Find(q => q.Id == QuestId);

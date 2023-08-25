@@ -78,6 +78,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "OpenQuestMenu",
+                    "type": "Button",
+                    "id": "d0bfa26c-fd63-4619-94cc-0fb2e42c07d5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "One",
                     "type": "Button",
                     "id": "9f75e1b4-cd52-44b1-8e80-10a5b33f5886",
@@ -411,6 +420,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Three",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6334b8a4-8f09-4655-b07a-6385a6d1961b",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenQuestMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

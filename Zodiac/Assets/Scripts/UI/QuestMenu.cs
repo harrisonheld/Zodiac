@@ -4,18 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UI;
+using System.Text;
+using QuestNamespace;
 
 namespace UI
 {
-    class AlertMenu : MonoBehaviour, IZodiacMenu
+    class QuestMenu : MonoBehaviour, IZodiacMenu
     {
-        [SerializeField] TextMeshProUGUI textmesh;
-        [SerializeField] RectTransform contextBox;
+        [SerializeField] TextMeshProUGUI text;
         public Canvas Canvas { get => GetComponent<Canvas>(); }
         public GameObject GameObject { get => gameObject; }
         public CanvasGroup CanvasGroup { get => GetComponent<CanvasGroup>(); }
 
-        public static AlertMenu Instance { get; private set; }
+        public static QuestMenu Instance { get; private set; }
         public void Awake()
         {
             if (Instance == null) // If there is no instance already
@@ -29,13 +30,23 @@ namespace UI
             }
         }
 
-        public void RefreshUI() { }
-        public void GainFocus() { }
-
-        public void SetText(string _text)
+        public void RefreshUI()
         {
-            textmesh.text = _text;
-            contextBox.sizeDelta = new(contextBox.sizeDelta.x, textmesh.preferredHeight);
+            StringBuilder sb = new();
+
+            QuestManager.Instance.GetActiveQuests().ForEach(quest =>
+            {
+                sb.AppendLine(quest.Title);
+                sb.AppendLine(quest.Subtitle);
+                quest.Steps.ForEach(step =>
+                {
+                    sb.Append(step.IsComplete ? '+' : '-'); sb.Append('\t'); sb.Append(step.Description);
+                    sb.AppendLine();
+                });
+            });
+
+            text.text = sb.ToString();
         }
+        public void GainFocus() { }
     }
 }

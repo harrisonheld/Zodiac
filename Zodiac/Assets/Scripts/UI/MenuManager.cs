@@ -16,6 +16,7 @@ namespace UI
         [SerializeField] private GameObject _itemSubMenuPrefab;
         [SerializeField] private GameObject _inventoryPrefab;
         [SerializeField] private GameObject _conversationMenuPrefab;
+        [SerializeField] private GameObject _questMenuPrefab;
 
         // singleton
         public static MenuManager Instance { get; private set; }
@@ -177,19 +178,6 @@ namespace UI
             StatusMenu.Instance.Log(pickupMessage);
         }
 
-        public void ShowPickMenu<T>(IList<T> options,
-                               Action<T> action,
-                               Func<T, string> getName = null,
-                               Func<T, bool> criterion = null,
-                               string prompt = "Pick",
-                               bool closeOnPick = true,
-                               bool removeOnPick = true)
-        {
-            PickMenu menu = Instantiate(_pickMenuPrefab).GetComponent<PickMenu>();
-            menu.Pick(options, action, getName, criterion, prompt, closeOnPick, removeOnPick);
-            Open(menu);
-        }
-
         public void ShowConversation(string startNode, GameObject speaker)
         {
             ConversationMenu menu = Instantiate(_conversationMenuPrefab).GetComponent<ConversationMenu>();
@@ -216,7 +204,24 @@ namespace UI
             menu.SetInventory(inv);
             Open(menu);
         }
+        public void ShowQuestMenu()
+        {
+            QuestMenu menu = Instantiate(_questMenuPrefab).GetComponent<QuestMenu>();
+            Open(menu);
+        }
 
+        public void ShowPickMenu<T>(IList<T> options,
+                       Action<T> action,
+                       Func<T, string> getName = null,
+                       Func<T, bool> criterion = null,
+                       string prompt = "Pick",
+                       bool closeOnPick = true,
+                       bool removeOnPick = true)
+        {
+            PickMenu menu = Instantiate(_pickMenuPrefab).GetComponent<PickMenu>();
+            menu.Pick(options, action, getName, criterion, prompt, closeOnPick, removeOnPick);
+            Open(menu);
+        }
         public void EquipmentMenu()
         {
             ShowPickMenu(

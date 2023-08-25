@@ -183,6 +183,13 @@ public static class ZodiacInput
             return;
         }
 
+        // open quest menu
+        if (inputMap.FreeRoam.OpenQuestMenu.triggered)
+        {
+            MenuManager.Instance.ShowQuestMenu();
+            return;
+        }
+
         // movement
         Vector2Int move = Vector2Int.RoundToInt(inputMap.FreeRoam.Move.ReadValue<Vector2>());
         if (move != Vector2Int.zero)

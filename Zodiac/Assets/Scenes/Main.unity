@@ -189,6 +189,7 @@ MonoBehaviour:
   _itemSubMenuPrefab: {fileID: 5993332394052065449, guid: 26d3cc9bd3aa3794fba08d21bbe8a7cf, type: 3}
   _inventoryPrefab: {fileID: 3916173655036655020, guid: 7c38398f15779eb439634802bed26f68, type: 3}
   _conversationMenuPrefab: {fileID: 6254738686171284972, guid: 7f3125e6922f37e47bbd8f91bbf83857, type: 3}
+  _questMenuPrefab: {fileID: 6254738686171284972, guid: bed3ce2dadf35844d9541ce96bc1dec2, type: 3}
 --- !u!114 &46995899
 MonoBehaviour:
   m_ObjectHideFlags: 0
