@@ -1,0 +1,28 @@
+[
+  {
+    "Id": "NewArrival",
+    "Title": "New Arrival",
+    "Description": "In Which our Protaganist Becomes Acquainted with the Denizens of a Sleepy Town",
+    "Steps": [
+      {
+        "Type": "SpeakToNpc",
+        "Description": "Speak to Pisces in her copper spire.",
+        "TargetNPCBlueprint": "Pisces"
+      },
+      {
+        "Type": "SpeakToNpc",
+        "Description": "Speak to Judas.",
+        "TargetNPCBlueprint": "Judas"
+      }
+    ]
+  },
+
+  {
+    "Id": "HallsOfGray",
+    "Title": "Halls of Gray",
+    "Description": "In which our Protaganist Seeks Out Adventure in a Perilous Dungeon Known as Halls of Gray",
+    "Steps": [
+      // idk we'll get here when we get here
+    ]
+  }
+]

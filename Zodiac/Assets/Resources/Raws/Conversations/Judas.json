@@ -10,7 +10,7 @@
   {
     "nodeId": "JudasConversation_NeedWork",
     "playerText": "I'm looking for something to do.",
-    "npcText": "The Halls of Gray can be found not too far east from here.",
+    "npcText": "The dungeon Halls of Gray can be found not too far east from here.",
     "npcPortrait": "Judas_Neutral",
     "options": [
       "JudasConversation_HallsOfGray"

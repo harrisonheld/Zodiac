@@ -78,6 +78,7 @@ namespace UI
         }
         public void GainFocus()
         {
+            optionsContainer.transform.GetChild(_selectedIdx).GetComponent<Selectable>().Select();
         }
         private void Clear()
         {
@@ -96,7 +97,7 @@ namespace UI
         /// <typeparam name="T"></typeparam>
         /// <param name="options">A list of items to choose from.</param>
         /// <param name="action">What to be done with the item once chosen.</param>
-        /// <param name="getName">A method to get a name for the obeject. If this is left null, the option's .ToString() method will be used.</param>
+        /// <param name="getName">A method to get a name for the object. If this is left null, the option's .ToString() method will be used.</param>
         /// <param name="criterion">Options failing the criterion will be greyed out and unselectable. If this is left null, all objects will pass.</param>
         /// <param name="prompt">The title of the menu.</param>
         /// <param name="closeOnPick">If the menu should close once an option is chosen.</param>

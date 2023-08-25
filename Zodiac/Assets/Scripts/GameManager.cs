@@ -48,6 +48,9 @@ public class GameManager : MonoBehaviour
         RegisterSystem<BrainSystem>();
         RegisterSystem<CooldownSystem>();
 
+        QuestNamespace.Quest quest1 = Quests.FromId("NewArrival");
+        QuestNamespace.Quest quest2 = Quests.FromId("HallsOfGray");
+
         WorldGen.World.SetWorldSeed(_gameSave.WorldSeed);
         _currentZoneInfo = WorldGen.World.GenerateZone(2, 15);
 
@@ -227,7 +230,7 @@ public class GameManager : MonoBehaviour
         attacker.GetComponent<Position>().VisualBump(target.GetComponent<Position>().Pos);
 
         // in the case of no weapon, use these default values
-        string attackDamage = "1d2";
+        string attackDamage = "1d3";
         int attackCost = 1000; // cost of the attack in energy
 
         // get the first melee weapon we have equipped
