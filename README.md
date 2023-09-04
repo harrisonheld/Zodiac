@@ -4,6 +4,7 @@ This is my game, temporarily titled 'Zodiac'. Other potential names include:
 - Flaming Metal System
 - You, But Starspawn
 - Summer in Otherworld
+- The Stars Came Down Screaming
 
 ## About the Project
 
