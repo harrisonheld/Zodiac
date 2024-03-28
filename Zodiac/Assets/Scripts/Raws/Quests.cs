@@ -11,7 +11,7 @@ namespace Raws
 {
     public static class Quests
     {
-        private const string QUESTS_DIR = @"C:\Users\johnd\Unity Projects\ZodiacRepo\Zodiac\Assets\Resources\Raws\Quests\";
+        private const string QUESTS_DIR = @"\Raws\Quests\";
 
         private static Dictionary<string, Quest> _quests = new();
         private static bool _initialized = false;
@@ -19,7 +19,7 @@ namespace Raws
         {
             _quests.Clear();
 
-            // load all loot tables from file
+            // load all quest tables from file
             foreach (string file in Directory.GetFiles(QUESTS_DIR))
             {
                 if (!file.EndsWith(".json"))
